@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="javax.persistence.ManyToOne"/>
+<fullyQualifiedTypeName name="org.springframework.data.repository.CrudRepository"/>
+<fullyQualifiedTypeName name="javax.persistence.JoinTable"/>
+<fullyQualifiedTypeName name="org.hibernate.mapping.Set"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.dal.ClinicAdminDbModel"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.repo.DoctorRepo"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.dal.DoctorDbModel"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,11 @@
+package com.siteproj0.demo.dal;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@SuppressWarnings("unused")
+@Entity
+@Table(name="ClinicAdmin")
+public class ClinicAdminDbModel {
+
+}

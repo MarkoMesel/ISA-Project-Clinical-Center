@@ -1,0 +1,67 @@
+package com.siteproj0.demo.dal;
+
+import java.util.UUID;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import validations.ValidPassword;
+
+@SuppressWarnings("unused")
+@Entity
+@Table(name="Clinicadmin")
+public class ClinicAdminDbModel {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	@NotEmpty
+	private String role;
+	
+	@NotEmpty
+	private String jmbg;
+	
+	@NotEmpty
+	private String firstName;
+	
+	@NotEmpty
+	private String lastName;
+	
+	@NotEmpty
+	@ValidPassword
+	private String password;
+
+	private boolean isVerified;
+	
+	private UUID validationToken;
+	
+	private UUID securityToken;
+	
+	@NotEmpty
+	@Email
+	private String email;
+	
+	@NotEmpty
+	private String country; 
+	
+	@NotEmpty
+	private String city;
+	
+	@NotEmpty
+	private String street;
+	
+	@NotEmpty
+	private String phone;	
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="CLINIC_ID")
+	private ClinicDbModel clinic;
+}

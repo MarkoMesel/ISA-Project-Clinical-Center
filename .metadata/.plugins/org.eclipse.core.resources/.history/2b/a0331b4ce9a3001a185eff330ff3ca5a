@@ -1,0 +1,8 @@
+if(localStorage.getItem('token')==null){
+	window.location.href = "../whatAreYou";
+}
+
+$("#logout").click(function() {
+	localStorage.removeItem('token');
+	window.location.href = "../whatAreYou";
+});

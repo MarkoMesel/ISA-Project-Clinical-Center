@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/tabulator/dist/css/tabulator_modern.min.css/}" />
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<title>Appointment Creation Step 0</title>
+
+<script>
+	$(function() {
+		$("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+		
+	});
+</script>
+
+</head>
+
+<body>
+	<!-- 	<container> -->
+
+
+	<div id="appointment_clinic_list"></div>
+
+	<form name="appointmentForm">
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon"> </span>
+				<p>
+					Date <input id="datepicker" class="form-control" type="text" />
+				</p>
+<input class="appointmentbutton" type="submit" value="submit"> </input>
+   <br/>
+   <a href="../home">Home</a>
+    <br/>
+</script>
+			</div>
+		</div>
+	</form>
+
+	<!-- 	</container> -->
+
+
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/tabulator/dist/js/tabulator.min.js/}"></script>
+
+	<script type="text/javascript"
+		th:src="@{/js/appointmentCreationStep0.js}"></script>
+</body>
+</html>

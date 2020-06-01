@@ -1,0 +1,9 @@
+package com.siteproj0.demo.repo;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.siteproj0.demo.dal.ClinicAdminDbModel;
+
+public interface ClinicAdminRepo extends CrudRepository<ClinicAdminDbModel, Integer> {
+
+}

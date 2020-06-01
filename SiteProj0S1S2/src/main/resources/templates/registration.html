@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+
+    <title>Register Your Account</title>
+</head>
+<body>
+
+
+	<!-- 	<container> -->
+	<div class="mainoptions">
+		<h1> Register Your Account </h1>
+		<div th:if="${param.success}">
+			<div class="alert alert-info">You've successfully registered to
+				our awesome app!</div>
+		</div>
+
+
+		<form th:action="@{/registration}" th:object="${user}" method="post">
+
+			<p class="error-message" th:if="${#fields.hasGlobalErrors()}"
+				th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation
+				error</p>
+
+
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('firstName')}? 'has-error':''">
+				<div class="input-group">
+					<span class="input-group-addon"> <i
+						class="glyphicon glyphicon-user color-blue"></i>
+					</span> <input id="firstName" class="form-control"
+						placeholder="First name" th:field="*{firstName}" />
+				</div>
+				<p class="error-message"
+					th:each="error: ${#fields.errors('firstName')}" th:text="${error}">Validation
+					error</p>
+			</div>
+
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('lastName')}? 'has-error':''">
+				<div class="input-group">
+					<span class="input-group-addon"> <i
+						class="glyphicon glyphicon-user color-blue"></i>
+					</span> <input id="lastName" class="form-control"
+						placeholder="Last name" th:field="*{lastName}" />
+				</div>
+				<p class="error-message"
+					th:each="error: ${#fields.errors('lastName')}" th:text="${error}">Validation
+					error</p>
+			</div>
+
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('jmbg')}? 'has-error':''">
+				<div class="input-group">
+					<span class="input-group-addon"> <i
+						class="glyphicon glyphicon-user color-blue"></i>
+					</span> <input id="jmbg" class="form-control"
+						placeholder="JMBG" th:field="*{jmbg}" />
+				</div>
+				<p class="error-message"
+					th:each="error: ${#fields.errors('jmbg')}" th:text="${error}">Validation
+					error</p>
+			</div>
+
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('email')}? 'has-error':''">
+				<div class="input-group">
+					<span class="input-group-addon"> <i
+						class="glyphicon glyphicon-user color-blue"></i>
+					</span> <input id="email" class="form-control" placeholder="email"
+						th:field="*{email}" />
+				</div>
+				<p class="error-message" th:each="error: ${#fields.errors('email')}"
+					th:text="${error}">Validation error</p>
+			</div>
+
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('country')}? 'has-error':''">
+				<div class="input-group">
+					<span class="input-group-addon"> <i
+						class="glyphicon glyphicon-user color-blue"></i>
+					</span> <input id="country" class="form-control" placeholder="country"
+						th:field="*{country}" />
+				</div>
+				<p class="error-message"
+					th:each="error: ${#fields.errors('country')}" th:text="${error}">Validation
+					error</p>
+			</div>
+
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('city')}? 'has-error':''">
+				<div class="input-group">
+					<span class="input-group-addon"> <i
+						class="glyphicon glyphicon-user color-blue"></i>
+					</span> <input id="city" class="form-control" placeholder="city"
+						th:field="*{city}" />
+				</div>
+				<p class="error-message" th:each="error: ${#fields.errors('city')}"
+					th:text="${error}">Validation error</p>
+			</div>
+
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('street')}? 'has-error':''">
+				<div class="input-group">
+					<span class="input-group-addon"> <i
+						class="glyphicon glyphicon-user color-blue"></i>
+					</span> <input id="street" class="form-control" placeholder="street"
+						th:field="*{street}" />
+				</div>
+				<p class="error-message"
+					th:each="error: ${#fields.errors('street')}" th:text="${error}">Validation
+					error</p>
+			</div>
+
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('phone')}? 'has-error':''">
+				<div class="input-group">
+					<span class="input-group-addon"> <i
+						class="glyphicon glyphicon-user color-blue"></i>
+					</span> <input id="phone" class="form-control" placeholder="phone"
+						th:field="*{phone}" />
+				</div>
+				<p class="error-message" th:each="error: ${#fields.errors('phone')}"
+					th:text="${error}">Validation error</p>
+			</div>
+
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('password')}? 'has-error':''">
+				<div class="input-group">
+					<span class="input-group-addon"> <i
+						class="glyphicon glyphicon-lock"></i>
+					</span> <input id="password" class="form-control" placeholder="password"
+						type="password" th:field="*{password}" />
+				</div>
+				<ul class="text-left" th:each="error: ${#fields.errors('password')}">
+					<li th:each="message : ${error.split(',')}">
+						<p class="error-message" th:text="${message}"></p>
+					</li>
+				</ul>
+			</div>
+
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('confirmPassword')}? 'has-error':''">
+				<div class="input-group">
+					<span class="input-group-addon"> <i
+						class="glyphicon glyphicon-lock"></i>
+					</span> <input id="confirmPassword" class="form-control" type="password"
+						placeholder="Confirm password" th:field="*{confirmPassword}" />
+				</div>
+				<ul class="text-left"
+					th:each="error: ${#fields.errors('confirmPassword')}">
+					<li th:each="message : ${error.split(',')}">
+						<p class="error-message" th:text="${message}"></p>
+					</li>
+				</ul>
+			</div>
+
+			<div>
+				<input type="submit" value="Submit">
+			</div>
+		</form>
+	</div>
+
+	<!-- 	</container> -->
+
+
+<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

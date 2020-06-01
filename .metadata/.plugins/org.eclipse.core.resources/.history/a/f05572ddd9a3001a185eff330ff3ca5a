@@ -1,0 +1,5 @@
+package com.siteproj0.demo.repo;
+
+public interface ClinicAdminRepo CrudRepository<ClinicAdminDbModel, Integer> {
+
+}

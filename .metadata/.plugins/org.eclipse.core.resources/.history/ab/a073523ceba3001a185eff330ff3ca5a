@@ -1,0 +1,36 @@
+if(localStorage.getItem('token')==null){
+	window.location.href = "../whatAreYou";
+}
+else {
+	$.ajax({
+		type : 'GET',
+		url : "/getProfile",
+		dataType : "json",
+		headers:{
+			'token':localStorage.getItem('token')
+		},
+		success : function(successData) {
+			var role = successData.role;
+			switch (role) {
+			  case "CLINICADMIN":
+				window.location.href = "../clinicAdminHome";
+			    break;
+			  case "DOCTOR":
+				window.location.href = "../doctorHome";
+			    break;
+			  default:
+				window.location.href = "../home";
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			if(textStatus=="401"){			
+				window.location.href = "../login";
+			}
+		}
+	});
+}
+
+$("#logout").click(function() {
+	localStorage.removeItem('token');
+	window.location.href = "../whatAreYou";
+});

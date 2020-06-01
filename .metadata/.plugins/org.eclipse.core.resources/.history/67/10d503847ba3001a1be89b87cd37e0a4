@@ -1,0 +1,105 @@
+package com.siteproj0.demo.dal;
+
+import java.io.Console;
+import java.util.List;
+import java.util.UUID;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import validations.FieldMatch;
+import validations.ValidPassword;
+import javax.validation.constraints.NotEmpty;
+
+@SuppressWarnings("unused")
+@Entity
+@Table(name="Doctor")
+public class DoctorDbModel {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	@NotEmpty
+	private String role;
+	
+	@NotEmpty
+	private String jmbg;
+	
+	@NotEmpty
+	private String firstName;
+	
+	@NotEmpty
+	private String lastName;
+	
+	@NotEmpty
+	@ValidPassword
+	private String password;
+
+	private boolean isVerified;
+	
+	private UUID validationToken;
+	
+	private UUID securityToken;
+	
+	@NotEmpty
+	@Email
+	private String email;
+	
+	@NotEmpty
+	private String country; 
+	
+	@NotEmpty
+	private String city;
+	
+	@NotEmpty
+	private String street;
+	
+	@NotEmpty
+	private String phone;
+	
+	@OneToMany(mappedBy = "doctor")
+	private List<ScheduleDbModel> schedules;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="CLINIC_ID")
+	private ClinicDbModel clinic;
+	
+	public ClinicDbModel getClinic() {
+		return clinic;
+	}
+	public void setClinic(ClinicDbModel clinic) {
+		this.clinic = clinic;
+	}
+	private String firstName;	
+	private String lastName;
+	private float rating;
+	
+
+	public float getRating() {
+		return rating;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public void setRating(float rating) {
+		this.rating = rating;
+	}
+}
+	
+

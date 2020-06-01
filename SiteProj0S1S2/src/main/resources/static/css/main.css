@@ -1,0 +1,55 @@
+@charset "ISO-8859-1";
+
+	input[type=text], select {
+		width: 300px;
+		padding: 12px 20px;
+		display: inline-block;
+		
+		margin: 10px 0;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		box-sizing: border-box;
+	}
+
+	
+	input[type=password], select {
+		 width: 300px;
+		 padding: 12px 18px;
+		 display: inline-block;
+		 
+		 margin: 10px 0;
+		 border: 1px solid #ccc;
+		 border-radius: 4px;
+		 box-sizing: border-box;
+	}
+	
+	input[type=submit] {
+	  width: 454px;
+	  background-color: #4CAF50;
+	  color: white;
+	  padding: 14px 18px;
+	  margin: 25px 0px;
+	  border: none;
+	  border-radius: 4px;
+	  cursor: pointer;
+	}
+
+	container {
+		position: fixed;
+		width: 335px;
+		height: 800px;
+		top: 50%;
+		left: 50%;
+		margin-top: -430px;
+		margin-left: -170px;
+	}
+	
+	div.mainoptions {
+    	width: 600px;
+    	margin: auto;
+	}
+	
+	label {
+		display: inline-block;
+		width: 150px;
+	}

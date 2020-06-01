@@ -1,0 +1,39 @@
+if(localStorage.getItem('token')==null){
+	window.location.href = "../whatAreYou";
+}
+else {
+	$.ajax({
+		type : 'GET',
+		url : "/getProfile",
+		dataType : "json",
+		headers:{
+			'token':localStorage.getItem('token')
+		},
+		success : function(successData) {
+			var role = successData.role;
+			if(role == "DOCTOR"){
+				window.location.href = "../doctorHome";
+			}
+			switch (role) {
+			  case "CLINICADMIN":
+				window.location.href = "../clinicAdminHome";
+			    break;
+			  case "DOCTOR":
+				window.location.href = "../doctorHome";
+			    break;
+			  default:
+			    text = "Looking forward to the Weekend";
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			if(textStatus=="401"){			
+				window.location.href = "../login";
+			}
+		}
+	});
+}
+
+$("#logout").click(function() {
+	localStorage.removeItem('token');
+	window.location.href = "../whatAreYou";
+});
