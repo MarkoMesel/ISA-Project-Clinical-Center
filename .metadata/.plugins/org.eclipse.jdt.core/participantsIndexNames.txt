@@ -1,7 +1,0 @@
-INDEX VERSION 1.131
-E:\FAKS\Materijali - ISA\ISA FAJNL BOS\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2738532689.index
-\async-example\src\main\java
-E:\FAKS\Materijali - ISA\ISA FAJNL BOS\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1116924358.index
-\jsp-example\src\main\java
-E:\FAKS\Materijali - ISA\ISA FAJNL BOS\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3607498450.index
-\validation-example\src\main\java

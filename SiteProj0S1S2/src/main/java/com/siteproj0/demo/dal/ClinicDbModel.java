@@ -16,12 +16,7 @@ public class ClinicDbModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 	
 	@OneToMany(mappedBy = "clinic")
 	private List<DoctorDbModel> doctors;
@@ -30,9 +25,23 @@ public class ClinicDbModel {
 	private List<ClinicAdminDbModel> clinicAdmins;
 	
 	private String name;	
+	
+	private String address;
+	
+	private String description;
+	
 	private float rating;
+	
 	private float price;
+	
 	private String room;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public List<DoctorDbModel> getDoctors() {
 		return doctors;
@@ -70,6 +79,19 @@ public class ClinicDbModel {
 	public void setRoom(String room) {
 		this.room = room;
 	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 }
 	
 

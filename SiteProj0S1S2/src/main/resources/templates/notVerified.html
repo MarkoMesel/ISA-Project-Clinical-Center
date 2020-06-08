@@ -7,35 +7,26 @@
 
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
-
-    <title>Home</title>
+    
+<title>You Are Not Verified</title>
 </head>
 <body>
-
-	<!-- 	<container> -->
-	<div class="mainoptions">
-		<h1> Welcome, patient! </h1>
-		<div th:if="${param.success}">
-			<div class="alert alert-info">You've successfully verified you email!</div>
-		</div>
+	<div>
+		<h1> You Are Not Verified </h1>
 	</div>
-	<div>Home Page</div>
-	<a href="#" id="logout">Logout</a>
-	<br/>
-	<a href="../apc0">Create an appointment</a>
-	<br/>
-    <a href="../clinic/1">Predefined appointments</a>
-    <br/>    
-    <a href="../myAppointments">My Appointments</a>
-    <br/>
-    <a href="../editProfile">Edit profile</a>
-    <br/>
-
-    
-	<!-- 	</container> -->
-
+	<div>
+		<p>
+			This profile has not been verified yet.<br/> 
+			Wait until you've been verified by a site administrator, or log in as a verified user.<br/>
+		</p>
+		<p>
+			You will be redirected to the "What Are you?" page in 10 seconds.<br/>
+			Or you can click <a href="../whatAreYou">here</a>. You do you, man.<br />
+		</p>
+	</div>
+	
 	<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
-	<script type="text/javascript" th:src="@{/js/home.js}"></script>
+	<script type="text/javascript" th:src="@{/js/notVerified.js}"></script>
 </body>
 </html>

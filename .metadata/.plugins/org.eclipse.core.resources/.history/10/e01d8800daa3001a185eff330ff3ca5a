@@ -1,7 +1,0 @@
-package com.siteproj0.demo.repo;
-
-import com.siteproj0.demo.dal.ClinicAdminDbModel;
-
-public interface ClinicAdminRepo extends CrudRepository<ClinicAdminDbModel, Integer> {
-
-}

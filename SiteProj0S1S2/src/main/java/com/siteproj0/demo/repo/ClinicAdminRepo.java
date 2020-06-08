@@ -1,10 +1,12 @@
 package com.siteproj0.demo.repo;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.repository.CrudRepository;
 
 import com.siteproj0.demo.dal.ClinicAdminDbModel;
+import com.siteproj0.demo.dal.ClinicDbModel;
 
 public interface ClinicAdminRepo extends CrudRepository<ClinicAdminDbModel, Integer> {
 	ClinicAdminDbModel findByValidationToken(UUID token);

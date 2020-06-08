@@ -1,8 +1,0 @@
-package com.siteproj0.demo.clinicadmin;
-
-import org.springframework.stereotype.Controller;
-
-@Controller
-public class ClinicAdminController {
-
-}

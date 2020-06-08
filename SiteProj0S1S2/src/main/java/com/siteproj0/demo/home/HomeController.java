@@ -25,4 +25,19 @@ public class HomeController {
 	public String showWhatAreYouPage() {
 		return "whatAreYou";
 	}
+	
+	@GetMapping(path = "/notVerified")
+	public String showNotVerifiedPage() {
+		return "notVerified";
+	}
+	
+	@GetMapping(path = "/notAuthorized")
+	public String showNotAuthorizedPage() {
+		return "notAuthorized";
+	}
+	
+	@GetMapping(path = "/clinicManager")
+	public String showClinicManagerPage() {
+		return "clinicManager";
+	}
 }

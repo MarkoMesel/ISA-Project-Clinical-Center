@@ -2,10 +2,9 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
-			<item value="E:\FAKS\Materijali - ISA\VEZBE IZ ISA\isa-master"/>
-			<item value="E:\FAKS\Materijali - ISA\VEZBE IZ ISA\isa-master\Vezbe4"/>
 			<item value="E:\FAKS\Materijali - XIWS\XIWS\Projekat\XIWSBackend"/>
-			<item value="E:\FAKS\Materijali - XIWS\XIWS\Projekat\XIWSBackend\ISATestApp"/>
+			<item value="E:\FAKS\Materijali - ISA\2019 NEW\Projekat"/>
+			<item value="E:\FAKS\Materijali - ISA\ISA FAJNL BOS 3\ISA-Proj\SiteProj0S1S2"/>
 		</list>
 		<list key="projectNameTemplate">
 			<item value="[artifactId]"/>
@@ -15,9 +14,5 @@
 			<item value="[groupId].[artifactId]-[version]"/>
 			<item value="[name]"/>
 		</list>
-	</section>
-	<section name="org.eclipse.m2e.core.pom.overview">
-	</section>
-	<section name="org.eclipse.m2e.core.pom.dependencies">
 	</section>
 </section>

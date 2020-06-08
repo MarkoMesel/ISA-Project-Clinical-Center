@@ -4,9 +4,11 @@ import com.siteproj0.demo.dal.ClinicDbModel;
 
 public class ClinicViewModel {
 	
-	public ClinicViewModel(int id, String name, float rating, float price) {
+	public ClinicViewModel(int id, String address, String description, String name, float rating, float price) {
 		super();
 		this.id = id;
+		this.address = address;
+		this.description = description;
 		this.name = name;
 		this.rating = rating;
 		this.price = price;
@@ -18,6 +20,8 @@ public class ClinicViewModel {
 		this.name = dbModel.getName();
 		this.rating = dbModel.getRating();
 		this.price = dbModel.getPrice();
+		this.address = dbModel.getAddress();
+		this.description = dbModel.getDescription();
 	}
 	
 	public ClinicViewModel() {
@@ -25,9 +29,13 @@ public class ClinicViewModel {
 	}
 	
 	private int id;
+	private String address;
+	private String description;
 	private String name;	
 	private float rating;
 	private float price;
+	
+	
 	public String getName() {
 		return name;
 	}
@@ -54,4 +62,22 @@ public class ClinicViewModel {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	
 }

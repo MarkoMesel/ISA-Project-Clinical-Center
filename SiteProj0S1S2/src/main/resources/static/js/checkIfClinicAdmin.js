@@ -3,46 +3,31 @@ if(localStorage.getItem('token')==null){
 }
 else {
 	var role = '';
+	var verified = '';
 	$.ajax({
 		type : 'GET',
-		url : "/getDoctorProfile",
+		url : "/getClinicAdminProfile",
 		dataType : "json",
 		headers:{
 			'token':localStorage.getItem('token')
 		},
 		success : function(successData) {
 			role = successData.role;
-			if(role == "DOCTOR") {
-				window.location.href = "../doctorHome";
-			} else {
+			if(role != "CLINICADMIN") {
+				localStorage.removeItem('token');
 				window.location.href = "../whatAreYou";
+			}
+			verified = successData.verified;
+			if(verified == false) {
+				localStorage.removeItem('token');
+				window.location.href = "../notVerified";
 			}
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			if(textStatus=="401"){			
+			if(textStatus=="401"){
 				window.location.href = "../whatAreYou";
 			} else {
-				$.ajax({
-					type : 'GET',
-					url : "/getProfile",
-					dataType : "json",
-					headers:{
-						'token':localStorage.getItem('token')
-					},
-					success : function(successData) {
-						role = successData.role;
-						if(role == "USER") {
-							window.location.href = "../home";
-						} else {
-							window.location.href = "../whatAreYou";
-						}
-					},
-					error : function(XMLHttpRequest, textStatus, errorThrown) {
-						if(textStatus=="401"){			
-							window.location.href = "../whatAreYou";
-						}
-					}
-				});
+				window.location.href = "../notAuthorized";
 			}
 		}
 	});

@@ -11,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
 public class ProfileResponseModel {	
 
 	public ProfileResponseModel(String firstName, String lastName, String country, String city, String street,
-			String phone, String jmbg, String email, String role) {
+			String phone, String jmbg, String email, boolean isVerified, String role) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -21,6 +21,7 @@ public class ProfileResponseModel {
 		this.phone = phone;
 		this.jmbg = jmbg;
 		this.email = email;
+		this.isVerified = isVerified;
 		this.role = role;
 	}
 	
@@ -39,6 +40,8 @@ public class ProfileResponseModel {
 	private String jmbg;	
 
 	private String email;
+	
+	private boolean isVerified;
 	
 	private String role;
 	
@@ -89,6 +92,13 @@ public class ProfileResponseModel {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public boolean isVerified() {
+		return isVerified;
+	}
+	public void setVerified(boolean isVerified) {
+		this.isVerified = isVerified;
 	}
 	public String getRole() {
 		return role;

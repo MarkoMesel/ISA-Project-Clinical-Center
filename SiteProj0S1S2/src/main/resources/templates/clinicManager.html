@@ -8,22 +8,18 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
 
-    <title>Clinic Admin Home</title>
+    <title>Clinic Manager</title>
 </head>
 <body>
 
 
 	<!-- 	<container> -->
 	<div class="mainoptions">
-		<h1> Welcome, clinic admin! </h1>
-		<div th:if="${param.success}">
-			<div class="alert alert-info">You've successfully verified you email!</div>
-		</div>
+		<h1 id="yourClinic">Your Clinic is ... </h1>
+		<h2 id="clinicLocation">Location: ... </h2>
 	</div>
-	<div>Home Page</div>
-	<a href="#" id="logout">Logout</a>
     <br/>
-    <a href="../clinicManager">Clinic Manager</a>
+    <a href="../clinicLocation">Update Clinic Location</a>
     
 
     
@@ -32,7 +28,7 @@
 
 <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
 <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/clinicAdminHome.js}"></script>
-
+<script type="text/javascript" th:src="@{/js/checkIfClinicAdmin.js}"></script>
+<script type="text/javascript" th:src="@{/js/clinicManager.js}"></script>
 </body>
 </html>

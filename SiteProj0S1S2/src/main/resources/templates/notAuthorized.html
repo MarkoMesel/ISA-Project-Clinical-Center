@@ -7,35 +7,27 @@
 
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
-
-    <title>Home</title>
+    
+<title>You Are Not Authorized</title>
 </head>
 <body>
-
-	<!-- 	<container> -->
-	<div class="mainoptions">
-		<h1> Welcome, patient! </h1>
-		<div th:if="${param.success}">
-			<div class="alert alert-info">You've successfully verified you email!</div>
-		</div>
+	<div>
+		<h1> You Are Not Authorized To View This Page </h1>
 	</div>
-	<div>Home Page</div>
-	<a href="#" id="logout">Logout</a>
-	<br/>
-	<a href="../apc0">Create an appointment</a>
-	<br/>
-    <a href="../clinic/1">Predefined appointments</a>
-    <br/>    
-    <a href="../myAppointments">My Appointments</a>
-    <br/>
-    <a href="../editProfile">Edit profile</a>
-    <br/>
-
-    
-	<!-- 	</container> -->
-
+	<div>
+		<p> 
+			You tried going on a page which you don't have permission to access.<br/>
+		</p>
+		<h2> What can I do then? </h2>
+		<p>
+			Well, you can <a href="../home">go back to the home page</a>.<br/>
+			Or you can try to <a id="logout" href="../whatAreYou">login with a different account</a>.<br />
+			(WARNING: clicking this link will log you out)<br />
+		</p>
+	</div>
+	
 	<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
-	<script type="text/javascript" th:src="@{/js/home.js}"></script>
+	<script type="text/javascript" th:src="@{/js/notAuthorized.js}"></script>
 </body>
 </html>

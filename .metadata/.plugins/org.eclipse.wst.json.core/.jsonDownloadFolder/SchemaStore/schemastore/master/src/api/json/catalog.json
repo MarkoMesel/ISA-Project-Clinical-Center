@@ -1789,6 +1789,22 @@
       "url": "https://json.schemastore.org/xunit.runner.schema"
     },
     {
+      "name": "servicehub.service.json",
+      "description": "Microsoft ServiceHub Service",
+      "fileMatch": [
+        "*.servicehub.service.json"
+      ],
+      "url": "https://json.schemastore.org/servicehub.service.schema"
+    },
+    {
+      "name": "servicehub.config.json",
+      "description": "Microsoft ServiceHub Configuration",
+      "fileMatch": [
+        "servicehub.config.json"
+      ],
+      "url": "https://json.schemastore.org/servicehub.config.schema"
+    },
+    {
       "name": ".cryproj engine-5.2",
       "description": "A JSON schema for CRYENGINE projects (.cryproj files)",
       "fileMatch": [
@@ -1959,7 +1975,7 @@
       "name": "release drafter",
       "description": "Release Drafter configuration file",
       "fileMatch": [
-        "release-drafter.yml"
+        ".github/release-drafter.yml"
       ],
       "url": "https://raw.githubusercontent.com/release-drafter/release-drafter/master/schema.json"
     },
@@ -2030,6 +2046,14 @@
         "zinoma.yml"
       ],
       "url": "https://github.com/fbecart/zinoma/releases/latest/download/zinoma-schema.json"
+    },
+    {
+      "name": "Windows Package Manager",
+      "description": "Windows Package Manager Manifest file",
+      "url": "http://json.schemastore.org/winget-pkgs",
+      "fileMatch": [
+        "manifests/*/*/*.yaml"
+      ]
     }
   ]
 }

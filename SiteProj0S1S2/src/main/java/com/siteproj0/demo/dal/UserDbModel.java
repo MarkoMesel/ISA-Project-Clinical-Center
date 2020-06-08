@@ -91,7 +91,7 @@ public class UserDbModel {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public void setIsVerified(Boolean isVerified) {
+	public void setVerified(Boolean isVerified) {
 		this.isVerified = isVerified;
 	}
 	public String getEmail() {
@@ -124,7 +124,7 @@ public class UserDbModel {
 	public void setPhone(String phone) {
 		this.phone= phone;
 	}
-	public boolean getIsVerified() {
+	public boolean isVerified() {
 		return isVerified;
 	}
 	public UUID getValidationToken() {

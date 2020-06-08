@@ -68,7 +68,7 @@ public class UserController {
 			}
 
 			ProfileResponseModel result = new ProfileResponseModel(user.getFirstName(), user.getLastName(),
-					user.getCountry(), user.getCity(), user.getStreet(), user.getPhone(), user.getJmbg(), user.getEmail(), user.getRole());
+					user.getCountry(), user.getCity(), user.getStreet(), user.getPhone(), user.getJmbg(), user.getEmail(), user.isVerified(), user.getRole());
 			
 			return new ResponseEntity<>(result, HttpStatus.OK);
 		} catch (Exception e) {
@@ -109,7 +109,7 @@ public class UserController {
 		userDbModel.setPassword(user.getPassword());
 		userDbModel.setPhone(user.getPhone());
 		userDbModel.setStreet(user.getStreet());
-		userDbModel.setIsVerified(false);
+		userDbModel.setVerified(false);
 		userDbModel.setValidationToken(UUID.randomUUID());
 		userDbModel.setSecurityToken(UUID.randomUUID());
 		userDbModel.setRole("USER");
@@ -208,7 +208,7 @@ public class UserController {
 	public String verify(@PathVariable UUID token) {
 
 		UserDbModel user = repo.findByValidationToken(token);
-		user.setIsVerified(true);
+		user.setVerified(true);
 		user.setValidationToken(null);
 		repo.save(user);
 		return "redirect:/home?success";

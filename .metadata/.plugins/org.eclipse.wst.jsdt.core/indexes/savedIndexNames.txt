@@ -1,7 +1,1 @@
-INDEX VERSION 1.4+E:\FAKS\Materijali - ISA\ISA FAJNL BOS\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-93472968.index
-1805532066.index
-3483550895.index
-4041307136.index
-2913704576.index
-3980099926.index
+INDEX VERSION 1.4+E:\FAKS\Materijali - ISA\ISA FAJNL BOS 3\ISA-Proj\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
