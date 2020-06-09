@@ -1,3 +1,5 @@
+var clinicName = '';
+var clinicDescription = '';
 var clinicLocation = '';
 $.ajax({
 	type : 'GET',
@@ -7,8 +9,12 @@ $.ajax({
 		'token':localStorage.getItem('token')
 	},
 	success : function(successData) {
+		clinicName = successData.name;
+		clinicDescription = successData.description;
 		clinicLocation = successData.address;
-		$("#address").html('' + clinicLocation);
+		$("#name").val(clinicName);
+		$("#description").val(clinicDescription);
+		$("#address").val(clinicLocation);
 	},
 	error : function(XMLHttpRequest, textStatus, errorThrown) {
 		if(textStatus=="401"){	
@@ -17,15 +23,16 @@ $.ajax({
 	}
 });
 
-$("#confirmLocation").click(function() {
-	let data = {"name": null,
-			"address": document.getElementById('address').innerHTML};
+$(document).on('submit', '*[name="editClinicForm"]',function(e){
+	e.preventDefault();
+	const form = document.forms['editClinicForm'];
+	const data = formToJSON(form.elements);
 	
 	$.ajax({
 		type : 'PUT',
 		url : "/editClinicLocation",
 		contentType : 'application/json',
-		data : JSON.stringify(data),	
+		data : data,	
 		headers:{
 			'token':localStorage.getItem('token')
 		},
@@ -42,3 +49,12 @@ $("#confirmLocation").click(function() {
 		}
 	});	
 });
+
+function formToJSON(form) {
+	return JSON.stringify({				
+		'name': form['name'].value,
+		'description': form['description'].value,
+		'address': form['address'].value,
+		
+	});
+}

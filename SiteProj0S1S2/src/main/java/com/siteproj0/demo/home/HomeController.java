@@ -36,8 +36,4 @@ public class HomeController {
 		return "notAuthorized";
 	}
 	
-	@GetMapping(path = "/clinicManager")
-	public String showClinicManagerPage() {
-		return "clinicManager";
-	}
 }

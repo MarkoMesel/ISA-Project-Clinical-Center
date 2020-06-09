@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/tabulator/dist/css/tabulator_modern.min.css/}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+
+
+
+<title>Doctor Manager</title>
+
+
+</head>
+
+<body>
+	<!-- 	<container> -->
+	<div id="doctorTable"></div>
+	<br/>
+	<div class="mainoptions">
+	   	<a href="../registerDoctor">Add New Doctor</a>
+	    <br/>
+	</div>
+
+
+	<!-- 	</container> -->
+
+
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/tabulator/dist/js/tabulator.min.js/}"></script>
+
+	<script type="text/javascript" th:src="@{/js/checkIfClinicAdmin.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/js/doctorManager.js}"></script>
+</body>
+</html>

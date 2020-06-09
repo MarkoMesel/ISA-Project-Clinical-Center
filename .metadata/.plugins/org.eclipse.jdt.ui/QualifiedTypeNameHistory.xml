@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.siteproj0.demo.dal.ClinicDbModel"/>
 <fullyQualifiedTypeName name="com.siteproj0.demo.repo.ClinicAdminRepo"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
+<fullyQualifiedTypeName name="org.hibernate.mapping.List"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.dal.ClinicDbModel"/>
+<fullyQualifiedTypeName name="org.springframework.data.jpa.repository.Query"/>
+<fullyQualifiedTypeName name="org.springframework.data.repository.query.Param"/>
+<fullyQualifiedTypeName name="org.hibernate.mapping.Set"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.doctor.DoctorResponseModel"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.repo.ClinicRepo"/>
 </qualifiedTypeNameHistroy>

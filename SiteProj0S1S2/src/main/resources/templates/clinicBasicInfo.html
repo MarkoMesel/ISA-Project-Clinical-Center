@@ -11,28 +11,69 @@
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.3.1/build/ol.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
-    <title>Update Clinic Location</title>
+    <title>Update Clinic Basic Info</title>
   </head>
   <body>
  	<div class="mainoptions">
-	    <h1> Choose a New location </h1>
-	    <p>Choose a new location for the clinic by clicking on the map.</p>
+	    <h1> Update Clinic Basic Info </h1>
+	    <p>
+	    	Edit the name, description and address of the clinic.<br/>
+	    </p>
+	    
+	    		<div th:if="${param.success}">
+			<div class="alert alert-info">Profile updated!</div>
+		</div>
+		<div th:if="${param.error}">
+			<div class="alert alert-danger">Server error!</div>
+		</div>
+
+
+		<form name="editClinicForm">
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon"> <i
+						class="glyphicon glyphicon-user color-blue"></i>
+					</span> <input id="name" class="form-control" placeholder="Clinic Name" required />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon"> <i
+						class="glyphicon glyphicon-user color-blue"></i>
+					</span> <input id="description" class="form-control" placeholder="Clinic Description" required />
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon"> <i
+						class="glyphicon glyphicon-user color-blue"></i>
+					</span> <input id="address" class="form-control" placeholder="Clinic Address" required />
+				</div>
+			</div>
+			<p>
+				You can also use coordinates (lon, lat) to update your address.<br/>
+				<input id="lon" type="number" step="0.000001">
+				<input id="lat" type="number" step="0.000001">
+				<button id="reversegeocoding" type=button name="button">Update With Coordinates</button>
+			</p>
+			<p>
+	    		Or you can just click on the map.<br/>
+	    	</p>
+			<div id="map" class="map"></div>
+		    <!--
+		    <div>
+		      <p>Chosen Location: <span id="address"></span></p><br/>
+		      
+		      <a href="#" id="confirmLocation">Confirm New Clinic Location</a>
+		    </div>
+			-->
+			<div>
+				<input type="submit" value="Submit">
+			</div>
+		</form>
 	    <br/>
-	    <div id="map" class="map"></div>
-	    <div>
-	      <p>Coordinates (lon, lat):
-		      <input id="lon" type="number" step="0.000001">
-		      <input id="lat" type="number" step="0.000001"><br/>
-		  </p>
-		  <p>
-		      <button id="reversegeocoding" type=button name="button">Update Location With Coordinates</button>
-	      </p>
-	    </div>
-	    <div>
-	      <p>Chosen Location: <span id="address"></span></p><br/>
-	      
-	      <a href="#" id="confirmLocation">Confirm New Clinic Location</a>
-	    </div>
     </div>
     <script type="text/javascript">
 		var map = new ol.Map({
@@ -51,7 +92,7 @@
 		    fetch('http://nominatim.openstreetmap.org/reverse?format=json&lon=' + lon + '&lat=' + lat).then(function(response) {
 		      return response.json();
 		    }).then(function(json) {
-		      document.getElementById('address').innerHTML = json.display_name;
+		      document.getElementById('address').value = json.display_name;
 		    })
 		  }
 		  map.on('click', function(e) {
@@ -71,6 +112,6 @@
     <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/checkIfClinicAdmin.js}"></script>
-    <script type="text/javascript" th:src="@{/js/clinicLocation.js}"></script>
+    <script type="text/javascript" th:src="@{/js/clinicBasicInfo.js}"></script>
   </body>
 </html>

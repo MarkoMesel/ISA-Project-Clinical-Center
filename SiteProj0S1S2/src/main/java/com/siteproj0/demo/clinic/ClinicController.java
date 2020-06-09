@@ -59,6 +59,11 @@ public class ClinicController {
 		return "healthRecord";
 	}
 	
+	@GetMapping(path = "/clinicManager")
+	public String showClinicManagerPage() {
+		return "clinicManager";
+	}
+	
 	@GetMapping(path = "/getClinics")
 	@ResponseBody
 	public List<ClinicViewModel> getClinics()
@@ -79,7 +84,7 @@ public class ClinicController {
 			}
 			ClinicDbModel clinic = user.getClinic();
 			
-			ClinicResponseModel result = new ClinicResponseModel(clinic.getName(), clinic.getAddress());
+			ClinicResponseModel result = new ClinicResponseModel(clinic.getId(), clinic.getName(), clinic.getDescription(), clinic.getAddress());
 			
 			return new ResponseEntity<>(result, HttpStatus.OK);
 		} catch (Exception e) {
@@ -87,9 +92,9 @@ public class ClinicController {
 		}
 	}
 	
-	@GetMapping(path = "/clinicLocation")
+	@GetMapping(path = "/clinicBasicInfo")
 	public String showClinicLocation() {
-		return "clinicLocation";
+		return "clinicBasicInfo";
 	}
 	
 	@PutMapping(path = "/editClinicLocation")
@@ -106,6 +111,8 @@ public class ClinicController {
 			}
 			
 			ClinicDbModel clinic = user.getClinic();
+			clinic.setName(clinicModel.getName());
+			clinic.setDescription(clinicModel.getDescription());
 			clinic.setAddress(clinicModel.getAddress());
 
 			clinicRepo.save(clinic);
