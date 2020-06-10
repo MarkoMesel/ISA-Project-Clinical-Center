@@ -30,7 +30,7 @@ $(document).on('submit', '*[name="editClinicForm"]',function(e){
 	
 	$.ajax({
 		type : 'PUT',
-		url : "/editClinicLocation",
+		url : "/editClinicInfo",
 		contentType : 'application/json',
 		data : data,	
 		headers:{
@@ -41,10 +41,10 @@ $(document).on('submit', '*[name="editClinicForm"]',function(e){
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			if(textStatus=="401"){			
-				window.location.href = "../clinicLocation";
+				window.location.href = "../clinicBasicInfo";
 			}
 			else{
-				window.location.href = "../clinicLocation";				
+				window.location.href = "../clinicBasicInfo";				
 			}
 		}
 	});	

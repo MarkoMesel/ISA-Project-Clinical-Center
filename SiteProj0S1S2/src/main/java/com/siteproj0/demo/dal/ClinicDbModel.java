@@ -24,6 +24,9 @@ public class ClinicDbModel {
 	@OneToMany(mappedBy = "clinic")
 	private List<ClinicAdminDbModel> clinicAdmins;
 	
+	@OneToMany(mappedBy = "clinic")
+	private List<RoomDbModel> rooms;
+	
 	private String name;	
 	
 	private String address;
@@ -90,6 +93,12 @@ public class ClinicDbModel {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public List<RoomDbModel> getRooms() {
+		return rooms;
+	}
+	public void setRooms(List<RoomDbModel> rooms) {
+		this.rooms = rooms;
 	}
 	
 }

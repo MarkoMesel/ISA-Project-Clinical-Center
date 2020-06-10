@@ -26,6 +26,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -120,7 +121,7 @@ public class DoctorController {
 			//System.out.println("ID OD OVE KLINIKE JE: " + clinicId);
 			
 			
-			List<DoctorDbModel> doctors = doctorRepo.findByClinicId(clinicId);
+			List<DoctorDbModel> doctors = doctorRepo.findByClinicIdAndEnabled(clinicId, true);
 			//System.out.println("NASAO JE OVOLIKO ELEMENATA: " + doctors.size());
 			
 			List<DoctorResponseModel> doctorResponseList = new ArrayList<DoctorResponseModel>();
@@ -157,7 +158,7 @@ public class DoctorController {
 	@PostMapping(path = "/registerDoctor")
 	public String registerDoctorAccount(@ModelAttribute("doctor") @Valid DoctorRegisterModel doctor, BindingResult result) {
 		if (result.hasErrors()) {
-			return "registration";
+			return "registerDoctor";
 		}
 
 		ClinicDbModel clinic = clinicRepo.findById(doctor.getClinicId()).get();
@@ -181,9 +182,79 @@ public class DoctorController {
 		doctorDbModel.setSecurityToken(UUID.randomUUID());
 		doctorDbModel.setRole("DOCTOR");
 		doctorDbModel.setClinic(clinic);
+		doctorDbModel.setEnabled(true);
 
 		doctorRepo.save(doctorDbModel);
 		
-		return "doctorManager";
+		return "redirect:/doctorManager";
+	}
+	
+	@GetMapping(path = "/findDoctorFirstNameLastNameRating")
+	public ResponseEntity<Object> findDoctorFirstNameLastNameRating(@RequestHeader("token") UUID securityToken,
+																	@RequestHeader("firstName") String firstName,
+																	@RequestHeader("lastName") String lastName,
+																	@RequestHeader("rating") float rating) {
+		try {
+			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			ClinicDbModel clinic = user.getClinic();
+			Integer clinicId = clinic.getId();
+			//System.out.println("ID OD OVE KLINIKE JE: " + clinicId);
+			
+			
+			List<DoctorDbModel> doctors = doctorRepo.findByFirstNameAndLastNameAndRatingAndClinicIdAndEnabled(firstName,
+																											lastName,
+																											rating,
+																											clinicId,
+																											true);
+			
+			DoctorDbModel d= doctors.get(0);
+            DoctorResponseModel drm = new DoctorResponseModel
+            		(d.getId(),
+            		d.getFirstName(),
+            		d.getLastName(),
+            		d.getJmbg(),
+            		d.getCountry(),
+            		d.getCity(),
+            		d.getStreet(),
+            		d.getEmail(),
+            		d.getPhone(),
+            		d.getRating(),
+            		d.getShiftStart(),
+            		d.getShiftEnd(),
+            		clinicId);
+			
+			//ClinicResponseModel result = new ClinicResponseModel(clinic.getName(), clinic.getDescription(), clinic.getAddress());
+			return new ResponseEntity<>(drm, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PutMapping(path = "/logicalDeleteDoctor")
+	@ResponseBody
+	public ResponseEntity logicalDeleteDoctor(@RequestHeader("token") UUID securityToken,
+			@RequestHeader("doctorId") int doctorId) {
+		if (securityToken == null) {
+			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+		}
+		try {
+			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			ClinicDbModel clinic = user.getClinic();
+			Integer clinicId = clinic.getId();
+			
+			List<DoctorDbModel> doctors = doctorRepo.findByIdAndClinicIdAndEnabled(doctorId, clinicId, true);
+			DoctorDbModel d= doctors.get(0);
+			d.setEnabled(false);
+			doctorRepo.save(d);
+		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 }

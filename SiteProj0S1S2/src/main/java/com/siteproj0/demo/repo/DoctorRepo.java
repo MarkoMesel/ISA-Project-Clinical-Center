@@ -16,5 +16,11 @@ public interface DoctorRepo extends CrudRepository<DoctorDbModel, Integer> {
 	DoctorDbModel findByValidationToken(UUID token);
 	DoctorDbModel findByEmailAndPassword(String email, String password);
 	DoctorDbModel findBySecurityToken(UUID securityToken);
-	List<DoctorDbModel> findByClinicId(Integer clinicId); 
+	List<DoctorDbModel> findByClinicIdAndEnabled(Integer clinicId, boolean enabled);
+	List<DoctorDbModel> findByFirstNameAndLastNameAndRatingAndClinicIdAndEnabled(String firstName,
+																		String lastName,
+																		float rating,
+																		Integer clinicId,
+																		boolean enabled);
+	List<DoctorDbModel> findByIdAndClinicIdAndEnabled(Integer id, Integer clinicId, boolean b);
 }

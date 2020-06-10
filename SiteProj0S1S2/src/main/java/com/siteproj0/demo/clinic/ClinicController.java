@@ -97,7 +97,7 @@ public class ClinicController {
 		return "clinicBasicInfo";
 	}
 	
-	@PutMapping(path = "/editClinicLocation")
+	@PutMapping(path = "/editClinicInfo")
 	@ResponseBody
 	public ResponseEntity editClinicLocation(@RequestHeader("token") UUID securityToken,
 			@RequestBody ClinicResponseModel clinicModel) {

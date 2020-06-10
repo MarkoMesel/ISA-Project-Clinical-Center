@@ -10,36 +10,40 @@
 
 
 
-<title>Doctor Manager</title>
+<title>Room Manager</title>
 
 
 </head>
 
 <body>
 	<!-- 	<container> -->
-	<div id="doctorTable"></div>
-	<br/>
-	<div>
-		<div style="width: 50%; float:left;">
-			<a href="../registerDoctor">Add New Doctor</a>
-			<br />
-			<a id="deleteDoctor" href="#">Delete Selected Doctor</a>
+	<div class="mainoptions">
+		<div style="width: 40%; float:left;">
+			<div id="roomTable"></div>
 		</div>
     	<div style="width: 50%; float:right;">
-    		<div style="width: 40%; float:left;">
-				<h3>Find A Doctor</h3>
+    		<div>
+    			<p>
+	    			<a href="../addRoom">Add New Room</a>
+					<br />
+					<a id="editRoom" href="#">Edit Selected Room</a>
+					<br />
+					<a id="deleteRoom" href="#">Delete Selected Room</a>
+					<br />
+				</p>
+				<br/>
+				<h3>Find A Room</h3>
 				<p>
-					<input type="text" placeholder="First Name" id="pFirstName"/><br />
-					<input type="text" placeholder="Last Name" id="pLastName"/><br />
-					<input type="text" placeholder="Rating" id="pRating"/><br />
+					<input type="text" placeholder="Room Name" id="rName"/><br />
+					<input type="text" placeholder="Room Number" id="rNumber"/><br />
 				</p>
 				<p>
-					<button id="findDoctorBtn" type=button name="findDoctorBtn">Find Doctor</button>
+					<button id="findRoomBtn" type=button name="findRoomBtn">Find Room</button>
 				</p>
 			</div>
-			<div style="width: 60%; float:right;">
-				<h3>Doctor Details</h3>
-				<div id="foundDoctorTable"></div>
+			<div>
+				<h3>Room Details</h3>
+				<div id="foundRoomTable"></div>
 			</div>
 		</div>
 	</div>
@@ -64,6 +68,6 @@
 
 	<script type="text/javascript" th:src="@{/js/checkIfClinicAdmin.js}"></script>
 	<script type="text/javascript"
-		th:src="@{/js/doctorManager.js}"></script>
+		th:src="@{/js/roomManager.js}"></script>
 </body>
 </html>

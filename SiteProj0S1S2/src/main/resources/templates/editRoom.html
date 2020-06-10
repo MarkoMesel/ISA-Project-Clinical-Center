@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <title>Update Room Basic Info</title>
+  </head>
+  <body>
+ 	<div class="mainoptions">
+	    <h1> Update Room Basic Info </h1>
+	    <p>
+	    	Edit the name and number of the room.<br/>
+	    </p>
+	    
+	    		<div th:if="${param.success}">
+			<div class="alert alert-info">Profile updated!</div>
+		</div>
+		<div th:if="${param.error}">
+			<div class="alert alert-danger">Server error!</div>
+		</div>
+
+
+		<form name="editRoomForm">
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon"> <i
+						class="glyphicon glyphicon-user color-blue"></i>
+					</span> <input id="name" class="form-control" placeholder="Room name" required />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon"> <i
+						class="glyphicon glyphicon-user color-blue"></i>
+					</span> <input id="number" class="form-control" placeholder="Room number" required />
+				</div>
+			</div>
+			
+			<div>
+				<input type="submit" value="Submit">
+			</div>
+		</form>
+	    <br/>
+    </div>
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/checkIfClinicAdmin.js}"></script>
+    <script type="text/javascript" th:src="@{/js/editRoom.js}"></script>
+  </body>
+</html>

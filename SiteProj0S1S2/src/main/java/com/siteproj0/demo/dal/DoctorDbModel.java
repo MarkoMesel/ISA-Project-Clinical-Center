@@ -76,6 +76,8 @@ public class DoctorDbModel {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="CLINIC_ID")
 	private ClinicDbModel clinic;
+	
+	private boolean enabled;
 
 	public int getId() {
 		return id;
@@ -228,6 +230,15 @@ public class DoctorDbModel {
 	public void setShiftEnd(String shiftEnd) {
 		this.shiftEnd = shiftEnd;
 	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	
 }
 	
 

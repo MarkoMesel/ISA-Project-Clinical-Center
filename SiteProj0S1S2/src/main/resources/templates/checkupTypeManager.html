@@ -10,36 +10,40 @@
 
 
 
-<title>Doctor Manager</title>
+<title>Checkup Type Manager</title>
 
 
 </head>
 
 <body>
 	<!-- 	<container> -->
-	<div id="doctorTable"></div>
-	<br/>
-	<div>
-		<div style="width: 50%; float:left;">
-			<a href="../registerDoctor">Add New Doctor</a>
-			<br />
-			<a id="deleteDoctor" href="#">Delete Selected Doctor</a>
+	<div class="mainoptions">
+		<div style="width: 40%; float:left;">
+			<div id="ctTable"></div>
 		</div>
     	<div style="width: 50%; float:right;">
-    		<div style="width: 40%; float:left;">
-				<h3>Find A Doctor</h3>
+    		<div>
+    			<p>
+	    			<a href="../addCt">Add New Checkup Type</a>
+					<br />
+					<a id="editCt" href="#">Edit Selected Checkup Type</a>
+					<br />
+					<a id="deleteCt" href="#">Delete Selected Checkup Type</a>
+					<br />
+				</p>
+				<br/>
+				<h3>Find A Checkup Type</h3>
 				<p>
-					<input type="text" placeholder="First Name" id="pFirstName"/><br />
-					<input type="text" placeholder="Last Name" id="pLastName"/><br />
-					<input type="text" placeholder="Rating" id="pRating"/><br />
+					<input type="text" placeholder="Checkup Type Name" id="ctName"/><br />
+					<input type="text" placeholder="Checkup Type Number" id="ctNumber"/><br />
 				</p>
 				<p>
-					<button id="findDoctorBtn" type=button name="findDoctorBtn">Find Doctor</button>
+					<button id="findCtBtn" type=button name="findCtmBtn">Find Checkup Type</button>
 				</p>
 			</div>
-			<div style="width: 60%; float:right;">
-				<h3>Doctor Details</h3>
-				<div id="foundDoctorTable"></div>
+			<div>
+				<h3>Checkup Type Details</h3>
+				<div id="foundCtTable"></div>
 			</div>
 		</div>
 	</div>
@@ -64,6 +68,6 @@
 
 	<script type="text/javascript" th:src="@{/js/checkIfClinicAdmin.js}"></script>
 	<script type="text/javascript"
-		th:src="@{/js/doctorManager.js}"></script>
+		th:src="@{/js/checkupTypeManager.js}"></script>
 </body>
 </html>

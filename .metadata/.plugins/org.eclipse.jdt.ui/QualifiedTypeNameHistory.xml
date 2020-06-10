@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.siteproj0.demo.repo.ClinicAdminRepo"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestParam"/>
 <fullyQualifiedTypeName name="org.hibernate.mapping.List"/>
 <fullyQualifiedTypeName name="java.util.List"/>
@@ -13,4 +12,10 @@
 <fullyQualifiedTypeName name="java.util.Iterator"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="com.siteproj0.demo.repo.ClinicRepo"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.dal.DoctorDbModel"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.repo.ClinicAdminRepo"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.dal.RoomDbModel"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.dal.CheckupTypeDbModel"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.repo.CheckupTypeRepo"/>
+<fullyQualifiedTypeName name="javax.validation.constraints.NotNull"/>
 </qualifiedTypeNameHistroy>

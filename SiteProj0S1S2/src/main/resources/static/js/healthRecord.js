@@ -16,7 +16,7 @@ $("#healthRecord").tabulator({
 	height : "300px",
 	layout : 'fitColumns',
 	movableCols : false,
-	selectable: false,
+	selectable: true,
 	sortable: false,
 	columns : [ {
 		title : "ID",
