@@ -1,6 +1,6 @@
 INDEX VERSION 1.131+E:\FAKS\Materijali - ISA\ISA FAJNL BOS 3\ISA-Proj\.metadata\.plugins\org.eclipse.jdt.core
 1462416328.index
-1729828554.index
+1347051889.index
 3410228908.index
 178045482.index
 1313478611.index
@@ -81,9 +81,9 @@ INDEX VERSION 1.131+E:\FAKS\Materijali - ISA\ISA FAJNL BOS 3\ISA-Proj\.metadata\
 3675634833.index
 1394568114.index
 2361772647.index
-1493241069.index
-1032593732.index
 1330671192.index
+1032593732.index
+1493241069.index
 1381601779.index
 2185808961.index
 3009941969.index
@@ -210,4 +210,4 @@ INDEX VERSION 1.131+E:\FAKS\Materijali - ISA\ISA FAJNL BOS 3\ISA-Proj\.metadata\
 409642062.index
 3987693760.index
 927026569.index
-1347051889.index
+1729828554.index

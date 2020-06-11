@@ -49,72 +49,69 @@ $.ajax({
 	}
 });
 
-/*
-
-$("#editRoom").click(function() {
-	var parsedData = getParsedDataFromTable("#roomTable");
-	var roomId = parsedData.id;
+$("#editCt").click(function() {
+	var parsedData = getParsedDataFromTable("#ctTable");
+	var ctId = parsedData.id;
 	
-	window.location.href = "../editRoom/"+roomId;	
+	window.location.href = "../editCheckupType/"+ctId;	
 });
 
-$("#deleteRoom").click(function() {
-	var parsedData = getParsedDataFromTable("#roomTable");
-	var roomId = parsedData.id;
-	var roomName = parsedData.name;
-	var roomNumber = parsedData.number;
+$("#findCtBtn").click(function() {
+	var name = $("#ctName").val();
+	var price = $("#ctPrice").val();
+	
+	$.ajax({
+		type : 'GET',
+		url : "/findCtNamePrice",
+		dataType : "json",
+		headers:{
+			'token':localStorage.getItem('token'),
+			'name': name,
+			'price': price
+		},
+		success : function(successData) {
+			var foundId = successData.id;
+			$("#ctTable").tabulator("selectRow", foundId);	
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			if(textStatus=="401"){			
+				window.location.href = "../whatAreYou";
+			}
+			//$("#foundDoctorTable").tabulator("clearData");
+		}
+	});
+});
 
-	if(window.confirm("Are you sure you want to remove room " + roomName + " " + roomNumber + "?")) {
+$("#deleteCt").click(function() {
+	var parsedData = getParsedDataFromTable("#ctTable");
+	var ctId = parsedData.id;
+	var name = parsedData.name;
+
+	if(window.confirm("Are you sure you want to remove checkup type " + name + "?")) {
 		$.ajax({
 			type : 'PUT',
-			url : "/logicalDeleteRoom",
+			url : "/logicalDeleteCt",
 			contentType : 'application/json',	
 			headers:{
 				'token':localStorage.getItem('token'),
-				'roomId': roomId
+				'ctId': ctId
 			},
 			success : function(successData) {
-				window.location.href = "../roomManager";	
+				window.location.href = "../checkupTypeManager";	
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				if(textStatus=="401"){			
-					window.location.href = "../roomManager";
+					window.location.href = "../checkupTypeManager";
 				}
 			}
 		});
 	}
 });
 
-$("#findRoomBtn").click(function() {
-	var rName = $("#rName").val();
-	var rNumber = $("#rNumber").val();
-	
-	$.ajax({
-		type : 'GET',
-		url : "/findRoomNameNumber",
-		dataType : "json",
-		headers:{
-			'token':localStorage.getItem('token'),
-			'name': rName,
-			'number': rNumber,
-		},
-		success : function(successData) {
-			var foundId = successData.id;
-			$("#roomTable").tabulator("selectRow", foundId);	
-		},
-		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			if(textStatus=="401"){			
-				window.location.href = "../whatAreYou";
-			}
-			$("#foundDoctorTable").tabulator("clearData");
-		}
-	});
-});
-
 function getParsedDataFromTable(tableIdString) {
 	var selectedData = $(tableIdString).tabulator("getSelectedData");
 	var dataTest = JSON.stringify(selectedData[0]);
 	var parsedData = JSON.parse(dataTest);
-	return parsedData
+	return parsedData;
 }
-*/
+

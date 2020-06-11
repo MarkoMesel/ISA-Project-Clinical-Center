@@ -36,6 +36,8 @@ import com.siteproj0.demo.dal.ClinicAdminDbModel;
 import com.siteproj0.demo.dal.ClinicDbModel;
 import com.siteproj0.demo.dal.DoctorDbModel;
 import com.siteproj0.demo.dal.UserDbModel;
+import com.siteproj0.demo.home.ChangePasswordRequestModel;
+import com.siteproj0.demo.home.EditProfileBasicInfoRequestModel;
 import com.siteproj0.demo.repo.ClinicAdminRepo;
 import com.siteproj0.demo.repo.ClinicRepo;
 import com.siteproj0.demo.repo.DoctorRepo;
@@ -59,6 +61,11 @@ public class DoctorController {
 	@ModelAttribute("doctor")
 	public DoctorRegisterModel doctor() {
 		return new DoctorRegisterModel();
+	}
+	
+	@ModelAttribute("changeDoctorPassword")
+	public ChangePasswordRequestModel mc() {
+		return new ChangePasswordRequestModel();
 	}
 	
 	/*
@@ -252,6 +259,76 @@ public class DoctorController {
 			DoctorDbModel d= doctors.get(0);
 			d.setEnabled(false);
 			doctorRepo.save(d);
+		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping(path = {"/editDoctorProfile"})
+	public String showEditDoctorProfileForm() {
+		return "editDoctorProfile";
+	}
+	
+	@PutMapping(path = "/editDoctorProfile")
+	@ResponseBody
+	public ResponseEntity editDoctorProfile(@RequestHeader("token") UUID securityToken,
+			@RequestBody EditProfileBasicInfoRequestModel editProfileModel) {
+		if (securityToken == null) {
+			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+		}
+		try {
+			DoctorDbModel user = doctorRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+			}
+
+			user.setFirstName(editProfileModel.getFirstName());
+			user.setLastName(editProfileModel.getLastName());
+			user.setCity(editProfileModel.getCity());
+			user.setStreet(editProfileModel.getStreet());
+			user.setCountry(editProfileModel.getCountry());
+			user.setPhone(editProfileModel.getPhone());
+			user.setEmail(editProfileModel.getJmbg());
+			user.setEmail(editProfileModel.getEmail());
+			/*
+			if (editProfileModel.getPassword()!=null && !editProfileModel.getPassword().isEmpty()) {
+				user.setPassword(editProfileModel.getPassword());
+			}
+			*/
+			doctorRepo.save(user);
+		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping(path = {"/changeDoctorPassword"})
+	public String showChangeDoctorPasswordForm() {
+		return "changeDoctorPassword";
+	}
+	
+	@PutMapping(path = "/changeDoctorPassword")
+	@ResponseBody
+	public ResponseEntity changeDoctorPassword(@RequestHeader("token") UUID securityToken,
+			@RequestBody ChangePasswordRequestModel doctorModel) {
+		if (securityToken == null) {
+			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+		}
+		try {
+			DoctorDbModel user = doctorRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+			}
+			String oldPassword = doctorModel.getOldPassword();
+			String passwordFromDb = user.getPassword();
+			
+			if(oldPassword.equals(passwordFromDb)) {
+				user.setPassword(doctorModel.getPassword());
+				doctorRepo.save(user);
+			} else {
+				return new ResponseEntity(HttpStatus.NO_CONTENT);
+			}
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}

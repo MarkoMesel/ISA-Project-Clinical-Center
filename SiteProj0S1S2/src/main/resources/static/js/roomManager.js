@@ -104,7 +104,7 @@ $("#findRoomBtn").click(function() {
 			if(textStatus=="401"){			
 				window.location.href = "../whatAreYou";
 			}
-			$("#foundDoctorTable").tabulator("clearData");
+			//$("#foundDoctorTable").tabulator("clearData");
 		}
 	});
 });
@@ -113,6 +113,6 @@ function getParsedDataFromTable(tableIdString) {
 	var selectedData = $(tableIdString).tabulator("getSelectedData");
 	var dataTest = JSON.stringify(selectedData[0]);
 	var parsedData = JSON.parse(dataTest);
-	return parsedData
+	return parsedData;
 }
 

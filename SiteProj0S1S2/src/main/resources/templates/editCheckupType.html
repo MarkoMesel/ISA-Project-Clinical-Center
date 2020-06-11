@@ -3,13 +3,13 @@
   <head>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
-    <title>Update Room</title>
+    <title>Update Checkup Type </title>
   </head>
   <body>
  	<div class="mainoptions">
-	    <h1> Update Room </h1>
+	    <h1> Update Checkup Type </h1>
 	    <p>
-	    	Edit the name and number of the room.<br/>
+	    	Edit the name and price of a checkup type.<br/>
 	    </p>
 	    
 	    		<div th:if="${param.success}">
@@ -20,12 +20,12 @@
 		</div>
 
 
-		<form name="editRoomForm">
+		<form name="editCtForm">
 			<div class="form-group">
 				<div class="input-group">
 					<span class="input-group-addon"> <i
 						class="glyphicon glyphicon-user color-blue"></i>
-					</span> <input id="name" class="form-control" placeholder="Room name" required />
+					</span> <input id="name" class="form-control" placeholder="Checkup type name" required />
 				</div>
 			</div>
 
@@ -33,7 +33,7 @@
 				<div class="input-group">
 					<span class="input-group-addon"> <i
 						class="glyphicon glyphicon-user color-blue"></i>
-					</span> <input id="number" class="form-control" placeholder="Room number" required />
+					</span> <input id="price" class="form-control" placeholder="Checkup type price" required />
 				</div>
 			</div>
 			
@@ -46,6 +46,6 @@
     <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/checkIfClinicAdmin.js}"></script>
-    <script type="text/javascript" th:src="@{/js/editRoom.js}"></script>
+    <script type="text/javascript" th:src="@{/js/editCheckupType.js}"></script>
   </body>
 </html>

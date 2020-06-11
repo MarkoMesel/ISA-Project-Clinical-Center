@@ -9,12 +9,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.siteproj0.demo.dal.ClinicAdminDbModel;
+import com.siteproj0.demo.dal.ClinicDbModel;
+import com.siteproj0.demo.dal.RoomDbModel;
+import com.siteproj0.demo.dal.UserDbModel;
+import com.siteproj0.demo.home.ChangePasswordRequestModel;
+import com.siteproj0.demo.home.EditProfileBasicInfoRequestModel;
+import com.siteproj0.demo.medicalcheckup.MedicalCheckupRegisterModel;
 import com.siteproj0.demo.repo.ClinicAdminRepo;
+import com.siteproj0.demo.room.RoomResponseModel;
+import com.siteproj0.demo.user.EditProfileRequestModel;
 import com.siteproj0.demo.user.LoginModel;
 import com.siteproj0.demo.user.LoginResponseModel;
 import com.siteproj0.demo.user.ProfileResponseModel;
@@ -36,6 +45,11 @@ public class ClinicAdminController {
 	@ModelAttribute("loginUser")
 	public LoginModel loginUser() {
 		return new LoginModel();
+	}
+	
+	@ModelAttribute("clinicAdminChangePassword")
+	public ChangePasswordRequestModel mc() {
+		return new ChangePasswordRequestModel();
 	}
 	
 	/*
@@ -66,6 +80,76 @@ public class ClinicAdminController {
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	@GetMapping(path = {"/editClinicAdminProfile"})
+	public String showEditClinicAdminProfileForm() {
+		return "editClinicAdminProfile";
+	}
+	
+	@PutMapping(path = "/editClinicAdminProfile")
+	@ResponseBody
+	public ResponseEntity editClinicAdminProfile(@RequestHeader("token") UUID securityToken,
+			@RequestBody EditProfileBasicInfoRequestModel editProfileModel) {
+		if (securityToken == null) {
+			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+		}
+		try {
+			ClinicAdminDbModel user = repo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+			}
+
+			user.setFirstName(editProfileModel.getFirstName());
+			user.setLastName(editProfileModel.getLastName());
+			user.setCity(editProfileModel.getCity());
+			user.setStreet(editProfileModel.getStreet());
+			user.setCountry(editProfileModel.getCountry());
+			user.setPhone(editProfileModel.getPhone());
+			user.setEmail(editProfileModel.getJmbg());
+			user.setEmail(editProfileModel.getEmail());
+			/*
+			if (editProfileModel.getPassword()!=null && !editProfileModel.getPassword().isEmpty()) {
+				user.setPassword(editProfileModel.getPassword());
+			}
+			*/
+			repo.save(user);
+		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping(path = {"/changeClinicAdminPassword"})
+	public String showChangeClinicAdminPasswordForm() {
+		return "changeClinicAdminPassword";
+	}
+	
+	@PutMapping(path = "/changeClinicAdminPassword")
+	@ResponseBody
+	public ResponseEntity changeClinicAdminPassword(@RequestHeader("token") UUID securityToken,
+			@RequestBody ChangePasswordRequestModel clinicAdminModel) {
+		if (securityToken == null) {
+			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+		}
+		try {
+			ClinicAdminDbModel user = repo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+			}
+			String oldPassword = clinicAdminModel.getOldPassword();
+			String passwordFromDb = user.getPassword();
+			
+			if(oldPassword.equals(passwordFromDb)) {
+				user.setPassword(clinicAdminModel.getPassword());
+				repo.save(user);
+			} else {
+				return new ResponseEntity(HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 	
 }

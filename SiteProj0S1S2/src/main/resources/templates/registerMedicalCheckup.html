@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/tabulator/dist/css/tabulator_modern.min.css/}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
+
+    <title>Register A New Medical Checkup</title>
+</head>
+<body>
+
+
+	<!-- 	<container> -->
+	<div class="medicalcheckupstyle" >
+		<div style="width: 36%; float:left;">
+			<h1> Register A New Medical Checkup </h1>
+			<div th:if="${param.success}">
+				<div class="alert alert-info">You've successfully registered to
+					our awesome app!</div>
+			</div>
+	
+	
+			<form name="registerMedicalCheckupForm" th:object="${medicalCheckup}">
+	
+				<p class="error-message" th:if="${#fields.hasGlobalErrors()}"
+					th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation
+					error</p>
+	
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('date')}? 'has-error':''">
+					<div class="input-group">
+						<span class="input-group-addon"> <i
+							class="glyphicon glyphicon-user color-blue"></i>
+						</span> <input type="date" id="date" class="form-control"
+							placeholder="Date" th:field="*{date}" />
+					</div>
+					<p class="error-message"
+						th:each="error: ${#fields.errors('date')}" th:text="${error}">Validation
+						error</p>
+				</div>
+	
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('time')}? 'has-error':''">
+					<div class="input-group">
+						<span class="input-group-addon"> <i
+							class="glyphicon glyphicon-user color-blue"></i>
+						</span> <input type="time" id="time" class="form-control"
+							placeholder="Time" th:field="*{time}" />
+					</div>
+					<p class="error-message"
+						th:each="error: ${#fields.errors('duration')}" th:text="${error}">Validation
+						error</p>
+				</div>
+				
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('duration')}? 'has-error':''">
+					<div class="input-group">
+						<span class="input-group-addon"> <i
+							class="glyphicon glyphicon-user color-blue"></i>
+						</span> <input id="duration" class="form-control"
+							placeholder="Duration (minutes)" th:field="*{duration}" />
+					</div>
+					<p class="error-message"
+						th:each="error: ${#fields.errors('duration')}" th:text="${error}">Validation
+						error</p>
+				</div>
+				
+				<input type="hidden" id="clinicId" class="form-control" th:field="*{clinicId}"/>
+				
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('price')}? 'has-error':''">
+					<div class="input-group">
+						<span class="input-group-addon"> <i
+							class="glyphicon glyphicon-user color-blue"></i>
+						</span> <input id="price" class="form-control"
+							placeholder="Total Price" th:field="*{price}" />
+					</div>
+					<p class="error-message"
+						th:each="error: ${#fields.errors('price')}" th:text="${error}">Validation
+						error
+					</p>
+					<br/>
+					
+					<input type="button" id="calculatePrice" value="Calculate Price from Checkup Type And Doctor" name="">
+					<p> Equation: <b>checkupTypePrice * doctorRating / 4</b></p>
+				</div>
+				
+				<input type="submit" value="Submit">
+			</form>
+		</div>
+		<div style="width: 56%; float:right;">
+			<div>
+				<div style="width: 46%; float:left;">
+					<h3> Choose a checkup type.</h3>
+					<div id="ctTable"></div>
+				</div>
+				<div style="width: 46%; float:right;">
+					<h3> Choose a room.</h3>
+					<div id="roomTable"></div>
+				</div>
+			</div>
+			<div >
+				<div style="padding-top: 230px;">
+					<h3> Choose a doctor.</h3>
+				</div>
+				<div id="doctorTable"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 	</container> -->
+
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/tabulator/dist/js/tabulator.min.js/}"></script>
+
+	<script type="text/javascript" th:src="@{/js/checkIfClinicAdmin.js}"></script>
+	<script type="text/javascript" th:src="@{/js/registerMedicalCheckup.js}"></script>
+	<script type="text/javascript" th:src="@{/js/getClinicId.js}"></script>
+
+</body>
+</html>
