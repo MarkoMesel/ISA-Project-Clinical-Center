@@ -6,29 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
 
     <title>Home</title>
 </head>
 <body>
 
 	<!-- 	<container> -->
-	<div class="mainoptions">
+	<div class="mainPanel">
 		<h1> Welcome, patient! </h1>
 		<div th:if="${param.success}">
 			<div class="alert alert-info">You've successfully verified you email!</div>
 		</div>
 	</div>
 	<div>Home Page</div>
-	<a href="#" id="logout">Logout</a>
+	<a class="button" href="#" id="logout">Logout</a>
 	<br/>
-	<a href="../apc0">Create an appointment</a>
+	<a class="button" href="../apc0">Create an appointment</a>
 	<br/>
-    <a href="../clinic/1">Predefined appointments</a>
+    <a class="button" href="../clinic/1">Predefined appointments</a>
     <br/>    
-    <a href="../myAppointments">My Appointments</a>
+    <a class="button" href="../myAppointments">My Appointments</a>
     <br/>
-    <a href="../editProfile">Edit profile</a>
+    <a class="button" href="../editProfile">Edit profile</a>
     <br/>
 
     

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
 
     <title>Clinic Admin Home</title>
 </head>
@@ -14,19 +14,19 @@
 
 
 	<!-- 	<container> -->
-	<div class="mainoptions">
-		<h1> Welcome, clinic admin! </h1>
+	<div class="mainPanel">
+		<h1> Welcome, Clinic Admin! </h1>
 		<div th:if="${param.success}">
 			<div class="alert alert-info">You've successfully verified you email!</div>
 		</div>
 		<br/>
-		<a href="../editClinicAdminProfile">Edit Profile</a>
+		<a class="button" href="../editClinicAdminProfile">Edit Profile</a>
 		<br/>
-		<a href="../changeClinicAdminPassword">Change Password</a>
+		<a class="button" href="../changeClinicAdminPassword">Change Password</a>
     	<br/>
-    	<a href="../clinicManager">Manage Clinic</a>
+    	<a class="button" href="../clinicManager">Manage Clinic</a>
     	<br/>
-    	<a href="#" id="logout">Logout</a>
+    	<a class="button" href="#" id="logout">Logout</a>
     	<!-- 
     	<br/>
     	<a href="../sendMailTest">SEND MAIL TEST</a>

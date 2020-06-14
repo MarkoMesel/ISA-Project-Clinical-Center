@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <link rel="stylesheet" type="text/css" th:href="@{/webjars/tabulator/dist/css/tabulator_modern.min.css/}"/>
-<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
 
 
 
@@ -17,18 +17,19 @@
 
 <body>
 	<!-- 	<container> -->
-	<div class="mainoptions">
+	<div class="mainPanel">
+	<h1>Checkup Type Manager</h1>
 		<div style="width: 40%; float:left;">
 			<div id="ctTable"></div>
 		</div>
     	<div style="width: 50%; float:right;">
     		<div>
     			<p>
-	    			<a href="../addCt">Add New Checkup Type</a>
+	    			<a class="button" href="../addCt">Add New Checkup Type</a>
 					<br />
-					<a id="editCt" href="#">Edit Selected Checkup Type</a>
+					<a class="button" id="editCt" href="#">Edit Selected Checkup Type</a>
 					<br />
-					<a id="deleteCt" href="#">Delete Selected Checkup Type</a>
+					<a class="button" id="deleteCt" href="#">Delete Selected Checkup Type</a>
 					<br />
 				</p>
 				<br/>
@@ -38,7 +39,7 @@
 					<input type="text" placeholder="Checkup Type Price" id="ctPrice"/><br />
 				</p>
 				<p>
-					<button id="findCtBtn" type=button name="findCtBtn">Find Checkup Type</button>
+					<button class="button" id="findCtBtn" type=button name="findCtBtn">Find Checkup Type</button>
 				</p>
 			</div>
 			<div>

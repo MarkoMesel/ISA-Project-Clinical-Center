@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <link rel="stylesheet" type="text/css" th:href="@{/webjars/tabulator/dist/css/tabulator_modern.min.css/}"/>
-<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
 
 
 
@@ -17,43 +17,42 @@
 
 <body>
 	<!-- 	<container> -->
-	<div class="mainoptions">
-		<h3>Rooms List</h3>
+	<div class="mainPanel">
+		<h1>Rooms List</h1>
 		<div>
 			<div style="width: 40%; float:left;">
 				<div id="roomTable"></div>
 			</div>
 	    	<div style="width: 50%; float:right;">
 	    		<div>
-	    			<p>
-		    			<a href="../roomManager">Manage Rooms</a>
-						<br />
-					</p>
+		    			<a class="button" href="../roomManager">Manage Rooms</a>
 					<br/>
 					<h3>Find A Room</h3>
 					<p>
 						
 						Room Name or Number: <input type="text" placeholder="Room Name" id="rNameOrNum"/><br />
-						Reservation Date: <input type="date" placeholder="Reservation Date" id="rDate"/><br />
+						Reservation Date: <br/><input type="date" placeholder="Reservation Date" id="rDate"/><br />
 					</p>
 					<p>
-						<button id="findRoomNameBtn" type=button name="findRoomNameBtn">Find By Room Name</button>
-						<button id="findRoomNumBtn" type=button name="findRoomNumBtn">Find By Room Number</button>
+						<a href="#" class="button" id="findRoomNameBtn" type=button name="findRoomNameBtn">Find By Room Name</a>
+						<a href="#" class="button" id="findRoomNumBtn" type=button name="findRoomNumBtn">Find By Room Number</a>
 					</p>
 				</div>
 			</div>
 		</div>
-		<div style="padding-top: 300px;">
+		<div style="padding-top: 390px;">
 			<div style="width: 40%; float:left;">
 				<h3 id="roomsFreeOn">Rooms free on ...</h3>
 				<div id="foundRoomTable"></div>
 				<br/>
-				<button id="chooseRoomDateBtn" name="chooseRoomDateBtn">Submit Room and Reservation Date</button>
 			</div>
 			<div style="width: 50%; float:right;">
 				<h3 id="busyDatesFor">Busy dates for ...</h3>
 				<div id="busyDatesTable"></div>
 			</div>
+		</div>
+		<div style="padding-top: 300px;">
+		<a href="#" class="submitButton" id="chooseRoomDateBtn" name="chooseRoomDateBtn">Submit Room and Reservation Date</a>
 		</div>
 	</div>
 	<!--

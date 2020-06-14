@@ -15,16 +15,18 @@
 
 
 	<!-- 	<container> -->
-	<div class="medicalcheckupstyle" >
+	<div class="mainPanelLarge" >
+				<form name="registerMedicalCheckupForm" th:object="${medicalCheckup}">
+		<h1>Register A New Medical Checkup</h1>
 		<div style="width: 36%; float:left;">
-			<h1> Register A New Medical Checkup </h1>
+		<br/>
+		<br/>
+		<br/>
 			<div th:if="${param.success}">
 				<div class="alert alert-info">You've successfully registered to
 					our awesome app!</div>
 			</div>
-	
-	
-			<form name="registerMedicalCheckupForm" th:object="${medicalCheckup}">
+
 	
 				<p class="error-message" th:if="${#fields.hasGlobalErrors()}"
 					th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation
@@ -85,7 +87,7 @@
 					</p>
 					<br/>
 					
-					<input type="button" id="calculatePrice" value="Calculate Price from Checkup Type And Doctor" name="">
+					<a href="#" class="button" id="calculatePrice">Calculate Price from Checkup Type And Doctor</a>
 					<p> Equation: <b>checkupTypePrice * doctorRating / 4</b></p>
 				</div>
 							
@@ -102,8 +104,6 @@
 						error</p>
 				</div>
 				
-				<input type="submit" value="Submit">
-			</form>
 		</div>
 		<div style="width: 56%; float:right;">
 			<div>
@@ -123,6 +123,10 @@
 				<div id="doctorTable"></div>
 			</div>
 		</div>
+		<div style="padding-top: 450px;">
+			<input class="submitButton" type="submit" value="Submit">
+		</div>
+		</form>
 	</div>
 
 	<!-- 	</container> -->

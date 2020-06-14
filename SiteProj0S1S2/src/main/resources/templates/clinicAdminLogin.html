@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
 
     <title>Log In As Clinic Admin</title>
 </head>
@@ -14,7 +14,7 @@
 
 
 	<!-- 	<container> -->
-	<div class="mainoptions">
+	<div class="mainPanel">
 		<h1> Log In As Clinic Admin </h1>
 		<div th:if="${param.error}">
 			<div class="alert alert-danger">Invalid credentials!</div>
@@ -41,7 +41,7 @@
 			</div>
 
 			<div>
-				<input type="submit" value="Submit">
+				<input class="submitButton" type="submit" value="Submit">
 			</div>
 			
 		</form>

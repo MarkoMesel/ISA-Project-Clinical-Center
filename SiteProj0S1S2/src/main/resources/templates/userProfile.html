@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/tabulator/dist/css/tabulator_modern.min.css/}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
 
     <title>User Profile</title>
 </head>
@@ -15,7 +15,7 @@
 
 
 	<!-- 	<container> -->
-	<div class="mainoptions">
+	<div class="mainPanelLarge">
 		<h1> User Profile </h1>
 		<h3 id="firstName">First name: ... </h3>
 		<h3 id="lastName">Last name: ...</h3>
@@ -26,14 +26,14 @@
 		<h3 id="jmbg">JMBG: ...</h3>
 		<h3 id="email">Email ... </h3>
 		<br/>
-		<a href="#" id="medicalRecord">Check Medical Record</a>
+		<a class="button" href="#" id="medicalRecord">Check Medical Record</a>
 		
 		<h3>Reserved medical checkups you have with this patient</h3>
 		<div id="mcTable"></div>
 		<br/>
 		<div>
 			<h3>Press this button to begin the checkup you've selected.</h3>
-			<button id="beginCheckupBtn" type=button name="beginCheckupBtn">Begin Checkup</button>
+			<button class="submitButton" id="beginCheckupBtn" type=button name="beginCheckupBtn">Begin Checkup</button>
 		</div>
 		
 		<!-- 

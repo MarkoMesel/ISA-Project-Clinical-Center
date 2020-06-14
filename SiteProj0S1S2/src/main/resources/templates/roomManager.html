@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <link rel="stylesheet" type="text/css" th:href="@{/webjars/tabulator/dist/css/tabulator_modern.min.css/}"/>
-<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
 
 
 
@@ -17,19 +17,19 @@
 
 <body>
 	<!-- 	<container> -->
-	<div class="mainoptions">
-		<h3>Rooms List</h3>
+	<div class="mainPanel">
+		<h1>Rooms List</h1>
 		<div style="width: 40%; float:left;">
 			<div id="roomTable"></div>
 		</div>
     	<div style="width: 50%; float:right;">
     		<div>
     			<p>
-	    			<a href="../addRoom">Add New Room</a>
+	    			<a class="button" href="../addRoom">Add New Room</a>
 					<br />
-					<a id="editRoom" href="#">Edit Selected Room</a>
+					<a class="button" id="editRoom" href="#">Edit Selected Room</a>
 					<br />
-					<a id="deleteRoom" href="#">Delete Selected Room</a>
+					<a class="button" id="deleteRoom" href="#">Delete Selected Room</a>
 					<br />
 				</p>
 				<br/>
@@ -39,7 +39,7 @@
 					<input type="text" placeholder="Room Number" id="rNumber"/><br />
 				</p>
 				<p>
-					<button id="findRoomBtn" type=button name="findRoomBtn">Find Room</button>
+					<button class="button" id="findRoomBtn" type=button name="findRoomBtn">Find Room</button>
 				</p>
 			</div>
 		</div>

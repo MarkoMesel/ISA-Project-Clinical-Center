@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <link rel="stylesheet" type="text/css" th:href="@{/webjars/tabulator/dist/css/tabulator_modern.min.css/}"/>
-<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
 
 
 
@@ -16,8 +16,8 @@
 </head>
 
 <body>
-	<div class="mainoptions">
-		<div style="width: 36%; float:left;">
+	<div class="mainPanel">
+		<div>
 			<h1> The Checkup Has Begun! </h1>
 			<div th:if="${param.success}">
 				<div class="alert alert-info">You've successfully registered to
@@ -26,7 +26,7 @@
 	
 	
 			<form name="sendMedicalCheckupRequestForm" th:object="${mc}">
-	
+				<h3> Send a new checkup request </h3>
 				<p class="error-message" th:if="${#fields.hasGlobalErrors()}"
 					th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation
 					error</p>
@@ -70,13 +70,8 @@
 						error</p>
 				</div>
 				
-				<input type="submit" value="Save Notes and Request a New Checkup">
-				<br/>
-				Or...
-				<br/>
-				<div>
-					<button id="saveNotesBtn" type=button name="saveNotesBtn">Just Save Notes</button>
-				</div>
+				<input class="submitButton" type="submit" value="Save Notes and Request a New Checkup">
+				<button  class="button" id="saveNotesBtn" type=button name="saveNotesBtn">Just Save Notes</button>
 			</form>
 		</div>
 	</div>

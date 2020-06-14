@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <link rel="stylesheet" type="text/css" th:href="@{/webjars/tabulator/dist/css/tabulator_modern.min.css/}"/>
-<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
 
 
 
@@ -16,25 +16,27 @@
 </head>
 
 <body>
-	<h1>List of patients that belong to this clinic</h1>
-	<!-- 	<container> -->
-	<div id="patientTable"></div>
-	<br/>
-	<div>
-		<h3>Find patients</h3>
-		<p>
-			<input type="text" placeholder="Find..." id="findByThis"/><br />
-		</p>
-		<p>
-			<button id="findByFirstName" type=button name="findByFirstName">Find By First Name</button>
-			<br/>
-			<button id="findByLastName" type=button name="findByLastName">Find By Last Name</button>
-			<br/>
-			<button id="findByJmbg" type=button name="findByJmbg">Find By Jmbg</button>
-		</p>
+	<div class="mainPanel" >
+		<h1>List of patients that belong to this clinic</h1>
+		<!-- 	<container> -->
+		<div id="patientTable"></div>
+		<br/>
+		<div>
+			<h3>Find patients</h3>
+			<p>
+				<input type="text" placeholder="Find..." id="findByThis"/><br />
+			</p>
+			<p>
+				<button class="button"  id="findByFirstName" type=button name="findByFirstName">Find By First Name</button>
+				<br/>
+				<button class="button"  id="findByLastName" type=button name="findByLastName">Find By Last Name</button>
+				<br/>
+				<button class="button"  id="findByJmbg" type=button name="findByJmbg">Find By Jmbg</button>
+			</p>
+		</div>
+		<h3> Select a row on the table to view that patients profile</h3>
+		<div id="searchResultTable"></div>
 	</div>
-	<h3> Select a row on the table to view that patients profile</h3>
-	<div id="searchResultTable"></div>
 	<!--
 	<div class="mainoptions">
 	   	<a href="../registerDoctor">Add New Doctor</a>

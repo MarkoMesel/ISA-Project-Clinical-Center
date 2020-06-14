@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
 
     <title>Doctor Home</title>
 </head>
@@ -14,24 +14,24 @@
 
 
 	<!-- 	<container> -->
-	<div class="mainoptions">
+	<div class="mainPanel">
 		<h1> Welcome, doctor! </h1>
 		<div th:if="${param.success}">
 			<div class="alert alert-info">You've successfully verified you email!</div>
 		</div>
-		<a href="../editDoctorProfile">Edit profile</a>
+		<a class="button" href="../editDoctorProfile">Edit profile</a>
 		<br/>
-		<a href="../changeDoctorPassword">Change Password</a>
+		<a class="button" href="../changeDoctorPassword">Change Password</a>
 		<br/>
-		<a href="../listOfPatients">List of Patients</a>
+		<a class="button" href="../listOfPatients">List of Patients</a>
 		<br/>
-		<a href="../doctorWorkingCalendar">Working Calendar</a>
+		<a class="button" href="../doctorWorkingCalendar">Working Calendar</a>
 		<br/>
-		<a href="../chooseAndBeginCheckup">Choose and Begin Checkup</a>
+		<a class="button" href="../chooseAndBeginCheckup">Choose and Begin Checkup</a>
 		<br/>
-		<a href="../sendVacationRequest">Send a Vacation Request</a>
+		<a class="button" href="../sendVacationRequest">Send a Vacation Request</a>
 		<br/>
-		<a href="#" id="logout">Logout</a>
+		<a class="button" href="#" id="logout">Logout</a>
 		<br/>
 	</div>
 	<!-- 

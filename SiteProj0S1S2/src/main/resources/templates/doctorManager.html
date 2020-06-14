@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <link rel="stylesheet" type="text/css" th:href="@{/webjars/tabulator/dist/css/tabulator_modern.min.css/}"/>
-<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
 
 
 
@@ -17,29 +17,32 @@
 
 <body>
 	<!-- 	<container> -->
-	<div id="doctorTable"></div>
-	<br/>
-	<div>
-		<div style="width: 50%; float:left;">
-			<a href="../registerDoctor">Add New Doctor</a>
-			<br />
-			<a id="deleteDoctor" href="#">Delete Selected Doctor</a>
-		</div>
-    	<div style="width: 50%; float:right;">
-    		<div style="width: 40%; float:left;">
-				<h3>Find A Doctor</h3>
-				<p>
-					<input type="text" placeholder="First Name" id="pFirstName"/><br />
-					<input type="text" placeholder="Last Name" id="pLastName"/><br />
-					<input type="text" placeholder="Rating" id="pRating"/><br />
-				</p>
-				<p>
-					<button id="findPatientsBtn" type=button name="findPatientsBtn">Find Doctor</button>
-				</p>
+	<div class="mainPanelLarge">
+		<h1>Doctor Manager</h1>
+		<div id="doctorTable"></div>
+		<br/>
+		<div>
+			<div style="width: 50%; float:left;">
+				<a class="button" href="../registerDoctor">Add New Doctor</a>
+				<br />
+				<a class="button" id="deleteDoctor" href="#">Delete Selected Doctor</a>
 			</div>
-			<div style="width: 60%; float:right;">
-				<h3>Doctor Details</h3>
-				<div id="foundDoctorTable"></div>
+	    	<div style="width: 50%; float:right;">
+	    		<div style="width: 40%; float:left;">
+					<h3>Find A Doctor</h3>
+					<p>
+						<input type="text" placeholder="First Name" id="pFirstName"/><br />
+						<input type="text" placeholder="Last Name" id="pLastName"/><br />
+						<input type="text" placeholder="Rating" id="pRating"/><br />
+					</p>
+					<p>
+						<button class="button" id="findDoctorBtn" type=button name="findDoctorBtn">Find Doctor</button>
+					</p>
+				</div>
+				<div style="width: 60%; float:right;">
+					<h3>Doctor Details</h3>
+					<div id="foundDoctorTable"></div>
+				</div>
 			</div>
 		</div>
 	</div>

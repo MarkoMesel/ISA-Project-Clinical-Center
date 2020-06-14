@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <link rel="stylesheet" type="text/css" th:href="@{/webjars/tabulator/dist/css/tabulator_modern.min.css/}"/>
-<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
 
 
 
@@ -16,17 +16,19 @@
 </head>
 
 <body>
-	<h1>Approve or Reject Vacation Requests</h1>
-	<!-- 	<container> -->
-	<h3>List of vacation requests that haven't been approved or rejected yet.</h3>
-	<div id="vrTable"></div>
-	<br/>
-	<div>
-		<h3>Approve the vacation request you've selected...</h3>
-		<button id="approveBtn" type=button name="approveBtn">Approve</button>
-		<h3>...or reject the vacation request and submit a reason for doing so.</h3>
-		<textarea id="reasonTextArea" placeholder="Write a reason for rejecting the vacation request." rows="4" cols="50"></textarea>
-		<button id="rejectBtn" type=button name="rejectBtn">Reject</button>
+	<div class="mainPanel">
+		<h1>Approve or Reject Vacation Requests</h1>
+		<!-- 	<container> -->
+		<h3>List of vacation requests that haven't been approved or rejected yet.</h3>
+		<div id="vrTable"></div>
+		<br/>
+		<div>
+			<h3>Approve the vacation request you've selected...</h3>
+			<button class="button" id="approveBtn" type=button name="approveBtn">Approve</button>
+			<h3>...or reject the vacation request and submit a reason for doing so.</h3>
+			<textarea id="reasonTextArea" placeholder="Write a reason for rejecting the vacation request." rows="4" cols="50"></textarea>
+			<br/><button class="button" id="rejectBtn" type=button name="rejectBtn">Reject</button>
+		</div>
 	</div>
 	<!--
 	<div class="mainoptions">

@@ -6,24 +6,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <link rel="stylesheet" type="text/css" th:href="@{/webjars/tabulator/dist/css/tabulator_modern.min.css/}"/>
-<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
 
 
 
-<title>The Checkup Has Started</title>
+<title>Send Vacation Request</title>
 
 
 </head>
 
 <body>
-	<div class="mainoptions">
-		<h3>The Checkup Has Started</h3>
+	<div class="mainPanel">
+		<h1>Send Vacation Request</h1>
 		<form th:action="@{/sendVacationRequest}" th:object="${vacation}" method="post">
 	
 			<p class="error-message" th:if="${#fields.hasGlobalErrors()}"
 				th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation
 				error</p>
-	
+			
+			<h3>Start Date</h3>
 			<div class="form-group"
 				th:classappend="${#fields.hasErrors('startDate')}? 'has-error':''">
 				<div class="input-group">
@@ -36,7 +37,8 @@
 					th:each="error: ${#fields.errors('startDate')}" th:text="${error}">Validation
 					error</p>
 			</div>
-	
+			
+			<h3>End Date</h3>
 			<div class="form-group"
 				th:classappend="${#fields.hasErrors('endDate')}? 'has-error':''">
 				<div class="input-group">
@@ -64,7 +66,7 @@
 			</div>
 			<!-- <input name="doctorId" value="doctorId" th:field="*{doctorId}" class="form-control" />-->
 			
-			<input type="submit" value="Send Vacation Request">
+			<input class="submitButton" type="submit" value="Send Vacation Request">
 		</form>
 	</div>
 	

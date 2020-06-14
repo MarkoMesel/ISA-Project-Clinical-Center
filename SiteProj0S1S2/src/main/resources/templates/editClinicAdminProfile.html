@@ -7,7 +7,7 @@
 
 <link rel="stylesheet" type="text/css"
 	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
-<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}" />
 
 <title>Edit Your Profile</title>
 </head>
@@ -15,7 +15,7 @@
 
 
 	<!-- 	<container> -->
-	<div class="mainoptions">
+	<div class="mainPanel">
 		<h1> Edit Your Profile </h1>
 
 		<div th:if="${param.success}">
@@ -98,12 +98,12 @@
 			</div>
 
 			<div>
-				<input type="submit" value="Submit">
+				<input class="submitButton" type="submit" value="Submit">
+				<a class="button" href="../clinicAdminHome">Go Home</a>
 			</div>
 		</form>
 	</div>
 	   <br/>
-   <a href="../home">Home</a>
     <br/>
 
 	<!-- 	</container> -->

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
 
     <title>Clinic Manager</title>
 </head>
@@ -14,25 +14,25 @@
 
 
 	<!-- 	<container> -->
-	<div class="mainoptions">
+	<div class="mainPanel">
 		<h1> Clinic Manager </h1>
 		<h3 id="yourClinic">Your clinic is ... </h3>
 		<h3 id="clinicDescription">Description: ...</h3>
 		<h3 id="clinicLocation">Its address is ... </h3>
 		<br/>
-		<a href="../clinicBasicInfo">Update Clinic Basic Info</a>
+		<a class="button" href="../clinicBasicInfo">Update Clinic Basic Info</a>
 		<br />
-		<a href="../registerMedicalCheckup">Create a New Medical Checkup</a>
+		<a class="button" href="../registerMedicalCheckup">Create a New Medical Checkup</a>
 		<br />
-		<a href="../checkupRequestManager">Manage Requested Medical Checkups</a>
+		<a class="button" href="../checkupRequestManager">Manage Requested Medical Checkups</a>
 		<br />
-		<a href="../doctorManager">Manage Doctors</a>
+		<a class="button" href="../doctorManager">Manage Doctors</a>
 		<br/>
-    	<a href="../vacationRequestsPendingForApproval">Manage Vacation Requests</a>
+    	<a class="button" href="../vacationRequestsPendingForApproval">Manage Vacation Requests</a>
 		<br />
-		<a href="../roomManager">Manage Rooms</a>
+		<a class="button" href="../roomManager">Manage Rooms</a>
 		<br />
-		<a href="../checkupTypeManager">Manage Checkup Types</a>
+		<a class="button" href="../checkupTypeManager">Manage Checkup Types</a>
 	</div>
     <br/>
     

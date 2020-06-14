@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
 
     <title>Add A New Room</title>
 </head>
@@ -14,7 +14,7 @@
 
 
 	<!-- 	<container> -->
-	<div class="mainoptions">
+	<div class="mainPanel">
 		<h1> Add A New Room  </h1>
 		<div th:if="${param.success}">
 			<div class="alert alert-info">You've successfully registered to
@@ -58,7 +58,7 @@
 			<input type="hidden" id="clinicId" class="form-control" th:field="*{clinicId}"/>
 
 			<div>
-				<input type="submit" value="Submit">
+				<input class="submitButton" type="submit" value="Submit">
 			</div>
 		</form>
 	</div>

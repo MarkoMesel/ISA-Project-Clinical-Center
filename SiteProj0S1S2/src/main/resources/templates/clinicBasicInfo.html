@@ -10,11 +10,11 @@
     </style>
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.3.1/build/ol.js"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
     <title>Update Clinic Basic Info</title>
   </head>
   <body>
- 	<div class="mainoptions">
+ 	<div class="mainPanel">
 	    <h1> Update Clinic Basic Info </h1>
 	    <p>
 	    	Edit the name, description and address of the clinic.<br/>
@@ -56,7 +56,8 @@
 				You can also use coordinates (lon, lat) to update your address.<br/>
 				<input id="lon" type="number" step="0.000001">
 				<input id="lat" type="number" step="0.000001">
-				<button id="reversegeocoding" type=button name="button">Update With Coordinates</button>
+				<br/>
+				<a class="button" id="reversegeocoding" href="#" name="button">Update With Coordinates</a>
 			</p>
 			<p>
 	    		Or you can just click on the map.<br/>
@@ -70,7 +71,7 @@
 		    </div>
 			-->
 			<div>
-				<input type="submit" value="Submit">
+				<input class="submitButton" type="submit" value="Submit">
 			</div>
 		</form>
 	    <br/>

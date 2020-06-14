@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <link rel="stylesheet" type="text/css" th:href="@{/webjars/tabulator/dist/css/tabulator_modern.min.css/}"/>
-<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
 
 
 
@@ -16,14 +16,16 @@
 </head>
 
 <body>
-	<h1>Choose a checkup from the list.</h1>
-	<!-- 	<container> -->
-	<h3>Reserved Medical Checkups</h3>
-	<div id="mcTable"></div>
-	<br/>
-	<div>
-		<h3>Press this button to begin the checkup you've selected.</h3>
-		<button id="beginCheckupBtn" type=button name="beginCheckupBtn">Begin Checkup</button>
+	<div class="mainPanelLarge">
+		<h1>Choose a checkup from the list.</h1>
+		<!-- 	<container> -->
+		<h3>Reserved Medical Checkups</h3>
+		<div id="mcTable"></div>
+		<br/>
+		<div>
+			<h3>Press this button to begin the checkup you've selected.</h3>
+			<button class="button" id="beginCheckupBtn" type=button name="beginCheckupBtn">Begin Checkup</button>
+		</div>
 	</div>
 	<!--
 	<div class="mainoptions">
