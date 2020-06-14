@@ -22,4 +22,20 @@ public interface MedicalCheckupRepo extends CrudRepository<MedicalCheckupDbModel
 
 	List<MedicalCheckupDbModel> findByCheckupTypeIdAndFinished(Integer ctId, boolean finished);
 
+	List<MedicalCheckupDbModel> findByClinicIdAndDoctorIdAndPatientIdAndFreeAndFinished(Integer clinicId, Integer doctorId,
+			Integer patientId, boolean free, boolean finished);
+
+	List<MedicalCheckupDbModel> findByClinicIdAndDoctorIdAndFreeAndFinished(Integer clinicId, Integer doctorId,
+			boolean free, boolean finished);
+
+	List<MedicalCheckupDbModel> findByClinicIdAndPatientId(Integer clinicId, Integer patientId);
+
+	List<MedicalCheckupDbModel> findByDoctorIdAndPatientId(Integer doctorId, Integer patientId);
+
+	List<MedicalCheckupDbModel> findByRoomIdIsNull();
+
+	List<MedicalCheckupDbModel> findByRoomIdAndDate(Integer roomId, String date);
+
+	List<MedicalCheckupDbModel> findByRoomId(int roomId);
+
 }

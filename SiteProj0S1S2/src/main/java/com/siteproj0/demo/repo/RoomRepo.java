@@ -20,5 +20,8 @@ public interface RoomRepo extends CrudRepository<RoomDbModel, Integer>{
 																Integer clinicId,
 																boolean enabled);
 
+	List<RoomDbModel> findByNameAndClinicIdAndEnabled(String searchByThis, Integer clinicId, boolean enabled);
+	List<RoomDbModel> findByNumberAndClinicIdAndEnabled(String searchByThis, Integer clinicId, boolean enabled);
+
 
 }

@@ -25,6 +25,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -361,6 +362,25 @@ public class DoctorController {
 			}
 			
 			List<MedicalCheckupDbModel> mcList = mcRepo.findByCheckupTypeIdAndFreeAndFinished(doctorId,false,false);
+			if(mcList.size() > 0)
+				return new ResponseEntity<>(true, HttpStatus.OK);
+			return new ResponseEntity<>(false, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(path = "/checkIfDoctorCanViewMedicalRecord/{uId}")
+	public ResponseEntity<Object> checkIfDoctorCanViewMedicalRecord(@RequestHeader("token") UUID securityToken,
+												@PathVariable int uId) {
+		//System.out.println("I AM HERE!");
+		try {
+			DoctorDbModel user = doctorRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			List<MedicalCheckupDbModel> mcList = mcRepo.findByDoctorIdAndPatientId(user.getId(),uId);
 			if(mcList.size() > 0)
 				return new ResponseEntity<>(true, HttpStatus.OK);
 			return new ResponseEntity<>(false, HttpStatus.OK);

@@ -277,4 +277,114 @@ public class RoomController {
 		}
 	}
 	
+	@GetMapping(path = "/findRoomByName")
+	public ResponseEntity<Object> findRoomByName(@RequestHeader("token") UUID securityToken,
+													@RequestHeader("searchByThis") String searchByThis,
+													@RequestHeader("rDate") String rDate) {
+		try {
+			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			ClinicDbModel clinic = user.getClinic();
+			Integer clinicId = clinic.getId();	
+			
+			List<RoomDbModel> rooms = roomRepo.findByNameAndClinicIdAndEnabled(searchByThis,
+																				clinicId,
+																				true);
+			
+				List<RoomResponseModel> roomResponseList = new ArrayList<RoomResponseModel>();
+					
+					for(RoomDbModel r : rooms) {
+						List<MedicalCheckupDbModel> mcList = mcRepo.findByRoomIdAndDate(r.getId(), rDate);
+						if(mcList.size() <= 0) {
+							RoomResponseModel rrm = new RoomResponseModel
+									(r.getId(),
+									r.getName(),
+									r.getNumber(),
+									clinicId);
+							roomResponseList.add(rrm);
+						}
+					}
+			
+			//ClinicResponseModel result = new ClinicResponseModel(clinic.getName(), clinic.getDescription(), clinic.getAddress());
+			return new ResponseEntity<>(roomResponseList, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(path = "/findRoomByNumber")
+	public ResponseEntity<Object> findRoomByNumber(@RequestHeader("token") UUID securityToken,
+													@RequestHeader("searchByThis") String searchByThis,
+													@RequestHeader("rDate") String rDate) {
+		
+		try {
+			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			ClinicDbModel clinic = user.getClinic();
+			Integer clinicId = clinic.getId();	
+			
+			List<RoomDbModel> rooms = roomRepo.findByNumberAndClinicIdAndEnabled(searchByThis,
+																				clinicId,
+																				true);
+			
+				List<RoomResponseModel> roomResponseList = new ArrayList<RoomResponseModel>();
+					
+					for(RoomDbModel r : rooms) {
+						List<MedicalCheckupDbModel> mcList = mcRepo.findByRoomIdAndDate(r.getId(), rDate);
+						if(mcList.size() <= 0) {
+							RoomResponseModel rrm = new RoomResponseModel
+									(r.getId(),
+									r.getName(),
+									r.getNumber(),
+									clinicId);
+							roomResponseList.add(rrm);
+						}
+					}
+			
+			//ClinicResponseModel result = new ClinicResponseModel(clinic.getName(), clinic.getDescription(), clinic.getAddress());
+			return new ResponseEntity<>(roomResponseList, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(path = "/getBusyDates/{pId}")
+	public ResponseEntity<Object> getBusyDates(@RequestHeader("token") UUID securityToken, @PathVariable int pId) {
+		//System.out.println("I AM HERE!");
+		try {
+			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			ClinicDbModel clinic = user.getClinic();
+			Integer clinicId = clinic.getId();
+			//System.out.println("I HAVE FOUND A CLINIC! ITS ID IS " + clinicId);
+			
+			List<MedicalCheckupDbModel> mcList = mcRepo.findByRoomIdAndFinished(pId,false);
+			
+			//System.out.println("I HAVE FOUND SOME ROOMS! NUMBER OF ROOMS I'VE FOUND: "  + rooms.size());
+			
+			//System.out.println("NASAO JE OVOLIKO ELEMENATA: " + doctors.size());
+			
+			List<BusyDateResponseModel> busyDates = new ArrayList<BusyDateResponseModel>();
+			
+			//List<RoomResponseModel> roomResponseList = new ArrayList<RoomResponseModel>();
+			
+			for(MedicalCheckupDbModel mc : mcList) {
+				BusyDateResponseModel bd = new BusyDateResponseModel(mc.getDate());
+				busyDates.add(bd);
+			}	
+			
+			//System.out.println("I HAVE CONVERTED THE ROOMS!");
+			
+			return new ResponseEntity<>(busyDates, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 }

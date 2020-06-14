@@ -98,7 +98,13 @@ $("#searchResultTable").tabulator({
 		visible : false
 	}
 	
-	],
+	], rowSelected:function(e, row){
+        //row.toggleSelect();
+        
+    	var parsedData = getParsedDataFromTable("#searchResultTable");
+    	var pId = parsedData.id;
+		window.location.href = "../userProfile/"+pId;
+    }
 
 });
 
@@ -194,3 +200,10 @@ $("#findByJmbg").click(function() {
 		}
 	});
 });
+
+function getParsedDataFromTable(tableIdString) {
+	var selectedData = $(tableIdString).tabulator("getSelectedData");
+	var dataTest = JSON.stringify(selectedData[0]);
+	var parsedData = JSON.parse(dataTest);
+	return parsedData;
+}

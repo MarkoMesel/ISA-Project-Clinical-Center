@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.siteproj0.demo.checkuptype.CheckupTypeResponseModel;
+import com.siteproj0.demo.dal.CheckupTypeDbModel;
 import com.siteproj0.demo.dal.ClinicAdminDbModel;
 import com.siteproj0.demo.dal.ClinicDbModel;
 import com.siteproj0.demo.dal.DoctorDbModel;
@@ -376,5 +378,48 @@ public class UserController {
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	@GetMapping(path = "/userProfile/{pId}")
+	public String showUserProfileForm() {
+		return "userProfile";
+	}
+	
+	@GetMapping(path = "/getUserInfo/{uId}")
+	public ResponseEntity<UserResponseModel> getRoomInfo(@RequestHeader("token") UUID securityToken, @PathVariable int uId) {
+		try {
+			/*
+			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			*/
+			/*
+			ClinicDbModel clinic = user.getClinic();
+			Integer clinicId = clinic.getId();
+			*/
+			
+			UserDbModel udbm = repo.findById(uId).get();
+			UserResponseModel result = new UserResponseModel(
+					udbm.getId(),
+					udbm.getFirstName(),
+					udbm.getLastName(),
+					udbm.getJmbg(),
+					udbm.getCountry(),
+					udbm.getCity(),
+					udbm.getStreet(),
+					udbm.getEmail(),
+					udbm.getPhone(),
+					udbm.getClinic().getId());
+
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(path = "/medicalRecord/{uId}")
+	public String showMedicalRecordForm() {
+		return "medicalRecord";
 	}
 }

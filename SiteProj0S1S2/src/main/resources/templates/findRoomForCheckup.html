@@ -19,28 +19,40 @@
 	<!-- 	<container> -->
 	<div class="mainoptions">
 		<h3>Rooms List</h3>
-		<div style="width: 40%; float:left;">
-			<div id="roomTable"></div>
+		<div>
+			<div style="width: 40%; float:left;">
+				<div id="roomTable"></div>
+			</div>
+	    	<div style="width: 50%; float:right;">
+	    		<div>
+	    			<p>
+		    			<a href="../roomManager">Manage Rooms</a>
+						<br />
+					</p>
+					<br/>
+					<h3>Find A Room</h3>
+					<p>
+						
+						Room Name or Number: <input type="text" placeholder="Room Name" id="rNameOrNum"/><br />
+						Reservation Date: <input type="date" placeholder="Reservation Date" id="rDate"/><br />
+					</p>
+					<p>
+						<button id="findRoomNameBtn" type=button name="findRoomNameBtn">Find By Room Name</button>
+						<button id="findRoomNumBtn" type=button name="findRoomNumBtn">Find By Room Number</button>
+					</p>
+				</div>
+			</div>
 		</div>
-    	<div style="width: 50%; float:right;">
-    		<div>
-    			<p>
-	    			<a href="../addRoom">Add New Room</a>
-					<br />
-					<a id="editRoom" href="#">Edit Selected Room</a>
-					<br />
-					<a id="deleteRoom" href="#">Delete Selected Room</a>
-					<br />
-				</p>
+		<div style="padding-top: 300px;">
+			<div style="width: 40%; float:left;">
+				<h3 id="roomsFreeOn">Rooms free on ...</h3>
+				<div id="foundRoomTable"></div>
 				<br/>
-				<h3>Select Room</h3>
-				<p>
-					<input type="text" placeholder="Room Name" id="rName"/><br />
-					<input type="text" placeholder="Room Number" id="rNumber"/><br />
-				</p>
-				<p>
-					<button id="findRoomBtn" type=button name="findRoomBtn">Find Room</button>
-				</p>
+				<button id="chooseRoomDateBtn" name="chooseRoomDateBtn">Submit Room and Reservation Date</button>
+			</div>
+			<div style="width: 50%; float:right;">
+				<h3 id="busyDatesFor">Busy dates for ...</h3>
+				<div id="busyDatesTable"></div>
 			</div>
 		</div>
 	</div>
@@ -65,6 +77,6 @@
 
 	<script type="text/javascript" th:src="@{/js/checkIfClinicAdmin.js}"></script>
 	<script type="text/javascript"
-		th:src="@{/js/roomManager.js}"></script>
+		th:src="@{/js/findRoomForCheckup.js}"></script>
 </body>
 </html>

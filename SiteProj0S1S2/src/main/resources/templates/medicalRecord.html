@@ -16,25 +16,10 @@
 
 	<!-- 	<container> -->
 	<div class="mainoptions">
-		<h1> User Profile </h1>
-		<h3 id="firstName">First name: ... </h3>
-		<h3 id="lastName">Last name: ...</h3>
-		<h3 id="country">Country: ... </h3>
-		<h3 id="city">City: ... </h3>
-		<h3 id="street">Street: ...</h3>
-		<h3 id="phone">Phone: ... </h3>
-		<h3 id="jmbg">JMBG: ...</h3>
-		<h3 id="email">Email ... </h3>
-		<br/>
-		<a href="#" id="medicalRecord">Check Medical Record</a>
-		
-		<h3>Reserved medical checkups you have with this patient</h3>
+		<h1> Medical Record </h1>
+		<h3 id="name">Medical history of ... </h3>
 		<div id="mcTable"></div>
 		<br/>
-		<div>
-			<h3>Press this button to begin the checkup you've selected.</h3>
-			<button id="beginCheckupBtn" type=button name="beginCheckupBtn">Begin Checkup</button>
-		</div>
 		
 		<!-- 
 		<a href="#" id="medicalRecord">Check Medical Record</a>
@@ -58,6 +43,7 @@
 		th:src="@{/webjars/tabulator/dist/js/tabulator.min.js/}"></script>
 		
 <script type="text/javascript" th:src="@{/js/checkIfDoctor.js}"></script>
-<script type="text/javascript" th:src="@{/js/userProfile.js}"></script>
+<script type="text/javascript" th:src="@{/js/checkIfDoctorCanViewMedicalRecord.js}"></script>
+<script type="text/javascript" th:src="@{/js/medicalRecord.js}"></script>
 </body>
 </html>

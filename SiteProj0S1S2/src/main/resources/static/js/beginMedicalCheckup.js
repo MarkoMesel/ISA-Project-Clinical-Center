@@ -26,7 +26,7 @@ $(document).on('submit', '*[name="sendMedicalCheckupRequestForm"]',function(e){
 					'token':localStorage.getItem('token')
 				},
 				success : function(successData) {
-					//window.location.href = "../clinicManager";	
+					window.location.href = "../doctorHome";	
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					if(textStatus=="401"){			
@@ -63,7 +63,7 @@ $("#saveNotesBtn").click(function() {
 			'notes':notes
 		},
 		success : function(successData) {
-			//window.location.href = "../doctorHome";	
+			window.location.href = "../doctorHome";
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			if(textStatus=="401"){			
