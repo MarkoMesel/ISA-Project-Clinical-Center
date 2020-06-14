@@ -90,6 +90,25 @@ public class MedicalCheckupController {
 		RoomDbModel room = roomRepo.findById(mc.getRoomId()).get();
 		DoctorDbModel doctor = doctorRepo.findById(mc.getDoctorId()).get();
 		
+		/*
+		 * Važno je da više istovremenih pacijenata, 
+		 * tj. korisnika aplikacije, 
+		 * ne može da zatraži upit za pregled 
+		 * u istom terminu kod istog lekara.
+		 */
+		/*
+		 * Jedan lekar ne može 
+		 * istovremeno da bude 
+		 * prisutan na više 
+		 * različitih operacija.
+		 */
+		List<MedicalCheckupDbModel> mcList = medicalCheckupRepo.findByDoctorIdAndDateAndTime(doctor.getId(),
+																							mc.getDate(),
+																							mc.getTime());
+		if(mcList.size() > 0) {
+			return "redirect:/registerMedicalCheckup";
+		}
+		
 		MedicalCheckupDbModel mcdbm = new MedicalCheckupDbModel();
 		mcdbm.setId(21);
 		mcdbm.setDate(mc.getDate());
@@ -174,10 +193,23 @@ public class MedicalCheckupController {
 	@PostMapping(path = "/saveNotesAndSendMedicalCheckupRequest")
 	public String saveNotesAndSendMedicalCheckupRequest(@RequestBody MedicalCheckupRegisterRequestModel mc, BindingResult result) {
 		if (result.hasErrors()) {
-			return "registerDoctor";
+			return "redirect:/doctorHome";
 		}
 		
 		MedicalCheckupDbModel mcOld = medicalCheckupRepo.findById(mc.getId()).get();
+		
+		/*
+		 * Jedan lekar ne može 
+		 * istovremeno da bude 
+		 * prisutan na više 
+		 * različitih operacija.
+		 */
+		List<MedicalCheckupDbModel> mcList = medicalCheckupRepo.findByDoctorIdAndDateAndTime(mcOld.getDoctor().getId(),
+																							mc.getDate(),
+																							mc.getTime());
+		if(mcList.size() > 0) {
+			return "redirect:/doctorHome";
+		}
 		
 		MedicalCheckupDbModel mcdbm = new MedicalCheckupDbModel();
 		mcdbm.setId(21);
@@ -196,7 +228,7 @@ public class MedicalCheckupController {
 		mcdbm.setFinished(false);
 		medicalCheckupRepo.save(mcdbm);
 		
-		return "redirect:/doctorHome";
+		return "redirect:/chooseAndBeginCheckup";
 	}
 	
 	@PutMapping(path = "/saveEndNotes")
@@ -284,13 +316,6 @@ public class MedicalCheckupController {
 					CheckupTypeDbModel ctdbm = ctRepo.findById(mc.getCheckupType().getId()).get();
 					RoomDbModel rdbm = roomRepo.findById(mc.getRoom().getId()).get();
 					UserDbModel udbm = userRepo.findById(mc.getPatient().getId()).get();
-					//System.out.println(udbm.getId());
-					/*
-					String finished = "No";
-					if(mc.isFinished()) {
-						finished = "Yes";
-					}
-					*/
 					MedicalCheckupDoctorResponseModel mcdrm = new MedicalCheckupDoctorResponseModel(
 							mc.getId(),
 							mc.getDate(),
@@ -416,8 +441,6 @@ public class MedicalCheckupController {
 			@RequestHeader("mcId") int mcId,
 			@RequestHeader("roomId") int roomId,
 			@RequestHeader("chosenDate") String chosenDate) {
-		//System.out.println("I AM HERE!!!");
-		//System.out.println("UBACENI ID JE: " + roomId );
 		if (securityToken == null) {
 			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 		}
@@ -428,6 +451,19 @@ public class MedicalCheckupController {
 			}
 			
 			MedicalCheckupDbModel mcdbm = medicalCheckupRepo.findById(mcId).get();
+			
+			/*
+			 * Prilikom odobravanja zahteva za 
+			 * operaciju/pregled, ne može jedna sala 
+			 * da bude rezervisana u isto vreme 
+			 * za različite operacije/preglede
+			 */
+			List<MedicalCheckupDbModel> mcList = medicalCheckupRepo.findByRoomIdAndDateAndTime(roomId,chosenDate,mcdbm.getTime());
+			if(mcList.size() > 1) {
+				return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			
+			
 			RoomDbModel rdbm = roomRepo.findById(roomId).get();
 			mcdbm.setRoom(rdbm);
 			mcdbm.setDate(chosenDate);

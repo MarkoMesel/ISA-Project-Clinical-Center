@@ -174,7 +174,7 @@ VALUES (6, '2020-07-03', '22:00', '50', 30, FALSE, 3, 1, null, 1, 1, 'This is th
 
 INSERT INTO MEDICALCHECKUP
 (ID, DATE, TIME, DURATION, PRICE, FREE, CHECKUPTYPE_ID, CLINIC_ID, ROOM_ID, DOCTOR_ID, PATIENT_ID, NOTES, END_NOTES, FINISHED)
-VALUES (7, '2020-08-03', '21:00', '10', 30, FALSE, 2, 1, null, 1, 3, 'This is the seventh one.', '', FALSE);
+VALUES (7, '2020-08-03', '18:00', '10', 30, FALSE, 2, 1, null, 1, 3, 'This is the seventh one.', '', FALSE);
 
 
 --VACATION

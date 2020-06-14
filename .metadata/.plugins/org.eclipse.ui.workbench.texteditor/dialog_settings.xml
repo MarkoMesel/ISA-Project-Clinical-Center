@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="time"/>
+		<item key="selection" value="register"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="register"/>
 			<item value="time"/>
 			<item value="date"/>
 			<item value="user"/>
@@ -22,7 +23,6 @@
 			<item value="email"/>
 			<item value="responseModel"/>
 			<item value="cursor"/>
-			<item value="confirmLocation"/>
 		</list>
 		<list key="replacehistory">
 		</list>

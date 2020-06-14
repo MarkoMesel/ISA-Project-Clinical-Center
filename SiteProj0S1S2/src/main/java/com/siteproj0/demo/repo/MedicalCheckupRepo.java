@@ -38,4 +38,8 @@ public interface MedicalCheckupRepo extends CrudRepository<MedicalCheckupDbModel
 
 	List<MedicalCheckupDbModel> findByRoomId(int roomId);
 
+	List<MedicalCheckupDbModel> findByRoomIdAndDateAndTime(int roomId, String date, String time);
+
+	List<MedicalCheckupDbModel> findByDoctorIdAndDateAndTime(int doctorId, String date, String time);
+
 }
