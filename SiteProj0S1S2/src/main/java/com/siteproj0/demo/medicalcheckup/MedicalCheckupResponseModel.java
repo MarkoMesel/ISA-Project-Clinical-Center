@@ -25,6 +25,7 @@ public class MedicalCheckupResponseModel {
 	private int clinicId;
 	private int roomId;
 	private int doctorId;
+	private String notes;
 	
 	public int getId() {
 		return id;
@@ -80,6 +81,11 @@ public class MedicalCheckupResponseModel {
 	public void setDoctorId(int doctorId) {
 		this.doctorId = doctorId;
 	}
-	
+	public String getNotes() {
+		return notes;
+	}
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
 	
 }

@@ -33,6 +33,9 @@ public class MedicalCheckupRegisterModel {
 	
 	@NotNull
 	private int doctorId;
+	
+	@NotEmpty
+	private String notes;
 
 	public int getId() {
 		return id;
@@ -104,5 +107,13 @@ public class MedicalCheckupRegisterModel {
 
 	public void setDoctorId(int doctorId) {
 		this.doctorId = doctorId;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 }

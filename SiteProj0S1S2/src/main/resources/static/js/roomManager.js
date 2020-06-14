@@ -53,7 +53,33 @@ $("#editRoom").click(function() {
 	var parsedData = getParsedDataFromTable("#roomTable");
 	var roomId = parsedData.id;
 	
-	window.location.href = "../editRoom/"+roomId;	
+	$.ajax({
+		type : 'GET',
+		url : "/isRoomReserved",
+		dataType : "text",
+		headers:{
+			'token':localStorage.getItem('token'),
+			'roomId': roomId
+		},
+		success : function(successData) {
+			//$("#roomTable").tabulator("setData", successData);
+			var isInUse = successData;
+			if(isInUse == 'true') {
+				alert("This room is reserved and therefore cannot be edited.");	
+			} else if(isInUse == 'false')  {
+				window.location.href = "../editRoom/"+roomId;
+			}
+			
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			if(textStatus=="401"){			
+				window.location.href = "../whatAreYou";
+			}
+		}
+	});
+
+	
+	//window.location.href = "../editRoom/"+roomId;	
 });
 
 $("#deleteRoom").click(function() {
@@ -62,25 +88,49 @@ $("#deleteRoom").click(function() {
 	var roomName = parsedData.name;
 	var roomNumber = parsedData.number;
 
-	if(window.confirm("Are you sure you want to remove room " + roomName + " " + roomNumber + "?")) {
-		$.ajax({
-			type : 'PUT',
-			url : "/logicalDeleteRoom",
-			contentType : 'application/json',	
-			headers:{
-				'token':localStorage.getItem('token'),
-				'roomId': roomId
-			},
-			success : function(successData) {
-				window.location.href = "../roomManager";	
-			},
-			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				if(textStatus=="401"){			
-					window.location.href = "../roomManager";
+	$.ajax({
+		type : 'GET',
+		url : "/isRoomInUse",
+		dataType : "text",
+		headers:{
+			'token':localStorage.getItem('token'),
+			'roomId': roomId
+		},
+		success : function(successData) {
+			//$("#roomTable").tabulator("setData", successData);
+			var isInUse = successData;
+			if(isInUse == 'true') {
+				alert("This room is reserved or  and therefore cannot be deleted.");	
+			} else if(isInUse == 'false')  {
+				if(window.confirm("Are you sure you want to remove room " + roomName + " " + roomNumber + "?")) {
+					$.ajax({
+						type : 'PUT',
+						url : "/logicalDeleteRoom",
+						contentType : 'application/json',	
+						headers:{
+							'token':localStorage.getItem('token'),
+							'roomId': roomId
+						},
+						success : function(successData) {
+							window.location.href = "../roomManager";	
+						},
+						error : function(XMLHttpRequest, textStatus, errorThrown) {
+							if(textStatus=="401"){			
+								window.location.href = "../roomManager";
+							}
+						}
+					});
 				}
 			}
-		});
-	}
+			
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			if(textStatus=="401"){			
+				window.location.href = "../whatAreYou";
+			}
+		}
+	});
+	
 });
 
 $("#findRoomBtn").click(function() {

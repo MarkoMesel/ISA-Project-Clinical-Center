@@ -20,4 +20,5 @@ public interface RoomRepo extends CrudRepository<RoomDbModel, Integer>{
 																Integer clinicId,
 																boolean enabled);
 
+
 }

@@ -73,7 +73,7 @@ public class ClinicAdminController {
 				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 			}
 
-			ProfileResponseModel result = new ProfileResponseModel(user.getFirstName(), user.getLastName(),
+			ProfileResponseModel result = new ProfileResponseModel(user.getId(), user.getFirstName(), user.getLastName(),
 					user.getCountry(), user.getCity(), user.getStreet(), user.getPhone(), user.getJmbg(), user.getEmail(), user.isVerified(), user.getRole());
 			
 			return new ResponseEntity<>(result, HttpStatus.OK);

@@ -24,10 +24,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.siteproj0.demo.dal.CheckupTypeDbModel;
 import com.siteproj0.demo.dal.ClinicAdminDbModel;
 import com.siteproj0.demo.dal.ClinicDbModel;
+import com.siteproj0.demo.dal.MedicalCheckupDbModel;
 import com.siteproj0.demo.dal.RoomDbModel;
 import com.siteproj0.demo.repo.CheckupTypeRepo;
 import com.siteproj0.demo.repo.ClinicAdminRepo;
 import com.siteproj0.demo.repo.ClinicRepo;
+import com.siteproj0.demo.repo.MedicalCheckupRepo;
 import com.siteproj0.demo.repo.RoomRepo;
 import com.siteproj0.demo.room.RoomRegisterModel;
 import com.siteproj0.demo.room.RoomResponseModel;
@@ -42,6 +44,9 @@ public class CheckupTypeController {
 	
 	@Autowired
 	ClinicAdminRepo clinicAdminRepo;
+	
+	@Autowired
+	MedicalCheckupRepo mcRepo;
 	
 	@ModelAttribute("ct")
 	public CheckupTypeRegisterModel ct() {
@@ -229,5 +234,45 @@ public class CheckupTypeController {
 			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping(path = "/isCheckupTypeInUse")
+	public ResponseEntity<Object> isCtInUse(@RequestHeader("token") UUID securityToken,
+								@RequestHeader("ctId") int ctId) {
+		//System.out.println("I AM HERE!");
+		try {
+			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			
+			List<MedicalCheckupDbModel> mcList = mcRepo.findByCheckupTypeIdAndFinished(ctId, false);
+			if(mcList.size() > 0)
+				return new ResponseEntity<>(true, HttpStatus.OK);
+			return new ResponseEntity<>(false, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(path = "/isCheckupTypeReserved")
+	public ResponseEntity<Object> isCtReserved(@RequestHeader("token") UUID securityToken,
+								@RequestHeader("ctId") int ctId) {
+		//System.out.println("I AM HERE!");
+		try {
+			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			
+			List<MedicalCheckupDbModel> mcList = mcRepo.findByCheckupTypeIdAndFreeAndFinished(ctId,false,false);
+			if(mcList.size() > 0)
+				return new ResponseEntity<>(true, HttpStatus.OK);
+			return new ResponseEntity<>(false, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

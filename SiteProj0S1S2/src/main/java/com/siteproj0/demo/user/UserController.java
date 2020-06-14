@@ -18,9 +18,12 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.UUID;
-
+import com.siteproj0.demo.dal.ClinicAdminDbModel;
+import com.siteproj0.demo.dal.ClinicDbModel;
+import com.siteproj0.demo.dal.DoctorDbModel;
 import com.siteproj0.demo.dal.UserDbModel;
+import com.siteproj0.demo.doctor.DoctorResponseModel;
+import com.siteproj0.demo.repo.DoctorRepo;
 import com.siteproj0.demo.repo.UserRepo;
 
 import java.util.*;
@@ -32,6 +35,9 @@ public class UserController {
 
 	@Autowired
 	UserRepo repo;
+	
+	@Autowired
+	DoctorRepo doctorRepo;
 
 	@ModelAttribute("user")
 	public UserRegisterModel user() {
@@ -67,7 +73,7 @@ public class UserController {
 				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 			}
 
-			ProfileResponseModel result = new ProfileResponseModel(user.getFirstName(), user.getLastName(),
+			ProfileResponseModel result = new ProfileResponseModel(user.getId(), user.getFirstName(), user.getLastName(),
 					user.getCountry(), user.getCity(), user.getStreet(), user.getPhone(), user.getJmbg(), user.getEmail(), user.isVerified(), user.getRole());
 			
 			return new ResponseEntity<>(result, HttpStatus.OK);
@@ -212,5 +218,163 @@ public class UserController {
 		user.setValidationToken(null);
 		repo.save(user);
 		return "redirect:/home?success";
+	}
+	
+	@GetMapping(path = "/getPatientsFromDoctor")
+	public ResponseEntity<Object> getPatientsFromDoctor(@RequestHeader("token") UUID securityToken) {
+		try {
+			DoctorDbModel user = doctorRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			ClinicDbModel clinic = user.getClinic();
+			Integer clinicId = clinic.getId();
+			//System.out.println("ID OD OVE KLINIKE JE: " + clinicId);
+			
+			
+			List<UserDbModel> users = repo.findByIsVerifiedAndClinicIdAndEnabled(true, clinicId, true);
+			//System.out.println("NASAO JE OVOLIKO ELEMENATA: " + doctors.size());
+			
+			List<UserResponseModel> userResponseList = new ArrayList<UserResponseModel>();
+			for (UserDbModel u : users) {
+	            UserResponseModel urm = new UserResponseModel
+	            		(u.getId(),
+	            		u.getFirstName(),
+	            		u.getLastName(),
+	            		u.getJmbg(),
+	            		u.getCountry(),
+	            		u.getCity(),
+	            		u.getStreet(),
+	            		u.getEmail(),
+	            		u.getPhone(),
+	            		clinicId);
+	            userResponseList.add(urm);
+	        }
+			
+			//ClinicResponseModel result = new ClinicResponseModel(clinic.getName(), clinic.getDescription(), clinic.getAddress());
+			return new ResponseEntity<>(userResponseList, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(path = "/findPatientsByFirstName")
+	public ResponseEntity<Object> findPatientsByFirstName(@RequestHeader("token") UUID securityToken,
+																	@RequestHeader("findByThis") String findByThis) {
+		try {
+			DoctorDbModel user = doctorRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			ClinicDbModel clinic = user.getClinic();
+			Integer clinicId = clinic.getId();
+			//System.out.println("ID OD OVE KLINIKE JE: " + clinicId);
+			
+			List<UserDbModel> users = repo.findByFirstNameAndClinicIdAndIsVerifiedAndEnabled(findByThis,
+																								clinicId,
+																								true,
+																								true);
+			
+			List<UserResponseModel> userResponseList = new ArrayList<UserResponseModel>();
+			for (UserDbModel u : users) {
+	            UserResponseModel urm = new UserResponseModel
+	            		(u.getId(),
+	            		u.getFirstName(),
+	            		u.getLastName(),
+	            		u.getJmbg(),
+	            		u.getCountry(),
+	            		u.getCity(),
+	            		u.getStreet(),
+	            		u.getEmail(),
+	            		u.getPhone(),
+	            		clinicId);
+	            userResponseList.add(urm);
+	        }
+			
+			//ClinicResponseModel result = new ClinicResponseModel(clinic.getName(), clinic.getDescription(), clinic.getAddress());
+			return new ResponseEntity<>(userResponseList, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(path = "/findPatientsByLastName")
+	public ResponseEntity<Object> findPatientsByLastName(@RequestHeader("token") UUID securityToken,
+																	@RequestHeader("findByThis") String findByThis) {
+		try {
+			DoctorDbModel user = doctorRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			ClinicDbModel clinic = user.getClinic();
+			Integer clinicId = clinic.getId();
+			//System.out.println("ID OD OVE KLINIKE JE: " + clinicId);
+			
+			List<UserDbModel> users = repo.findByLastNameAndClinicIdAndIsVerifiedAndEnabled(findByThis,
+																								clinicId,
+																								true,
+																								true);
+			
+			List<UserResponseModel> userResponseList = new ArrayList<UserResponseModel>();
+			for (UserDbModel u : users) {
+	            UserResponseModel urm = new UserResponseModel
+	            		(u.getId(),
+	            		u.getFirstName(),
+	            		u.getLastName(),
+	            		u.getJmbg(),
+	            		u.getCountry(),
+	            		u.getCity(),
+	            		u.getStreet(),
+	            		u.getEmail(),
+	            		u.getPhone(),
+	            		clinicId);
+	            userResponseList.add(urm);
+	        }
+			
+			//ClinicResponseModel result = new ClinicResponseModel(clinic.getName(), clinic.getDescription(), clinic.getAddress());
+			return new ResponseEntity<>(userResponseList, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(path = "/findPatientsByJmbg")
+	public ResponseEntity<Object> findPatientsByJmbg(@RequestHeader("token") UUID securityToken,
+																	@RequestHeader("findByThis") String findByThis) {
+		try {
+			DoctorDbModel user = doctorRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			ClinicDbModel clinic = user.getClinic();
+			Integer clinicId = clinic.getId();
+			//System.out.println("ID OD OVE KLINIKE JE: " + clinicId);
+			
+			List<UserDbModel> users = repo.findByJmbgAndClinicIdAndIsVerifiedAndEnabled(findByThis,
+																								clinicId,
+																								true,
+																								true);
+			
+			List<UserResponseModel> userResponseList = new ArrayList<UserResponseModel>();
+			for (UserDbModel u : users) {
+	            UserResponseModel urm = new UserResponseModel
+	            		(u.getId(),
+	            		u.getFirstName(),
+	            		u.getLastName(),
+	            		u.getJmbg(),
+	            		u.getCountry(),
+	            		u.getCity(),
+	            		u.getStreet(),
+	            		u.getEmail(),
+	            		u.getPhone(),
+	            		clinicId);
+	            userResponseList.add(urm);
+	        }
+			
+			//ClinicResponseModel result = new ClinicResponseModel(clinic.getName(), clinic.getDescription(), clinic.getAddress());
+			return new ResponseEntity<>(userResponseList, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

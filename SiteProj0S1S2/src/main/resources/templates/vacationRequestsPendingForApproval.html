@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/tabulator/dist/css/tabulator_modern.min.css/}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+
+
+
+<title>Approve or Reject Vacation Requests</title>
+
+
+</head>
+
+<body>
+	<h1>Approve or Reject Vacation Requests</h1>
+	<!-- 	<container> -->
+	<h3>List of vacation requests that haven't been approved or rejected yet.</h3>
+	<div id="vrTable"></div>
+	<br/>
+	<div>
+		<h3>Approve the vacation request you've selected...</h3>
+		<button id="approveBtn" type=button name="approveBtn">Approve</button>
+		<h3>...or reject the vacation request and submit a reason for doing so.</h3>
+		<textarea id="reasonTextArea" placeholder="Write a reason for rejecting the vacation request." rows="4" cols="50"></textarea>
+		<button id="rejectBtn" type=button name="rejectBtn">Reject</button>
+	</div>
+	<!--
+	<div class="mainoptions">
+	   	<a href="../registerDoctor">Add New Doctor</a>
+	    <br/>
+	</div>
+	-->
+
+	<!-- 	</container> -->
+
+
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/tabulator/dist/js/tabulator.min.js/}"></script>
+
+	<script type="text/javascript"
+		th:src="@{/js/vacationRequestsPendingForApproval.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/js/checkIfClinicAdmin.js}"></script>
+</body>
+</html>

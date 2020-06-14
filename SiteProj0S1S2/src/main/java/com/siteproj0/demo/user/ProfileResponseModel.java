@@ -10,9 +10,10 @@ import javax.validation.constraints.NotEmpty;
 
 public class ProfileResponseModel {	
 
-	public ProfileResponseModel(String firstName, String lastName, String country, String city, String street,
+	public ProfileResponseModel(int id, String firstName, String lastName, String country, String city, String street,
 			String phone, String jmbg, String email, boolean isVerified, String role) {
 		super();
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.country = country;
@@ -24,6 +25,7 @@ public class ProfileResponseModel {
 		this.isVerified = isVerified;
 		this.role = role;
 	}
+	private int id;
 	
 	private String firstName;
 	
@@ -45,6 +47,12 @@ public class ProfileResponseModel {
 	
 	private String role;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getFirstName() {
 		return firstName;
 	}

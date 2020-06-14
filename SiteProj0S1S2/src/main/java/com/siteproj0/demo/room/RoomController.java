@@ -25,11 +25,13 @@ import com.siteproj0.demo.clinic.ClinicResponseModel;
 import com.siteproj0.demo.dal.ClinicAdminDbModel;
 import com.siteproj0.demo.dal.ClinicDbModel;
 import com.siteproj0.demo.dal.DoctorDbModel;
+import com.siteproj0.demo.dal.MedicalCheckupDbModel;
 import com.siteproj0.demo.dal.RoomDbModel;
 import com.siteproj0.demo.doctor.DoctorRegisterModel;
 import com.siteproj0.demo.doctor.DoctorResponseModel;
 import com.siteproj0.demo.repo.ClinicAdminRepo;
 import com.siteproj0.demo.repo.ClinicRepo;
+import com.siteproj0.demo.repo.MedicalCheckupRepo;
 import com.siteproj0.demo.repo.RoomRepo;
 import com.siteproj0.demo.room.RoomRegisterModel;
 
@@ -43,6 +45,9 @@ public class RoomController {
 	
 	@Autowired
 	ClinicAdminRepo clinicAdminRepo;
+	
+	@Autowired
+	MedicalCheckupRepo mcRepo;
 	
 	@ModelAttribute("room")
 	public RoomRegisterModel room() {
@@ -231,4 +236,45 @@ public class RoomController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@GetMapping(path = "/isRoomInUse")
+	public ResponseEntity<Object> isRoomInUse(@RequestHeader("token") UUID securityToken,
+								@RequestHeader("roomId") int roomId) {
+		//System.out.println("I AM HERE!");
+		try {
+			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			
+			List<MedicalCheckupDbModel> mcList = mcRepo.findByRoomIdAndFinished(roomId,false);
+			if(mcList.size() > 0)
+				return new ResponseEntity<>(true, HttpStatus.OK);
+			return new ResponseEntity<>(false, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(path = "/isRoomReserved")
+	public ResponseEntity<Object> isRoomReserved(@RequestHeader("token") UUID securityToken,
+								@RequestHeader("roomId") int roomId) {
+		//System.out.println("I AM HERE!");
+		try {
+			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			
+			List<MedicalCheckupDbModel> mcList = mcRepo.findByRoomIdAndFreeAndFinished(roomId,false,false);
+			if(mcList.size() > 0)
+				return new ResponseEntity<>(true, HttpStatus.OK);
+			return new ResponseEntity<>(false, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 }

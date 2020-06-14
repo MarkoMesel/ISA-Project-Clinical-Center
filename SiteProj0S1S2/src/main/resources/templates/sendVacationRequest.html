@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/tabulator/dist/css/tabulator_modern.min.css/}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+
+
+
+<title>The Checkup Has Started</title>
+
+
+</head>
+
+<body>
+	<div class="mainoptions">
+		<h3>The Checkup Has Started</h3>
+		<form th:action="@{/sendVacationRequest}" th:object="${vacation}" method="post">
+	
+			<p class="error-message" th:if="${#fields.hasGlobalErrors()}"
+				th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation
+				error</p>
+	
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('startDate')}? 'has-error':''">
+				<div class="input-group">
+					<span class="input-group-addon"> <i
+						class="glyphicon glyphicon-user color-blue"></i>
+					</span> <input type="date" id="startDate" class="form-control"
+						placeholder="Start Date" th:field="*{startDate}" />
+				</div>
+				<p class="error-message"
+					th:each="error: ${#fields.errors('startDate')}" th:text="${error}">Validation
+					error</p>
+			</div>
+	
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('endDate')}? 'has-error':''">
+				<div class="input-group">
+					<span class="input-group-addon"> <i
+						class="glyphicon glyphicon-user color-blue"></i>
+					</span> <input type="date" id="endDate" class="form-control"
+						placeholder="End Date" th:field="*{endDate}" />
+				</div>
+				<p class="error-message"
+					th:each="error: ${#fields.errors('endDate')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('doctorId')}? 'has-error':''">
+				<div class="input-group">
+					<span class="input-group-addon"> <i
+						class="glyphicon glyphicon-user color-blue"></i>
+					</span> <input type="hidden" id="doctorId" class="form-control"
+						placeholder="End Date" th:field="*{doctorId}" />
+				</div>
+				<p class="error-message"
+					th:each="error: ${#fields.errors('doctorId')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			<!-- <input name="doctorId" value="doctorId" th:field="*{doctorId}" class="form-control" />-->
+			
+			<input type="submit" value="Send Vacation Request">
+		</form>
+	</div>
+	
+	<!--
+	<div class="mainoptions">
+	   	<a href="../registerDoctor">Add New Doctor</a>
+	    <br/>
+	</div>
+	-->
+
+	<!-- 	</container> -->
+
+
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/tabulator/dist/js/tabulator.min.js/}"></script>
+
+	<script type="text/javascript"
+		th:src="@{/js/checkIfDoctor.js}"></script>
+			<script type="text/javascript"
+		th:src="@{/js/sendVacationRequest.js}"></script>
+</body>
+</html>

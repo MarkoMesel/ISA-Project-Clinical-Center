@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+
+    <title>Clinic Manager</title>
+</head>
+<body>
+
+
+	<!-- 	<container> -->
+	<div class="mainoptions">
+		<h1> Clinic Manager </h1>
+		<h3 id="firstName">First name: ... </h3>
+		<h3 id="lastName">Last name: ...</h3>
+		<h3 id="country">Country: ... </h3>
+		<h3 id="city">City: ... </h3>
+		<h3 id="street">Street: ...</h3>
+		<h3 id="phone">Phone: ... </h3>
+		<h3 id="jmbg">JMBG: ...</h3>
+		<h3 id="email">Email ... </h3>
+		<br/>
+		<a href="#" id="medicalRecord">Check Medical Record</a>
+		<!-- 
+		<a href="#" id="medicalRecord">Check Medical Record</a>
+		<br />
+		-->
+	</div>
+    <br/>
+    
+
+    
+	<!-- 	</container> -->
+
+
+<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/checkIfClinicAdmin.js}"></script>
+<script type="text/javascript" th:src="@{/js/clinicManager.js}"></script>
+</body>
+</html>

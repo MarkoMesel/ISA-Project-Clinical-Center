@@ -172,23 +172,47 @@ $("#deleteDoctor").click(function() {
 	var doctorFirstName = parsedData.firstName;
 	var doctorLastName = parsedData.lastName;
 
-	if(window.confirm("Are you sure you want to remove doctor " + parsedData.firstName + " " + parsedData.lastName + "?")) {
-		$.ajax({
-			type : 'PUT',
-			url : "/logicalDeleteDoctor",
-			contentType : 'application/json',	
-			headers:{
-				'token':localStorage.getItem('token'),
-				'doctorId': doctorId
-			},
-			success : function(successData) {
-				window.location.href = "../doctorManager";	
-			},
-			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				if(textStatus=="401"){			
-					window.location.href = "../doctorManager";
+	$.ajax({
+		type : 'GET',
+		url : "/isDoctorInUse",
+		dataType : "text",
+		headers:{
+			'token':localStorage.getItem('token'),
+			'doctorId': doctorId
+		},
+		success : function(successData) {
+			//$("#roomTable").tabulator("setData", successData);
+			var isInUse = successData;
+			if(isInUse == 'true') {
+				alert("This doctor has registered checkups and therefore cannot be edited.");	
+			} else if(isInUse == 'false')  {
+				if(window.confirm("Are you sure you want to remove doctor " + parsedData.firstName + " " + parsedData.lastName + "?")) {
+					$.ajax({
+						type : 'PUT',
+						url : "/logicalDeleteDoctor",
+						contentType : 'application/json',	
+						headers:{
+							'token':localStorage.getItem('token'),
+							'doctorId': doctorId
+						},
+						success : function(successData) {
+							window.location.href = "../doctorManager";	
+						},
+						error : function(XMLHttpRequest, textStatus, errorThrown) {
+							if(textStatus=="401"){			
+								window.location.href = "../doctorManager";
+							}
+						}
+					});
 				}
 			}
-		});
-	}
+			
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			if(textStatus=="401"){			
+				window.location.href = "../whatAreYou";
+			}
+		}
+	});
+	
 });

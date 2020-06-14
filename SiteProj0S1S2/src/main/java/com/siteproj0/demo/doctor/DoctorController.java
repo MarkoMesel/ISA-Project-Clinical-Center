@@ -35,12 +35,14 @@ import com.siteproj0.demo.clinic.ClinicResponseModel;
 import com.siteproj0.demo.dal.ClinicAdminDbModel;
 import com.siteproj0.demo.dal.ClinicDbModel;
 import com.siteproj0.demo.dal.DoctorDbModel;
+import com.siteproj0.demo.dal.MedicalCheckupDbModel;
 import com.siteproj0.demo.dal.UserDbModel;
 import com.siteproj0.demo.home.ChangePasswordRequestModel;
 import com.siteproj0.demo.home.EditProfileBasicInfoRequestModel;
 import com.siteproj0.demo.repo.ClinicAdminRepo;
 import com.siteproj0.demo.repo.ClinicRepo;
 import com.siteproj0.demo.repo.DoctorRepo;
+import com.siteproj0.demo.repo.MedicalCheckupRepo;
 import com.siteproj0.demo.user.LoginModel;
 import com.siteproj0.demo.user.LoginResponseModel;
 import com.siteproj0.demo.user.ProfileResponseModel;
@@ -57,6 +59,9 @@ public class DoctorController {
 	
 	@Autowired
 	ClinicRepo clinicRepo;
+	
+	@Autowired
+	MedicalCheckupRepo mcRepo;
 	
 	@ModelAttribute("doctor")
 	public DoctorRegisterModel doctor() {
@@ -102,7 +107,7 @@ public class DoctorController {
 				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 			}
 
-			ProfileResponseModel result = new ProfileResponseModel(user.getFirstName(), user.getLastName(),
+			ProfileResponseModel result = new ProfileResponseModel(user.getId(), user.getFirstName(), user.getLastName(),
 					user.getCountry(), user.getCity(), user.getStreet(), user.getPhone(), user.getJmbg(), user.getEmail(), user.isVerified(), user.getRole());
 			
 			return new ResponseEntity<>(result, HttpStatus.OK);
@@ -334,4 +339,35 @@ public class DoctorController {
 		}
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
+	
+	@GetMapping(path = "/listOfPatients")
+	public String listOfPatientsPage() {
+		return "listOfPatients";
+	}
+	
+	@GetMapping(path = "/doctorWorkingCalendar")
+	public String doctorWorkingCalendarPage() {
+		return "doctorWorkingCalendar";
+	}
+	
+	@GetMapping(path = "/isDoctorInUse")
+	public ResponseEntity<Object> isRoomInUse(@RequestHeader("token") UUID securityToken,
+								@RequestHeader("doctorId") int doctorId) {
+		//System.out.println("I AM HERE!");
+		try {
+			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			
+			List<MedicalCheckupDbModel> mcList = mcRepo.findByCheckupTypeIdAndFreeAndFinished(doctorId,false,false);
+			if(mcList.size() > 0)
+				return new ResponseEntity<>(true, HttpStatus.OK);
+			return new ResponseEntity<>(false, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 }

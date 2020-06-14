@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/tabulator/dist/css/tabulator_modern.min.css/}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+
+
+
+<title>List of Patients that belong to this clinic</title>
+
+
+</head>
+
+<body>
+	<h1>List of Patients that belong to this clinic</h1>
+	<!-- 	<container> -->
+	<div id="patientTable"></div>
+	<br/>
+	<div>
+		<h3>Find A Doctor</h3>
+		<p>
+			<input type="text" placeholder="Find..." id="findByThis"/><br />
+		</p>
+		<p>
+			<button id="findByFirstName" type=button name="findByFirstName">Find By First Name</button>
+			<br/>
+			<button id="findByLastName" type=button name="findByLastName">Find By Last Name</button>
+			<br/>
+			<button id="findByJmbg" type=button name="findByJmbg">Find By Jmbg</button>
+		</p>
+	</div>
+	<div id="searchResultTable"></div>
+	<!--
+	<div class="mainoptions">
+	   	<a href="../registerDoctor">Add New Doctor</a>
+	    <br/>
+	</div>
+	-->
+
+	<!-- 	</container> -->
+
+
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/tabulator/dist/js/tabulator.min.js/}"></script>
+
+	<script type="text/javascript"
+		th:src="@{/js/listOfPatients.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/js/checkIfDoctor.js}"></script>
+</body>
+</html>

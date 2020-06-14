@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -60,6 +63,15 @@ public class UserDbModel {
 	
 	@OneToMany(mappedBy = "patient")
 	private List<AppointmentDbModel> appointments;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="CLINIC_ID")
+	private ClinicDbModel clinic;
+	
+	@OneToMany(mappedBy = "patient")
+	private List<MedicalCheckupDbModel> medicalCheckups;
+	
+	private boolean enabled;
 	
 	public int getId() {
 		return id;
@@ -154,5 +166,23 @@ public class UserDbModel {
 	}
 	public void setVerified(boolean isVerified) {
 		this.isVerified = isVerified;
+	}
+	public ClinicDbModel getClinic() {
+		return clinic;
+	}
+	public void setClinic(ClinicDbModel clinic) {
+		this.clinic = clinic;
+	}
+	public boolean isEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	public List<MedicalCheckupDbModel> getMedicalCheckups() {
+		return medicalCheckups;
+	}
+	public void setMedicalCheckups(List<MedicalCheckupDbModel> medicalCheckups) {
+		this.medicalCheckups = medicalCheckups;
 	}
 }

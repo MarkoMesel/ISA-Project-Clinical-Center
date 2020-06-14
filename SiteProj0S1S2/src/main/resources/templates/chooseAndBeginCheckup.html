@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/tabulator/dist/css/tabulator_modern.min.css/}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+
+
+
+<title>Choose and Begin Checkup</title>
+
+
+</head>
+
+<body>
+	<h1>Choose a checkup from the list.</h1>
+	<!-- 	<container> -->
+	<h3>Reserved Medical Checkups</h3>
+	<div id="mcTable"></div>
+	<br/>
+	<div>
+		<h3>Press this button to begin the checkup you've selected.</h3>
+		<button id="beginCheckupBtn" type=button name="beginCheckupBtn">Begin Checkup</button>
+	</div>
+	<!--
+	<div class="mainoptions">
+	   	<a href="../registerDoctor">Add New Doctor</a>
+	    <br/>
+	</div>
+	-->
+
+	<!-- 	</container> -->
+
+
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/tabulator/dist/js/tabulator.min.js/}"></script>
+
+	<script type="text/javascript"
+		th:src="@{/js/chooseAndBeginCheckup.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/js/checkIfDoctor.js}"></script>
+</body>
+</html>

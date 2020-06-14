@@ -11,14 +11,19 @@
 <fullyQualifiedTypeName name="com.siteproj0.demo.doctor.DoctorResponseModel"/>
 <fullyQualifiedTypeName name="java.util.Iterator"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="com.siteproj0.demo.dal.DoctorDbModel"/>
-<fullyQualifiedTypeName name="com.siteproj0.demo.repo.ClinicAdminRepo"/>
-<fullyQualifiedTypeName name="com.siteproj0.demo.repo.MedicalCheckupRepo"/>
 <fullyQualifiedTypeName name="com.siteproj0.demo.repo.ClinicRepo"/>
 <fullyQualifiedTypeName name="com.siteproj0.demo.repo.CheckupTypeRepo"/>
 <fullyQualifiedTypeName name="com.siteproj0.demo.repo.RoomRepo"/>
 <fullyQualifiedTypeName name="com.siteproj0.demo.dal.CheckupTypeDbModel"/>
 <fullyQualifiedTypeName name="com.siteproj0.demo.dal.RoomDbModel"/>
-<fullyQualifiedTypeName name="com.siteproj0.demo.dal.MedicalCheckupDbModel"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.repo.UserRepo"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.repo.VacationRepo"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.repo.DoctorRepo"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.dal.DoctorDbModel"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.dal.VacationDbModel"/>
 <fullyQualifiedTypeName name="javax.validation.constraints.NotNull"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ResponseBody"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.repo.ClinicAdminRepo"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.dal.MedicalCheckupDbModel"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.repo.MedicalCheckupRepo"/>
 </qualifiedTypeNameHistroy>

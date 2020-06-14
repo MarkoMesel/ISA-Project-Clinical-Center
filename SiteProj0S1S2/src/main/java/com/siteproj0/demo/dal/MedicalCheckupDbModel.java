@@ -48,6 +48,16 @@ public class MedicalCheckupDbModel {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="DOCTOR_ID")
 	private DoctorDbModel doctor;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="PATIENT_ID")
+	private UserDbModel patient;
+	
+	private String notes;
+	
+	private String endNotes;
+	
+	private boolean finished;
 
 	public int getId() {
 		return id;
@@ -128,4 +138,37 @@ public class MedicalCheckupDbModel {
 	public void setDoctor(DoctorDbModel doctor) {
 		this.doctor = doctor;
 	}
+
+	public UserDbModel getPatient() {
+		return patient;
+	}
+
+	public void setPatient(UserDbModel patient) {
+		this.patient = patient;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
+	public String getEndNotes() {
+		return endNotes;
+	}
+
+	public void setEndNotes(String endNotes) {
+		this.endNotes = endNotes;
+	}
+
+	public boolean isFinished() {
+		return finished;
+	}
+
+	public void setFinished(boolean finished) {
+		this.finished = finished;
+	}
+	
 }

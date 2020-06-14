@@ -53,7 +53,31 @@ $("#editCt").click(function() {
 	var parsedData = getParsedDataFromTable("#ctTable");
 	var ctId = parsedData.id;
 	
-	window.location.href = "../editCheckupType/"+ctId;	
+	$.ajax({
+		type : 'GET',
+		url : "/isCheckupTypeReserved",
+		dataType : "text",
+		headers:{
+			'token':localStorage.getItem('token'),
+			'ctId': ctId
+		},
+		success : function(successData) {
+			//$("#roomTable").tabulator("setData", successData);
+			var isInUse = successData;
+			if(isInUse == 'true') {
+				alert("A checkup of this type is reserved and therefore this type cannot be edited.");	
+			} else if(isInUse == 'false')  {
+				window.location.href = "../editCheckupType/"+ctId;	
+			}
+			
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			if(textStatus=="401"){			
+				window.location.href = "../whatAreYou";
+			}
+		}
+	});
+	
 });
 
 $("#findCtBtn").click(function() {
@@ -71,7 +95,7 @@ $("#findCtBtn").click(function() {
 		},
 		success : function(successData) {
 			var foundId = successData.id;
-			$("#ctTable").tabulator("selectRow", foundId);	
+			$("#ctTable").tabulator("selectRow", foundId);
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			if(textStatus=="401"){			
@@ -87,25 +111,48 @@ $("#deleteCt").click(function() {
 	var ctId = parsedData.id;
 	var name = parsedData.name;
 
-	if(window.confirm("Are you sure you want to remove checkup type " + name + "?")) {
-		$.ajax({
-			type : 'PUT',
-			url : "/logicalDeleteCt",
-			contentType : 'application/json',	
-			headers:{
-				'token':localStorage.getItem('token'),
-				'ctId': ctId
-			},
-			success : function(successData) {
-				window.location.href = "../checkupTypeManager";	
-			},
-			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				if(textStatus=="401"){			
-					window.location.href = "../checkupTypeManager";
+	$.ajax({
+		type : 'GET',
+		url : "/isCheckupTypeInUse",
+		dataType : "text",
+		headers:{
+			'token':localStorage.getItem('token'),
+			'ctId': ctId
+		},
+		success : function(successData) {
+			//$("#roomTable").tabulator("setData", successData);
+			var isInUse = successData;
+			if(isInUse == 'true') {
+				alert("A checkup of this type is reserved and therefore this type cannot be deleted.");	
+			} else if(isInUse == 'false')  {
+				if(window.confirm("Are you sure you want to remove checkup type " + name + "?")) {
+					$.ajax({
+						type : 'PUT',
+						url : "/logicalDeleteCt",
+						contentType : 'application/json',	
+						headers:{
+							'token':localStorage.getItem('token'),
+							'ctId': ctId
+						},
+						success : function(successData) {
+							window.location.href = "../checkupTypeManager";	
+						},
+						error : function(XMLHttpRequest, textStatus, errorThrown) {
+							if(textStatus=="401"){			
+								window.location.href = "../checkupTypeManager";
+							}
+						}
+					});
 				}
 			}
-		});
-	}
+			
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			if(textStatus=="401"){			
+				window.location.href = "../whatAreYou";
+			}
+		}
+	});
 });
 
 function getParsedDataFromTable(tableIdString) {

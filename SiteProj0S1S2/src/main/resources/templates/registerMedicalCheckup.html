@@ -88,6 +88,19 @@
 					<input type="button" id="calculatePrice" value="Calculate Price from Checkup Type And Doctor" name="">
 					<p> Equation: <b>checkupTypePrice * doctorRating / 4</b></p>
 				</div>
+							
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('notes')}? 'has-error':''">
+					<div class="input-group">
+						<span class="input-group-addon"> <i
+							class="glyphicon glyphicon-user color-blue"></i>
+						</span> <input id="notes" class="form-control"
+							placeholder="Notes" th:field="*{notes}" />
+					</div>
+					<p class="error-message"
+						th:each="error: ${#fields.errors('notes')}" th:text="${error}">Validation
+						error</p>
+				</div>
 				
 				<input type="submit" value="Submit">
 			</form>

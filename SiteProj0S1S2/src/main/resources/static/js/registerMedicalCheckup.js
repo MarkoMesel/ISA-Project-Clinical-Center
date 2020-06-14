@@ -180,7 +180,7 @@ $(document).on('submit', '*[name="registerMedicalCheckupForm"]',function(e){
 	
 	$.ajax({
 		type : 'POST',
-		url : "/registerMedicalCheckup",
+		url : "/saveEndNotesAndMakeNewAppointment",
 		contentType : 'application/json',
 		data : data,	
 		headers:{
@@ -235,5 +235,6 @@ function formToJSON(form) {
 		'clinicId' : form['clinicId'].value,
 		'roomId' : getSelectedIdFromtable("#roomTable"),
 		'doctorId' : getSelectedIdFromtable("#doctorTable"),
+		'notes' : form['notes'].value,
 	});
 }
