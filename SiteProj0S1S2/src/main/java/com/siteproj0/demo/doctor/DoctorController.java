@@ -217,13 +217,11 @@ public class DoctorController {
 			//System.out.println("ID OD OVE KLINIKE JE: " + clinicId);
 			
 			
-			List<DoctorDbModel> doctors = doctorRepo.findByFirstNameAndLastNameAndRatingAndClinicIdAndEnabled(firstName,
+			DoctorDbModel d = doctorRepo.findByFirstNameAndLastNameAndRatingAndClinicIdAndEnabled(firstName,
 																											lastName,
 																											rating,
 																											clinicId,
 																											true);
-			
-			DoctorDbModel d= doctors.get(0);
             DoctorResponseModel drm = new DoctorResponseModel
             		(d.getId(),
             		d.getFirstName(),
@@ -261,8 +259,7 @@ public class DoctorController {
 			ClinicDbModel clinic = user.getClinic();
 			Integer clinicId = clinic.getId();
 			
-			List<DoctorDbModel> doctors = doctorRepo.findByIdAndClinicIdAndEnabled(doctorId, clinicId, true);
-			DoctorDbModel d= doctors.get(0);
+			DoctorDbModel d = doctorRepo.findByIdAndClinicIdAndEnabled(doctorId, clinicId, true);
 			d.setEnabled(false);
 			doctorRepo.save(d);
 		} catch (Exception e) {

@@ -1,13 +1,13 @@
 --CLINIC
 INSERT INTO CLINIC
-(ID, ADDRESS, DESCRIPTION, NAME, RATING, PRICE, ROOM)
+(ID, ADDRESS, DESCRIPTION, NAME, RATING, PRICE)
 
-VALUES(1, 'To the left', 'This is clinic 1.', 'VMA', 10, 200, 'ORDINACIJA_1');
+VALUES(1, 'To the left', 'This is clinic 1.', 'VMA', 10, 200);
 
 INSERT INTO CLINIC
-(ID, ADDRESS, DESCRIPTION, NAME, RATING, PRICE, ROOM)
+(ID, ADDRESS, DESCRIPTION, NAME, RATING, PRICE)
 
-VALUES(2, 'To the right', 'This is clinic 2.', 'Betanija', 9, 150, 'ORDINACIJA_2');
+VALUES(2, 'To the right', 'This is clinic 2.', 'Betanija', 9, 150);
 
 --DOCTOR
 INSERT INTO DOCTOR

@@ -107,11 +107,11 @@ public class VacationController {
 			
 			for(VacationDbModel v : vList) {
 				//PROVERA DA LI SU DOKTOR I CLINICADMIN IZ ISTE KLINIKE
-				List<DoctorDbModel> drList = doctorRepo.findByIdAndClinicIdAndEnabled(v.getDoctor().getId(), user.getClinic().getId(), true);
-				if(drList.size() > 0) {
+				DoctorDbModel dr = doctorRepo.findByIdAndClinicIdAndEnabled(v.getDoctor().getId(), user.getClinic().getId(), true);
+				if(dr != null) {
 					VacationResponseModel vrm = new VacationResponseModel(
 							v.getId(),
-							drList.get(0).getFirstName() + " " + drList.get(0).getLastName(),
+							dr.getFirstName() + " " + dr.getLastName(),
 							v.getStartDate(),
 							v.getEndDate());
 					vrmList.add(vrm);

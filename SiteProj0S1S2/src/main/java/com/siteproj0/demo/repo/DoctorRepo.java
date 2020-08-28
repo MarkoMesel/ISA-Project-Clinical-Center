@@ -17,10 +17,10 @@ public interface DoctorRepo extends CrudRepository<DoctorDbModel, Integer> {
 	DoctorDbModel findByEmailAndPassword(String email, String password);
 	DoctorDbModel findBySecurityToken(UUID securityToken);
 	List<DoctorDbModel> findByClinicIdAndEnabled(Integer clinicId, boolean enabled);
-	List<DoctorDbModel> findByFirstNameAndLastNameAndRatingAndClinicIdAndEnabled(String firstName,
+	DoctorDbModel findByFirstNameAndLastNameAndRatingAndClinicIdAndEnabled(String firstName,
 																		String lastName,
 																		float rating,
 																		Integer clinicId,
 																		boolean enabled);
-	List<DoctorDbModel> findByIdAndClinicIdAndEnabled(Integer id, Integer clinicId, boolean b);
+	DoctorDbModel findByIdAndClinicIdAndEnabled(Integer id, Integer clinicId, boolean b);
 }

@@ -25,14 +25,10 @@ import com.siteproj0.demo.dal.CheckupTypeDbModel;
 import com.siteproj0.demo.dal.ClinicAdminDbModel;
 import com.siteproj0.demo.dal.ClinicDbModel;
 import com.siteproj0.demo.dal.MedicalCheckupDbModel;
-import com.siteproj0.demo.dal.RoomDbModel;
 import com.siteproj0.demo.repo.CheckupTypeRepo;
 import com.siteproj0.demo.repo.ClinicAdminRepo;
 import com.siteproj0.demo.repo.ClinicRepo;
 import com.siteproj0.demo.repo.MedicalCheckupRepo;
-import com.siteproj0.demo.repo.RoomRepo;
-import com.siteproj0.demo.room.RoomRegisterModel;
-import com.siteproj0.demo.room.RoomResponseModel;
 
 @Controller
 public class CheckupTypeController {
@@ -54,7 +50,7 @@ public class CheckupTypeController {
 	}
 	
 	@GetMapping(path = "/checkupTypeManager")
-	public String showctManagerPage() {
+	public String showCtManagerPage() {
 		return "checkupTypeManager";
 	}
 
@@ -69,8 +65,6 @@ public class CheckupTypeController {
 			ClinicDbModel clinic = user.getClinic();
 			Integer clinicId = clinic.getId();
 			//System.out.println("I HAVE FOUND A CLINIC! ITS ID IS " + clinicId);
-			
-			
 			
 			List<CheckupTypeDbModel> cts = ctRepo.findByClinicIdAndEnabled(clinicId, true);
 			
@@ -129,7 +123,7 @@ public class CheckupTypeController {
 	}
 	
 	@GetMapping(path = "/getCtInfo/{ctId}")
-	public ResponseEntity<CheckupTypeResponseModel> getRoomInfo(@RequestHeader("token") UUID securityToken, @PathVariable int ctId) {
+	public ResponseEntity<CheckupTypeResponseModel> getCtInfo(@RequestHeader("token") UUID securityToken, @PathVariable int ctId) {
 		try {
 			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
 			if (user == null) {
@@ -139,7 +133,7 @@ public class CheckupTypeController {
 			Integer clinicId = clinic.getId();
 			
 			
-			CheckupTypeDbModel ctbm = ctRepo.findByIdAndClinicId(ctId, clinicId);
+			CheckupTypeDbModel ctbm = ctRepo.findByIdAndClinicIdAndEnabled(ctId, clinicId, true);
 			
 			CheckupTypeResponseModel result = new CheckupTypeResponseModel(ctbm.getId(), ctbm.getName(), ctbm.getPrice(), clinicId);
 			
@@ -164,11 +158,11 @@ public class CheckupTypeController {
 				return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 			}
 			
-			Integer roomId = ctModel.getId();
+			Integer ctId = ctModel.getId();
 			ClinicDbModel clinic = user.getClinic();
 			Integer clinicId = clinic.getId();
 			
-			CheckupTypeDbModel ctdbm = ctRepo.findByIdAndClinicId(roomId, clinicId);
+			CheckupTypeDbModel ctdbm = ctRepo.findByIdAndClinicIdAndEnabled(ctId, clinicId, true);
 			
 			ctdbm.setName(ctModel.getName());
 			ctdbm.setPrice(ctModel.getPrice());

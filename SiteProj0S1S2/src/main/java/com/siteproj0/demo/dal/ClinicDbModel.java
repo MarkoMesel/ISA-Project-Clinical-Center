@@ -36,9 +36,7 @@ public class ClinicDbModel {
 	private float rating;
 	
 	private float price;
-	
-	private String room;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -75,12 +73,6 @@ public class ClinicDbModel {
 	}
 	public void setPrice(float price) {
 		this.price = price;
-	}
-	public String getRoom() {
-		return room;
-	}
-	public void setRoom(String room) {
-		this.room = room;
 	}
 	public String getAddress() {
 		return address;

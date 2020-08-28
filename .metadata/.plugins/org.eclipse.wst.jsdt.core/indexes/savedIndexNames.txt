@@ -1,1 +1,0 @@
-INDEX VERSION 1.4+E:\FAKS\Materijali - ISA\ISA FAJNL BOS 3\ISA-Proj\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
