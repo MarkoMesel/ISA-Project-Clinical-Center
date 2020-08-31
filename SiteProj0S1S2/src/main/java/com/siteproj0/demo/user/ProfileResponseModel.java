@@ -22,7 +22,7 @@ public class ProfileResponseModel {
 		this.phone = phone;
 		this.jmbg = jmbg;
 		this.email = email;
-		this.isVerified = isVerified;
+		this.verified = isVerified;
 		this.role = role;
 	}
 	private int id;
@@ -43,7 +43,7 @@ public class ProfileResponseModel {
 
 	private String email;
 	
-	private boolean isVerified;
+	private boolean verified;
 	
 	private String role;
 	
@@ -103,10 +103,10 @@ public class ProfileResponseModel {
 	}
 	
 	public boolean isVerified() {
-		return isVerified;
+		return verified;
 	}
 	public void setVerified(boolean isVerified) {
-		this.isVerified = isVerified;
+		this.verified = isVerified;
 	}
 	public String getRole() {
 		return role;

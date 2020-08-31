@@ -1,4 +1,4 @@
-package com.siteproj0.demo;
+package com.siteproj0.demo.testrepo;
 
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.everyItem;
@@ -22,11 +22,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import com.siteproj0.demo.dal.VacationDbModel;
 import com.siteproj0.demo.repo.VacationRepo;
 
-@DataJpaTest
-@TestExecutionListeners({
-    DependencyInjectionTestExecutionListener.class,
-})
-class TestVacationRepo {
+class TestVacationRepo extends TestRepo {
 
 	@Autowired
 	VacationRepo vacationRepo;
@@ -44,6 +40,7 @@ class TestVacationRepo {
 		));
 	}
 	
+	@Test
 	void findById_ReturnObj() {
 		VacationDbModel result = vacationRepo.findById(1).get();
 		assertThat(result, notNullValue());

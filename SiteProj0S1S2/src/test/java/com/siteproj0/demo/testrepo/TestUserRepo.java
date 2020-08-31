@@ -1,4 +1,4 @@
-package com.siteproj0.demo;
+package com.siteproj0.demo.testrepo;
 
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.everyItem;
@@ -24,17 +24,12 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import com.siteproj0.demo.dal.UserDbModel;
 import com.siteproj0.demo.repo.UserRepo;
 
-@DataJpaTest
-@TestExecutionListeners({
-    DependencyInjectionTestExecutionListener.class,
-})
-class TestUserRepo {
+class TestUserRepo extends TestRepo {
 
 	@Autowired
 	UserRepo userRepo;
 	
 	@Test
-	@Sql("data.sql")
 	void findById_ReturnObj() {
 		UserDbModel result = userRepo.findById(1).get();
 		assertThat(result, notNullValue());
@@ -42,7 +37,6 @@ class TestUserRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findBySecurityToken_ReturnObj() {
 		UUID securityToken = UUID.fromString("2D1EBC5B-7D27-4197-9CF0-E84451C5BBB1");
 		UserDbModel result = userRepo.findBySecurityToken(securityToken);
@@ -51,7 +45,6 @@ class TestUserRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findByEmailAndPassword_ReturnObj() {
 		UserDbModel result = userRepo.findByEmailAndPassword("neznam@gmail.com", "neznamneznam");
 		assertThat(result, notNullValue());
@@ -62,7 +55,6 @@ class TestUserRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findByIsVerifiedAndClinicIdAndEnabled_ReturnList() {
 		List<UserDbModel> result = userRepo.findByIsVerifiedAndClinicIdAndEnabled(true, 1, true);
 		assertThat(result, not(empty()));
@@ -77,7 +69,6 @@ class TestUserRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findByFirstNameAndClinicIdAndIsVerifiedAndEnabled_ReturnList() {
 		List<UserDbModel> result = userRepo.findByFirstNameAndClinicIdAndIsVerifiedAndEnabled(
 			"Isa",
@@ -96,6 +87,7 @@ class TestUserRepo {
 		));
 	}
 	
+	@Test
 	void findByJmbgAndClinicIdAndIsVerifiedAndEnabled_ReturnList() {
 		List<UserDbModel> result = userRepo.findByJmbgAndClinicIdAndIsVerifiedAndEnabled(
 			"5454554545454",
@@ -108,7 +100,7 @@ class TestUserRepo {
 			allOf(
 				hasProperty("jmbg", is("5454554545454")),
 				hasProperty("clinic", hasProperty("id", is(1))),
-				hasProperty("IsVerified", is(true)),
+				hasProperty("verified", is(true)),
 				hasProperty("enabled", is(true))
 			)
 		));

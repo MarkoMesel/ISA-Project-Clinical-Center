@@ -1,4 +1,4 @@
-package com.siteproj0.demo;
+package com.siteproj0.demo.testrepo;
 
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.everyItem;
@@ -23,17 +23,12 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import com.siteproj0.demo.dal.RoomDbModel;
 import com.siteproj0.demo.repo.RoomRepo;
 
-@DataJpaTest
-@TestExecutionListeners({
-    DependencyInjectionTestExecutionListener.class,
-})
-class TestRoomRepo {
+class TestRoomRepo extends TestRepo {
 
 	@Autowired
 	RoomRepo roomRepo;
 	
 	@Test
-	@Sql("data.sql")
 	void findById_ReturnObj() {
 		RoomDbModel result = roomRepo.findById(1).get();
 		assertThat(result, notNullValue());
@@ -41,7 +36,6 @@ class TestRoomRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findByClinicIdAndEnabled_ReturnList() {
 		List<RoomDbModel> result = roomRepo.findByClinicIdAndEnabled(1, true);
 		assertThat(result, not(empty()));
@@ -55,7 +49,6 @@ class TestRoomRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findByIdAndClinicId_ReturnObj() {
 		RoomDbModel result = roomRepo.findByIdAndClinicId(1, 1);
 		assertThat(result, notNullValue());
@@ -66,7 +59,6 @@ class TestRoomRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findByIdAndClinicIdAndEnabled_ReturnObj() {
 		RoomDbModel result = roomRepo.findByIdAndClinicIdAndEnabled(1, 1, true);
 		assertThat(result, notNullValue());
@@ -78,7 +70,6 @@ class TestRoomRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findByNameAndNumberAndClinicIdAndEnabled_ReturnObj() {
 		RoomDbModel result = roomRepo.findByNameAndNumberAndClinicIdAndEnabled(
 			"A",
@@ -95,7 +86,6 @@ class TestRoomRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findByNameAndClinicIdAndEnabled_ReturnList() {
 		List<RoomDbModel> result = roomRepo.findByNameAndClinicIdAndEnabled(
 			"A",
@@ -113,7 +103,6 @@ class TestRoomRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findByNumberAndClinicIdAndEnabled_ReturnList() {
 		List<RoomDbModel> result = roomRepo.findByNumberAndClinicIdAndEnabled(
 			"1",

@@ -1,4 +1,4 @@
-package com.siteproj0.demo;
+package com.siteproj0.demo.testrepo;
 
 //import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,17 +27,12 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
-@DataJpaTest
-@TestExecutionListeners({
-    DependencyInjectionTestExecutionListener.class,
-})
-class TestCheckupTypeRepo {
+class TestCheckupTypeRepo extends TestRepo {
 
 	@Autowired
 	CheckupTypeRepo ctRepo;
 	
 	@Test
-	@Sql("data.sql")
 	void findByClinicIdAndEnabled_ReturnList() {	
 		List<CheckupTypeDbModel> result = ctRepo.findByClinicIdAndEnabled(1, true);
 		assertThat(result, not(empty()));
@@ -51,7 +46,6 @@ class TestCheckupTypeRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findByIdAndClinicIdAndEnabled_ReturnObj() {
 		CheckupTypeDbModel result = ctRepo.findByIdAndClinicIdAndEnabled(1, 1, true);
 		assertThat(result, notNullValue());
@@ -63,7 +57,6 @@ class TestCheckupTypeRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findByNameAndPriceAndClinicIdAndEnabled_ReturnObj() {
 		CheckupTypeDbModel result = ctRepo.findByNameAndPriceAndClinicIdAndEnabled(
 			"type1",
@@ -81,7 +74,6 @@ class TestCheckupTypeRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findById_ReturnObj() {
 		CheckupTypeDbModel result = ctRepo.findById(1).get();
 		assertThat(result, notNullValue());

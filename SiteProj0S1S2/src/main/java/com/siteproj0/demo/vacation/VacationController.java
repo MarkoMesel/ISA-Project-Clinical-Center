@@ -60,7 +60,7 @@ public class VacationController {
 	}
 	
 	@PostMapping(path = "/sendVacationRequest")
-	public String registerUserAccount(@ModelAttribute("vacation") @Valid VacationRegisterModel vacation, BindingResult result) {
+	public String sendVacationRequest(@ModelAttribute("vacation") @Valid VacationRegisterModel vacation, BindingResult result) {
 
 		if (result.hasErrors()) {
 			return "sendVacationRequest";

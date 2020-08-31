@@ -1,4 +1,4 @@
-package com.siteproj0.demo;
+package com.siteproj0.demo.testrepo;
 
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -18,17 +18,12 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import com.siteproj0.demo.dal.ClinicAdminDbModel;
 import com.siteproj0.demo.repo.ClinicAdminRepo;
 
-@DataJpaTest
-@TestExecutionListeners({
-    DependencyInjectionTestExecutionListener.class,
-})
-class TestClinicAdminRepo {
+class TestClinicAdminRepo extends TestRepo {
 
 	@Autowired
 	ClinicAdminRepo clinicAdminRepo;
 	
 	@Test
-	@Sql("data.sql")
 	void findBySecurityToken_ReturnObj() {
 		UUID securityToken = UUID.fromString("2D1EBC5B-7D27-4197-9CF0-E84451C5BBB4");
 		ClinicAdminDbModel result = clinicAdminRepo.findBySecurityToken(securityToken);
@@ -37,7 +32,6 @@ class TestClinicAdminRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findByEmailAndPassword_ReturnObj() {
 		ClinicAdminDbModel result = clinicAdminRepo.findByEmailAndPassword("abab@gmail.com", "abcde123");
 		assertThat(result, notNullValue());

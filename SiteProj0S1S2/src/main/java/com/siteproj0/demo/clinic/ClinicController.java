@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.siteproj0.demo.appointment.AppointmentViewModel;
 import com.siteproj0.demo.dal.AppointmentDbModel;
 import com.siteproj0.demo.dal.ClinicAdminDbModel;
 import com.siteproj0.demo.dal.ClinicDbModel;
@@ -76,7 +75,7 @@ public class ClinicController {
 	}
 	
 	@GetMapping(path = "/getClinicInfo")
-	public ResponseEntity<ClinicResponseModel> getProfileInformation(@RequestHeader("token") UUID securityToken) {
+	public ResponseEntity<ClinicResponseModel> getClinicInfo(@RequestHeader("token") UUID securityToken) {
 		try {
 			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
 			if (user == null) {
@@ -93,13 +92,13 @@ public class ClinicController {
 	}
 	
 	@GetMapping(path = "/clinicBasicInfo")
-	public String showClinicLocation() {
+	public String showClinicBasicInfo() {
 		return "clinicBasicInfo";
 	}
 	
 	@PutMapping(path = "/editClinicInfo")
 	@ResponseBody
-	public ResponseEntity editClinicLocation(@RequestHeader("token") UUID securityToken,
+	public ResponseEntity editClinicInfo(@RequestHeader("token") UUID securityToken,
 			@RequestBody ClinicResponseModel clinicModel) {
 		if (securityToken == null) {
 			return new ResponseEntity(HttpStatus.UNAUTHORIZED);

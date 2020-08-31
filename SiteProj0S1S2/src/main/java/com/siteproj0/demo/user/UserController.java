@@ -386,7 +386,7 @@ public class UserController {
 	}
 	
 	@GetMapping(path = "/getUserInfo/{uId}")
-	public ResponseEntity<UserResponseModel> getRoomInfo(@RequestHeader("token") UUID securityToken, @PathVariable int uId) {
+	public ResponseEntity<UserResponseModel> getUserInfo(@RequestHeader("token") UUID securityToken, @PathVariable int uId) {
 		try {
 			/*
 			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);

@@ -1,4 +1,4 @@
-package com.siteproj0.demo;
+package com.siteproj0.demo.testrepo;
 
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.everyItem;
@@ -28,13 +28,13 @@ import com.siteproj0.demo.repo.DoctorRepo;
 @TestExecutionListeners({
     DependencyInjectionTestExecutionListener.class,
 })
+@Sql("data.sql")
 class TestDoctorRepo {
 	
 	@Autowired
 	DoctorRepo doctorRepo;
 
 	@Test
-	@Sql("data.sql")
 	void findBySecurityToken_ReturnObj() {
 		//2D1EBC5B7D2741979CF0E84451C5BBB2
 		UUID securityToken = UUID.fromString("2D1EBC5B-7D27-4197-9CF0-E84451C5BBB2");
@@ -44,7 +44,6 @@ class TestDoctorRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findByClinicIdAndEnabled_ReturnList() {
 		List<DoctorDbModel> result = doctorRepo.findByClinicIdAndEnabled(1, true);
 		assertThat(result, not(empty()));
@@ -58,7 +57,6 @@ class TestDoctorRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findByFirstNameAndLastNameAndRatingAndClinicIdAndEnabled_ReturnObj() {
 		DoctorDbModel result = doctorRepo.findByFirstNameAndLastNameAndRatingAndClinicIdAndEnabled(
 			"Isa",
@@ -77,7 +75,6 @@ class TestDoctorRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findByIdAndClinicIdAndEnabled_ReturnObj() {
 		DoctorDbModel result = doctorRepo.findByIdAndClinicIdAndEnabled(1, 1, true);
 		assertThat(result, notNullValue());
@@ -89,7 +86,6 @@ class TestDoctorRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findById_ReturnObj() {
 		DoctorDbModel result = doctorRepo.findById(1).get();
 		assertThat(result, notNullValue());

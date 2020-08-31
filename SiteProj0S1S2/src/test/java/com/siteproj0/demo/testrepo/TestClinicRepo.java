@@ -1,4 +1,4 @@
-package com.siteproj0.demo;
+package com.siteproj0.demo.testrepo;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -17,17 +17,12 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import com.siteproj0.demo.dal.ClinicDbModel;
 import com.siteproj0.demo.repo.ClinicRepo;
 
-@DataJpaTest
-@TestExecutionListeners({
-    DependencyInjectionTestExecutionListener.class,
-})
-class TestClinicRepo {
+class TestClinicRepo extends TestRepo {
 	
 	@Autowired
 	ClinicRepo clinicRepo;
 	
 	@Test
-	@Sql("data.sql")
 	void findById_ReturnObj() {
 		ClinicDbModel result = clinicRepo.findById(1).get();
 		assertThat(result, notNullValue());
@@ -35,7 +30,6 @@ class TestClinicRepo {
 	}
 	
 	@Test
-	@Sql("data.sql")
 	void findAll_ReturnIterable() {
 		Iterable<ClinicDbModel> result = clinicRepo.findAll();
 		assertThat(result, not(emptyIterable()));
