@@ -47,7 +47,7 @@ class TestUserController extends TestController {
 		profileRM.setRole("USER");
 		String expected = new Gson().toJson(profileRM);
 		
-		when(patientRepo.findBySecurityToken((UUID)notNull())).thenReturn(patientDBM);
+		when(patientRepo.findBySecurityToken((UUID)notNull())).thenReturn(patientDBM0);
 		
 		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/getProfile")
 			.header("token", UUID.randomUUID()))
@@ -64,10 +64,10 @@ class TestUserController extends TestController {
 		Gson gson = new Gson();
 	    String jsonStr = gson.toJson(loginM);
 	    
-	    loginRM.setToken(patientDBM.getSecurityToken());
+	    loginRM.setToken(patientDBM0.getSecurityToken());
 		String expected = new Gson().toJson(loginRM);
 		
-		when(patientRepo.findByEmailAndPassword(anyString(), anyString())).thenReturn(patientDBM);
+		when(patientRepo.findByEmailAndPassword(anyString(), anyString())).thenReturn(patientDBM0);
 	    
 		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/login")
     		.contentType(MediaType.APPLICATION_JSON)
@@ -92,8 +92,8 @@ class TestUserController extends TestController {
 		Gson gson = new Gson();
 	    String jsonStr = gson.toJson(editProfileRM);
 	    
-		when(patientRepo.findBySecurityToken((UUID)notNull())).thenReturn(patientDBM);
-	    when(patientRepo.save((UserDbModel)notNull())).thenReturn(patientDBM);
+		when(patientRepo.findBySecurityToken((UUID)notNull())).thenReturn(patientDBM0);
+	    when(patientRepo.save((UserDbModel)notNull())).thenReturn(patientDBM0);
 		
 		mockMvc.perform(MockMvcRequestBuilders.put("/editProfile")
 			.header("token", UUID.randomUUID())
@@ -104,8 +104,8 @@ class TestUserController extends TestController {
 	
 	@Test
 	void verify_GET() throws Exception {
-		when(patientRepo.findByValidationToken((UUID)notNull())).thenReturn(patientDBM);
-	    when(patientRepo.save((UserDbModel)notNull())).thenReturn(patientDBM);
+		when(patientRepo.findByValidationToken((UUID)notNull())).thenReturn(patientDBM0);
+	    when(patientRepo.save((UserDbModel)notNull())).thenReturn(patientDBM0);
 	    
 		mockMvc.perform(MockMvcRequestBuilders.get("/verify/{token}", UUID.randomUUID()))
 		.andExpect(redirectedUrl("/home?success"));
@@ -225,7 +225,7 @@ class TestUserController extends TestController {
 	void getUserInfo_GET() throws Exception {
 		String expected = new Gson().toJson(patientResM);
 		
-		when(patientRepo.findById(anyInt())).thenReturn(Optional.of(patientDBM));
+		when(patientRepo.findById(anyInt())).thenReturn(Optional.of(patientDBM0));
 		
 		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/getUserInfo/1")
 			.header("token", UUID.randomUUID()))

@@ -1,20 +1,9 @@
 package com.siteproj0.demo.doctor;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.Set;
 import java.util.UUID;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,22 +21,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.siteproj0.demo.clinic.ClinicResponseModel;
 import com.siteproj0.demo.dal.ClinicAdminDbModel;
 import com.siteproj0.demo.dal.ClinicDbModel;
 import com.siteproj0.demo.dal.DoctorDbModel;
+import com.siteproj0.demo.dal.DoctorRatingDbModel;
 import com.siteproj0.demo.dal.MedicalCheckupDbModel;
-import com.siteproj0.demo.dal.UserDbModel;
 import com.siteproj0.demo.home.ChangePasswordRequestModel;
 import com.siteproj0.demo.home.EditProfileBasicInfoRequestModel;
 import com.siteproj0.demo.repo.ClinicAdminRepo;
 import com.siteproj0.demo.repo.ClinicRepo;
+import com.siteproj0.demo.repo.DoctorRatingRepo;
 import com.siteproj0.demo.repo.DoctorRepo;
 import com.siteproj0.demo.repo.MedicalCheckupRepo;
 import com.siteproj0.demo.user.LoginModel;
 import com.siteproj0.demo.user.LoginResponseModel;
 import com.siteproj0.demo.user.ProfileResponseModel;
-import com.siteproj0.demo.user.UserRegisterModel;
 
 @Controller
 public class DoctorController {
@@ -63,6 +51,9 @@ public class DoctorController {
 	
 	@Autowired
 	MedicalCheckupRepo mcRepo;
+	
+	@Autowired
+	DoctorRatingRepo doctorRatingRepo;
 	
 	@ModelAttribute("doctor")
 	public DoctorRegisterModel doctor() {
@@ -382,6 +373,45 @@ public class DoctorController {
 				return new ResponseEntity<>(true, HttpStatus.OK);
 			return new ResponseEntity<>(false, HttpStatus.OK);
 			
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(path = "/getDoctorAverageRatings")
+	public ResponseEntity<Object> getDoctorRatings(@RequestHeader("token") UUID securityToken) {
+		try {
+			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			ClinicDbModel clinic = user.getClinic();
+			Integer clinicId = clinic.getId();
+			//System.out.println("ID OD OVE KLINIKE JE: " + clinicId);
+			
+			
+			List<DoctorDbModel> doctors = doctorRepo.findByClinicIdAndEnabled(clinicId, true);
+			//System.out.println("NASAO JE OVOLIKO ELEMENATA: " + doctors.size());
+			
+			List<DoctorRatingResponseModel> doctorRatingResponseList = new ArrayList<DoctorRatingResponseModel>();
+			for (DoctorDbModel d : doctors) {
+				List<DoctorRatingDbModel> doctorRatingDBMList = doctorRatingRepo.findByDoctorId(d.getId());
+				float doctorRatingAverage = (float) doctorRatingDBMList.stream()
+	                .mapToDouble(drdbm -> drdbm.getRating())
+	                .average()
+	                .orElse(0);
+				
+	            DoctorRatingResponseModel drrm = new DoctorRatingResponseModel(
+	            		d.getId(),
+	            		d.getFirstName(),
+	            		d.getLastName(),
+	            		doctorRatingAverage,
+	            		clinicId);
+	            doctorRatingResponseList.add(drrm);
+	        }
+			
+			//ClinicResponseModel result = new ClinicResponseModel(clinic.getName(), clinic.getDescription(), clinic.getAddress());
+			return new ResponseEntity<>(doctorRatingResponseList, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

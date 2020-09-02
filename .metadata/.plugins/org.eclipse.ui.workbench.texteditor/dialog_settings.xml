@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="findBySecurityToken"/>
+		<item key="selection" value="Income"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="income"/>
+			<item value=".html"/>
+			<item value="freeAndFinished"/>
 			<item value="findBySecurityToken"/>
 			<item value="flashAttr"/>
 			<item value="bindingResult"/>
@@ -20,9 +23,6 @@
 			<item value="EditProfileRequestModel"/>
 			<item value="findByRoomIdAndFinished"/>
 			<item value="gson"/>
-			<item value="Gson"/>
-			<item value="clinicRepo"/>
-			<item value="RoomResponseModel"/>
 		</list>
 		<list key="replacehistory">
 			<item value=" "/>

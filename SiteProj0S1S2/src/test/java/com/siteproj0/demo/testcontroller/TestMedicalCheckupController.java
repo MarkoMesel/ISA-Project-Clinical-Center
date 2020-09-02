@@ -76,7 +76,7 @@ class TestMedicalCheckupController extends TestController {
 		.thenReturn(medicalCheckupDBMList);
 		when(checkupTypeRepo.findById(anyInt())).thenReturn(Optional.of(checkupTypeDBM0));
 		when(roomRepo.findById(anyInt())).thenReturn(Optional.of(roomDBM));
-		when(patientRepo.findById(anyInt())).thenReturn(Optional.of(patientDBM));
+		when(patientRepo.findById(anyInt())).thenReturn(Optional.of(patientDBM0));
 		
 		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/getReservedMcFromDoctor")
 			.header("token", UUID.randomUUID()))
@@ -173,7 +173,7 @@ class TestMedicalCheckupController extends TestController {
 		.thenReturn(medicalCheckupDBMList);
 		when(checkupTypeRepo.findById(anyInt())).thenReturn(Optional.of(checkupTypeDBM0));
 		when(roomRepo.findById(anyInt())).thenReturn(Optional.of(roomDBM));
-		when(patientRepo.findById(anyInt())).thenReturn(Optional.of(patientDBM));
+		when(patientRepo.findById(anyInt())).thenReturn(Optional.of(patientDBM0));
 		
 		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/getReservedMcFromDoctorAndPatient/1")
 			.header("token", UUID.randomUUID()))
@@ -230,7 +230,7 @@ class TestMedicalCheckupController extends TestController {
 		when(clinicAdminRepo.findBySecurityToken((UUID)notNull())).thenReturn(clinicAdminDBM);
 		when(medicalCheckupRepo.findByRoomIdIsNull()).thenReturn(medicalCheckupDBMWithNoRoomList);
 		when(checkupTypeRepo.findById(anyInt())).thenReturn(Optional.of(checkupTypeDBM0));
-		when(patientRepo.findById(anyInt())).thenReturn(Optional.of(patientDBM));
+		when(patientRepo.findById(anyInt())).thenReturn(Optional.of(patientDBM0));
 		when(doctorRepo.findById(anyInt())).thenReturn(Optional.of(doctorDBM));
 		
 		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/getCheckupsWithNoRoom")

@@ -110,5 +110,12 @@ class TestClinicAdminController extends TestController {
 	    	.content(jsonStr))
 		.andExpect(MockMvcResultMatchers.status().isNoContent());
 	}
+	
+	@Test
+	void showBusinessReportPage_GET() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/businessReport"))
+	    .andExpect(MockMvcResultMatchers.status().isOk())
+	    .andExpect(view().name("businessReport"));
+	}
 
 }

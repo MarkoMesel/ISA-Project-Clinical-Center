@@ -3,6 +3,7 @@ package com.siteproj0.demo.testcontroller;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.ArrayList;
@@ -93,5 +94,22 @@ public class TestClinicController extends TestController {
 	    	.content(jsonStr)
 	    	.header("token", UUID.randomUUID()))
 	    .andExpect(MockMvcResultMatchers.status().isNoContent());
+	}
+	
+	@Test
+	void getClinicAverageRating_GET() throws Exception {
+		String expected = new Gson().toJson(6.25f);
+		
+		when(clinicAdminRepo.findBySecurityToken((UUID)notNull())).thenReturn(clinicAdminDBM);
+		when(clinicRatingRepo.findByClinicId(anyInt())).thenReturn(clinicRatingDBMList);
+		
+		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/getClinicAverageRating")
+			.header("token", UUID.randomUUID()))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+	    .andReturn();
+		
+		String result = mvcResult.getResponse().getContentAsString();
+		
+		assertEquals(expected,result);
 	}
 }

@@ -2,10 +2,6 @@ package com.siteproj0.demo.testcontroller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.anyFloat;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
@@ -28,6 +24,7 @@ import com.siteproj0.demo.checkuptype.CheckupTypeResponseModel;
 import com.siteproj0.demo.dal.CheckupTypeDbModel;
 import com.siteproj0.demo.dal.ClinicAdminDbModel;
 import com.siteproj0.demo.dal.DoctorDbModel;
+import com.siteproj0.demo.doctor.DoctorRatingResponseModel;
 import com.siteproj0.demo.doctor.DoctorResponseModel;
 
 class TestDoctorController extends TestController {
@@ -251,6 +248,28 @@ class TestDoctorController extends TestController {
 		
 		String result = mvcResult.getResponse().getContentAsString();
 
+		assertEquals(expected,result);
+	}
+	
+	@Test
+	void getDoctorRatings_GET() throws Exception {
+		JsonArray expectedJsonArray = (JsonArray) new Gson().toJsonTree(doctorRatingResMList,
+	            new TypeToken<List<DoctorRatingResponseModel>>() {
+	            }.getType());
+		
+		String expected = expectedJsonArray.toString();
+		
+		when(doctorRepo.findByClinicIdAndEnabled(anyInt(), anyBoolean())).thenReturn(doctorDBMList);
+		when(clinicAdminRepo.findBySecurityToken((UUID)notNull())).thenReturn(clinicAdminDBM);
+		when(doctorRatingRepo.findByDoctorId(anyInt())).thenReturn(doctorRatingDBMList);
+		
+		MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/getDoctorAverageRatings")
+			.header("token", UUID.randomUUID()))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+	    .andReturn();
+		
+		String result = mvcResult.getResponse().getContentAsString();
+		
 		assertEquals(expected,result);
 	}
 

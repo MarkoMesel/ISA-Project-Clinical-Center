@@ -39,6 +39,16 @@ div.mainPanelLarge {
    	text-align: center;
 }
 
+div.businessreportstyle {
+	height:100%;
+	background-color: #5D3F6A;
+	color: #F5F5DC;
+	width: 1200px;
+	min-height: 1200px;
+   	margin: auto;
+   	text-align: center;
+}
+
 input {
 	color: black;
 }

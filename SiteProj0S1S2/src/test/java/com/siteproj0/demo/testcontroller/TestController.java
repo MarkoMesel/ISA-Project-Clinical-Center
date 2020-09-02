@@ -23,11 +23,14 @@ import com.siteproj0.demo.clinic.ClinicViewModel;
 import com.siteproj0.demo.dal.CheckupTypeDbModel;
 import com.siteproj0.demo.dal.ClinicAdminDbModel;
 import com.siteproj0.demo.dal.ClinicDbModel;
+import com.siteproj0.demo.dal.ClinicRatingDbModel;
 import com.siteproj0.demo.dal.DoctorDbModel;
+import com.siteproj0.demo.dal.DoctorRatingDbModel;
 import com.siteproj0.demo.dal.MedicalCheckupDbModel;
 import com.siteproj0.demo.dal.RoomDbModel;
 import com.siteproj0.demo.dal.UserDbModel;
 import com.siteproj0.demo.dal.VacationDbModel;
+import com.siteproj0.demo.doctor.DoctorRatingResponseModel;
 import com.siteproj0.demo.doctor.DoctorRegisterModel;
 import com.siteproj0.demo.doctor.DoctorResponseModel;
 import com.siteproj0.demo.home.ChangePasswordRequestModel;
@@ -39,7 +42,9 @@ import com.siteproj0.demo.medicalcheckup.MedicalCheckupResponseModel;
 import com.siteproj0.demo.medicalcheckup.MedicalCheckupRoomResponseModel;
 import com.siteproj0.demo.repo.CheckupTypeRepo;
 import com.siteproj0.demo.repo.ClinicAdminRepo;
+import com.siteproj0.demo.repo.ClinicRatingRepo;
 import com.siteproj0.demo.repo.ClinicRepo;
+import com.siteproj0.demo.repo.DoctorRatingRepo;
 import com.siteproj0.demo.repo.DoctorRepo;
 import com.siteproj0.demo.repo.MedicalCheckupRepo;
 import com.siteproj0.demo.repo.RoomRepo;
@@ -87,6 +92,12 @@ class TestController {
 	@MockBean
 	VacationRepo vacationRepo;
 	
+	@MockBean
+	ClinicRatingRepo clinicRatingRepo;
+	
+	@MockBean
+	DoctorRatingRepo doctorRatingRepo;
+	
 	static ClinicDbModel clinicDBM;
 	static ClinicAdminDbModel clinicAdminDBM;
 	static CheckupTypeDbModel checkupTypeDBM0;
@@ -100,7 +111,8 @@ class TestController {
 	static List<CheckupTypeResponseModel> checkupTypeResMList;
 	static RoomDbModel roomDBM;
 	static DoctorDbModel doctorDBM;
-	static UserDbModel patientDBM;
+	static UserDbModel patientDBM0;
+	static UserDbModel patientDBM1;
 	static MedicalCheckupDbModel medicalCheckupDBM;
 	static List<MedicalCheckupDbModel> medicalCheckupDBMList;
 	static BindingResult bindingResult;
@@ -153,6 +165,16 @@ class TestController {
 	static VacationRegisterModel vacationRegM;
 	static VacationResponseModel vacationResM;
 	static List<VacationResponseModel> vacationResMList;
+	
+	static ClinicRatingDbModel clinicRatingDBM0;
+	static ClinicRatingDbModel clinicRatingDBM1;
+	static List<ClinicRatingDbModel> clinicRatingDBMList;
+	
+	static DoctorRatingDbModel doctorRatingDBM0;
+	static DoctorRatingDbModel doctorRatingDBM1;
+	static List<DoctorRatingDbModel> doctorRatingDBMList;
+	static DoctorRatingResponseModel doctorRatingResM;
+	static List<DoctorRatingResponseModel> doctorRatingResMList;
 	
 	@BeforeAll
 	static void init() {
@@ -248,23 +270,41 @@ class TestController {
 		doctorDBM.setShiftEnd("18:00");
 		doctorDBM.setEnabled(true);
 		
-		patientDBM = new UserDbModel();
-		patientDBM.setId(1);
-		patientDBM.setRole("USER");
-		patientDBM.setCountry("TestCountry");
-		patientDBM.setCity("TestCity");
-		patientDBM.setStreet("TestStreet");
-		patientDBM.setEmail("testmail@testmail.com");
-		patientDBM.setFirstName("TestFirstName");
-		patientDBM.setLastName("TestLastName");
-		patientDBM.setJmbg("1111111111111");
-		patientDBM.setPhone("0213334444");
-		patientDBM.setVerified(true);
-		patientDBM.setPassword("abcde123");
-		patientDBM.setValidationToken(null);
-		patientDBM.setSecurityToken(UUID.randomUUID());
-		patientDBM.setClinic(clinicDBM);
-		patientDBM.setEnabled(true);
+		patientDBM0 = new UserDbModel();
+		patientDBM0.setId(1);
+		patientDBM0.setRole("USER");
+		patientDBM0.setCountry("TestCountry");
+		patientDBM0.setCity("TestCity");
+		patientDBM0.setStreet("TestStreet");
+		patientDBM0.setEmail("testmail@testmail.com");
+		patientDBM0.setFirstName("TestFirstName");
+		patientDBM0.setLastName("TestLastName");
+		patientDBM0.setJmbg("1111111111111");
+		patientDBM0.setPhone("0213334444");
+		patientDBM0.setVerified(true);
+		patientDBM0.setPassword("abcde123");
+		patientDBM0.setValidationToken(null);
+		patientDBM0.setSecurityToken(UUID.randomUUID());
+		patientDBM0.setClinic(clinicDBM);
+		patientDBM0.setEnabled(true);
+		
+		patientDBM1 = new UserDbModel();
+		patientDBM1.setId(2);
+		patientDBM1.setRole("USER");
+		patientDBM1.setCountry("TestCountry");
+		patientDBM1.setCity("TestCity");
+		patientDBM1.setStreet("TestStreet");
+		patientDBM1.setEmail("testmail@testmail.com");
+		patientDBM1.setFirstName("TestFirstName");
+		patientDBM1.setLastName("TestLastName");
+		patientDBM1.setJmbg("1111111111111");
+		patientDBM1.setPhone("0213334444");
+		patientDBM1.setVerified(true);
+		patientDBM1.setPassword("abcde123");
+		patientDBM1.setValidationToken(null);
+		patientDBM1.setSecurityToken(UUID.randomUUID());
+		patientDBM1.setClinic(clinicDBM);
+		patientDBM1.setEnabled(true);
 		
 		medicalCheckupDBM = new MedicalCheckupDbModel();
 		medicalCheckupDBM.setId(1);
@@ -277,7 +317,7 @@ class TestController {
 		medicalCheckupDBM.setClinic(clinicDBM);
 		medicalCheckupDBM.setRoom(roomDBM);
 		medicalCheckupDBM.setDoctor(doctorDBM);
-		medicalCheckupDBM.setPatient(patientDBM);
+		medicalCheckupDBM.setPatient(patientDBM0);
 		medicalCheckupDBM.setNotes("TestNotes");
 		medicalCheckupDBM.setEndNotes("TestEndNotes");
 		medicalCheckupDBM.setFinished(false);
@@ -428,7 +468,7 @@ class TestController {
 		medicalCheckupDBMWithNoRoom.setClinic(clinicDBM);
 		medicalCheckupDBMWithNoRoom.setRoom(null);
 		medicalCheckupDBMWithNoRoom.setDoctor(doctorDBM);
-		medicalCheckupDBMWithNoRoom.setPatient(patientDBM);
+		medicalCheckupDBMWithNoRoom.setPatient(patientDBM0);
 		medicalCheckupDBMWithNoRoom.setNotes("TestNotes");
 		medicalCheckupDBMWithNoRoom.setEndNotes("TestEndNotes");
 		medicalCheckupDBMWithNoRoom.setFinished(false);
@@ -515,7 +555,7 @@ class TestController {
 		editProfileRM.setPhone("0213334444");
 		
 		patientDBMList = new ArrayList<>();
-		patientDBMList.add(patientDBM);
+		patientDBMList.add(patientDBM0);
 		
 		patientResM = new UserResponseModel(
     		1,
@@ -557,6 +597,52 @@ class TestController {
 		
 		vacationResMList = new ArrayList<>();
 		vacationResMList.add(vacationResM);
+		
+		clinicRatingDBM0 = new ClinicRatingDbModel();
+		clinicRatingDBM0.setId(1);
+		clinicRatingDBM0.setUser(patientDBM0);
+		clinicRatingDBM0.setClinic(clinicDBM);
+		clinicRatingDBM0.setRating(5.3f);
+		clinicRatingDBM0.setComment("This is a comment");
+		
+		clinicRatingDBM1 = new ClinicRatingDbModel();
+		clinicRatingDBM1.setId(2);
+		clinicRatingDBM1.setUser(patientDBM1);
+		clinicRatingDBM1.setClinic(clinicDBM);
+		clinicRatingDBM1.setRating(7.2f);
+		clinicRatingDBM1.setComment("This is another comment");
+		
+		clinicRatingDBMList = new ArrayList<>();
+		clinicRatingDBMList.add(clinicRatingDBM0);
+		clinicRatingDBMList.add(clinicRatingDBM1);
+		
+		doctorRatingDBM0 = new DoctorRatingDbModel();
+		doctorRatingDBM0.setId(1);
+		doctorRatingDBM0.setUser(patientDBM0);
+		doctorRatingDBM0.setDoctor(doctorDBM);
+		doctorRatingDBM0.setRating(5.3f);
+		doctorRatingDBM0.setComment("This is a comment");
+		
+		doctorRatingDBM1 = new DoctorRatingDbModel();
+		doctorRatingDBM1.setId(2);
+		doctorRatingDBM1.setUser(patientDBM0);
+		doctorRatingDBM1.setDoctor(doctorDBM);
+		doctorRatingDBM1.setRating(7.2f);
+		doctorRatingDBM1.setComment("This is another comment");
+		
+		doctorRatingDBMList = new ArrayList<>();
+		doctorRatingDBMList.add(doctorRatingDBM0);
+		doctorRatingDBMList.add(doctorRatingDBM1);
+		
+		doctorRatingResM = new DoctorRatingResponseModel(
+			1, 
+			"TestFirstName", 
+			"TestLastName", 
+			6.25f, 
+			1);
+		
+		doctorRatingResMList = new ArrayList<>();
+		doctorRatingResMList.add(doctorRatingResM);
 	}
 
 }

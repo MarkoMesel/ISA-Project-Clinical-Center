@@ -1,7 +1,18 @@
 package com.siteproj0.demo.medicalcheckup;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,6 +51,8 @@ import com.siteproj0.demo.repo.UserRepo;
 import com.siteproj0.demo.room.RoomResponseModel;
 import com.siteproj0.demo.user.UserRegisterModel;
 import com.siteproj0.demo.user.UserResponseModel;
+
+import java.text.DateFormatSymbols;
 
 @Controller
 public class MedicalCheckupController {
@@ -472,6 +485,248 @@ public class MedicalCheckupController {
 			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping(path = "/getMcDaily")
+	public ResponseEntity<Object> getMcDaily(@RequestHeader("token") UUID securityToken) {
+		ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
+		if (user == null) {
+			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+		}
+		try {
+			ClinicDbModel clinic = user.getClinic();
+			Integer clinicId = clinic.getId();
+			
+			List<MedicalCheckupDbModel> mcList = medicalCheckupRepo.findByClinicIdAndFreeAndFinished(
+				clinicId,
+				false,
+				true);
+			
+			List<MedicalCheckupDailyResponseModel> mcdrmList = new ArrayList<>();
+			String currentMcDate = "";
+			Integer occurences;
+			
+			HashMap<String, Integer> mcMap = new HashMap<>();
+			for(MedicalCheckupDbModel mcdbm : mcList) {
+				currentMcDate = mcdbm.getDate();
+				occurences = mcMap.get(currentMcDate);
+				mcMap.put(currentMcDate, (occurences == null) ? 1 : occurences + 1);
+			}
+			
+			Iterator it = mcMap.entrySet().iterator();
+		    while (it.hasNext()) {
+		        Map.Entry pair = (Map.Entry)it.next();
+		        MedicalCheckupDailyResponseModel mcdrm = new MedicalCheckupDailyResponseModel((String)pair.getKey(),(Integer)pair.getValue());
+		        mcdrmList.add(mcdrm);
+		        it.remove(); // avoids a ConcurrentModificationException
+		    }
+		    
+		    List<MedicalCheckupDailyResponseModel> mcdrmListSorted = sortMcByDate(mcdrmList);
+		    for(MedicalCheckupDailyResponseModel mcdrms : mcdrmListSorted) {
+		    	mcdrms.setDate(renameDateToDaily(mcdrms.getDate()));
+		    }
+		    
+			return new ResponseEntity<>(mcdrmListSorted, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}		
+	}
+	
+	@GetMapping(path = "/getMcWeekly")
+	public ResponseEntity<Object> getMcWeekly(@RequestHeader("token") UUID securityToken) {
+		ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
+		if (user == null) {
+			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+		}
+		try {
+			ClinicDbModel clinic = user.getClinic();
+			Integer clinicId = clinic.getId();
+			
+			List<MedicalCheckupDbModel> mcList = medicalCheckupRepo.findByClinicIdAndFreeAndFinished(
+				clinicId,
+				false,
+				true);
+			
+			List<MedicalCheckupDailyResponseModel> mcdrmList = new ArrayList<>();
+			String currentMcDate = "";
+			Integer occurences;
+			
+			HashMap<String, Integer> mcMap = new HashMap<>();
+			for(MedicalCheckupDbModel mcdbm : mcList) {
+				currentMcDate = mcdbm.getDate();
+				occurences = mcMap.get(currentMcDate);
+				mcMap.put(currentMcDate, (occurences == null) ? 1 : occurences + 1);
+			}
+			
+			Iterator it = mcMap.entrySet().iterator();
+		    while (it.hasNext()) {
+		        Map.Entry pair = (Map.Entry)it.next();
+		        MedicalCheckupDailyResponseModel mcdrm = new MedicalCheckupDailyResponseModel((String)pair.getKey(),(Integer)pair.getValue());
+		        mcdrmList.add(mcdrm);
+		        it.remove(); // avoids a ConcurrentModificationException
+		    }
+		    
+		    List<MedicalCheckupDailyResponseModel> mcdrmListSorted = sortMcByDate(mcdrmList);
+		    for(MedicalCheckupDailyResponseModel mcdrms : mcdrmListSorted) {
+		    	mcdrms.setDate(renameDateToWeekly(mcdrms.getDate()));
+		    }
+		    
+		    List<MedicalCheckupDailyResponseModel> mcdrmListWeekly = new ArrayList<>();
+		    boolean alreadyExists = false;
+		    
+		    for(MedicalCheckupDailyResponseModel current : mcdrmListSorted) {
+		    	alreadyExists = false;
+		    	for(MedicalCheckupDailyResponseModel existing : mcdrmListWeekly) {
+			    	if(current.getDate().equals(existing.getDate())) {
+			    		existing.setCount(existing.getCount()+current.getCount());
+			    		alreadyExists = true;
+			    		break;
+			    	}
+		    	}
+		    	if(!alreadyExists) {
+		    		mcdrmListWeekly.add(current);
+		    	}
+		    }
+		    
+			return new ResponseEntity<>(mcdrmListWeekly, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}		
+	}
+	
+	@GetMapping(path = "/getMcMonthly")
+	public ResponseEntity<Object> getMcMonthly(@RequestHeader("token") UUID securityToken) {
+		ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
+		if (user == null) {
+			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+		}
+		try {
+			ClinicDbModel clinic = user.getClinic();
+			Integer clinicId = clinic.getId();
+			
+			List<MedicalCheckupDbModel> mcList = medicalCheckupRepo.findByClinicIdAndFreeAndFinished(
+				clinicId,
+				false,
+				true);
+			
+			List<MedicalCheckupDailyResponseModel> mcdrmList = new ArrayList<>();
+			String currentMcDate = "";
+			Integer occurences;
+			
+			HashMap<String, Integer> mcMap = new HashMap<>();
+			for(MedicalCheckupDbModel mcdbm : mcList) {
+				currentMcDate = mcdbm.getDate();
+				occurences = mcMap.get(currentMcDate);
+				mcMap.put(currentMcDate, (occurences == null) ? 1 : occurences + 1);
+			}
+			
+			Iterator it = mcMap.entrySet().iterator();
+		    while (it.hasNext()) {
+		        Map.Entry pair = (Map.Entry)it.next();
+		        MedicalCheckupDailyResponseModel mcdrm = new MedicalCheckupDailyResponseModel((String)pair.getKey(),(Integer)pair.getValue());
+		        mcdrmList.add(mcdrm);
+		        it.remove(); // avoids a ConcurrentModificationException
+		    }
+		    
+		    List<MedicalCheckupDailyResponseModel> mcdrmListSorted = sortMcByDate(mcdrmList);
+		    for(MedicalCheckupDailyResponseModel mcdrms : mcdrmListSorted) {
+		    	mcdrms.setDate(renameDateToMonthly(mcdrms.getDate()));
+		    }
+		    
+		    List<MedicalCheckupDailyResponseModel> mcdrmListMonthly = new ArrayList<>();
+		    boolean alreadyExists = false;
+		    
+		    for(MedicalCheckupDailyResponseModel current : mcdrmListSorted) {
+		    	alreadyExists = false;
+		    	for(MedicalCheckupDailyResponseModel existing : mcdrmListMonthly) {
+			    	if(current.getDate().equals(existing.getDate())) {
+			    		existing.setCount(existing.getCount()+current.getCount());
+			    		alreadyExists = true;
+			    		break;
+			    	}
+		    	}
+		    	if(!alreadyExists) {
+		    		mcdrmListMonthly.add(current);
+		    	}
+		    }
+		    
+			return new ResponseEntity<>(mcdrmListMonthly, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}		
+	}
+	
+	private static List<MedicalCheckupDailyResponseModel> sortMcByDate(List<MedicalCheckupDailyResponseModel> mcdrmList) {
+		Collections.sort(mcdrmList, new Comparator<MedicalCheckupDailyResponseModel>() {
+		public int compare(MedicalCheckupDailyResponseModel o1, MedicalCheckupDailyResponseModel o2) {
+			DateFormat format = new SimpleDateFormat("MM/dd/yyyy",Locale.US);
+		      Date date1 = null;
+		      Date date2 = null;
+		      try {
+		          date1=format.parse(o1.getDate());
+		          date2=format.parse(o2.getDate());
+		
+		      } catch (ParseException e) {
+		          e.printStackTrace();
+		      }
+		
+		      return date1.compareTo(date2);
+			}
+		});
+	
+		return mcdrmList;
+	}
+	
+	private String renameDateToDaily(String oldName) {
+		String[] dateParts = oldName.split("/");
+		int month = 0;
+	    try {
+	    	month = Integer.parseInt(dateParts[0]);
+		} catch (NumberFormatException e) {
+			return oldName;
+		}
+	    
+	    String newMonth = new DateFormatSymbols().getMonths()[month-1].substring(0,3);
+	    
+	    return newMonth + " " + dateParts[1] + ", " + dateParts[2];
+	}
+	
+	private String renameDateToWeekly(String oldName) {	
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy",Locale.US);
+		Date date = null;
+		
+		try {
+	          date=dateFormat.parse(oldName);
+	
+	      } catch (ParseException e) {
+	          e.printStackTrace();
+	      }
+		
+		Calendar c = Calendar.getInstance();
+		
+	    c.setFirstDayOfWeek(Calendar.MONDAY); //Line2
+	    c.setTime(date);
+	    int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+	    c.set(Calendar.DAY_OF_WEEK, c.getFirstDayOfWeek());
+	    String weekStartDate = dateFormat.format(c.getTime());
+	    c.add(Calendar.DATE, 6);
+	    String weekEndDate = dateFormat.format(c.getTime());
+
+	    return renameDateToDaily(weekStartDate) + " - " + renameDateToDaily(weekEndDate);
+	}
+	
+	private String renameDateToMonthly(String oldName) {	
+		String[] dateParts = oldName.split("/");
+		int month = 0;
+	    try {
+	    	month = Integer.parseInt(dateParts[0]);
+		} catch (NumberFormatException e) {
+			return oldName;
+		}
+	    
+	    String newMonth = new DateFormatSymbols().getMonths()[month-1].substring(0,3);
+	    
+	    return newMonth  + " " + dateParts[2];
 	}
 	
 }

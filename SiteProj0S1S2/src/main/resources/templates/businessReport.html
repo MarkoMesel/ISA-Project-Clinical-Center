@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/tabulator/dist/css/tabulator_modern.min.css/}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mainpage.css}"/>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js">
+	</script>
+    <title>Business Report</title>
+</head>
+<body>
+
+
+	<!-- 	<container> -->
+	<div class="mainPanelLarge">
+		<h1> Business Report </h1>
+		<h3 id="clinicRating">Average clinic rating: ... </h3>
+		<div>
+			<div>
+				<div style="width: 48%; float:left; padding-left: 10px;">
+					<h3>Average doctor ratings </h3>
+					<div id="doctorTable"></div>
+				</div>
+				<div style="width: 48%; float:right;">
+					<h3> Calculate clinic profit </h3>
+					<div>
+						<div style="width: 50%; float:left;">
+							<div style="display:flex; flex-direction: row; justify-content: center; align-items: center; padding-right: 10px;">
+								<label style="min-width: 50px; text-align: left;" for="dateFrom">From:</label>
+								 <input type="date" id="dateFrom" class="form-control"
+										placeholder="Date" />
+							</div>
+							<br />
+							<div style="display:flex; flex-direction: row; justify-content: center; align-items: center; padding-right: 10px;">
+								<label style="min-width: 50px; text-align: left;" for="dateTo">To:</label>
+								<input type="date" id="dateTo" class="form-control"
+										placeholder="Date" />
+							</div>
+							<h3 id="incomeResult" style="text-align:left">Profit is ...</h3>
+						</div>
+						<div style="width: 50%; float:right; padding-top: 5px; padding-right: 55px">
+							<a class="button" id="calculateIncome" href="#">Calculate Profit</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="padding-top: 235px">
+				<div style="width: 10%; float:left;">
+					<h3> Mode</h3>
+					<br />
+					<a class="button" href="#" onClick="loadDaily()">Daily</a>
+					<br />
+					<a class="button" href="#" onClick="loadWeekly()">Weekly</a>
+					<br />
+					<a class="button" href="#" onClick="loadMonthly()">Monthly</a>
+				</div>
+				<div style="width: 89%; float:right;">
+					<h3 id="checkupGraphHeader"> Daily checkups</h3>
+					<div id="chart-container">
+						<canvas id="myChart" width="400" height="470"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    
+
+    
+	<!-- 	</container> -->
+
+
+<script type="text/javascript"
+		th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js/}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/tabulator/dist/js/tabulator.min.js/}"></script>
+		
+<script type="text/javascript" th:src="@{/js/checkIfClinicAdmin.js}"></script>
+<script type="text/javascript" th:src="@{/js/businessReport.js}"></script>
+</body>
+</html>

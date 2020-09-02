@@ -1,26 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.siteproj0.demo.repo.ClinicRepo"/>
-<fullyQualifiedTypeName name="com.siteproj0.demo.checkuptype.CheckupTypeRegisterModel"/>
-<fullyQualifiedTypeName name="com.google.gson.JsonObject"/>
-<fullyQualifiedTypeName name="com.siteproj0.demo.repo.MedicalCheckupRepo"/>
-<fullyQualifiedTypeName name="org.springframework.boot.test.mock.mockito.MockBean"/>
-<fullyQualifiedTypeName name="com.siteproj0.demo.clinic.ClinicResponseModel"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
-<fullyQualifiedTypeName name="org.springframework.test.context.ContextConfiguration"/>
-<fullyQualifiedTypeName name="com.siteproj0.demo.clinic.ClinicController"/>
-<fullyQualifiedTypeName name="com.siteproj0.demo.checkuptype.CheckupTypeController"/>
-<fullyQualifiedTypeName name="org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest"/>
-<fullyQualifiedTypeName name="org.junit.runners.Suite"/>
-<fullyQualifiedTypeName name="org.junit.runners.Suite.SuiteClasses"/>
-<fullyQualifiedTypeName name="org.junit.Test"/>
-<fullyQualifiedTypeName name="org.springframework.boot.test.context.SpringBootTest"/>
-<fullyQualifiedTypeName name="org.springframework.test.context.junit4.SpringJUnit4ClassRunner"/>
-<fullyQualifiedTypeName name="org.junit.runner.RunWith"/>
-<fullyQualifiedTypeName name="org.springframework.test.context.junit4.SpringRunner"/>
-<fullyQualifiedTypeName name="org.springframework.transaction.annotation.Transactional"/>
-<fullyQualifiedTypeName name="org.springframework.validation.BindingResult"/>
-<fullyQualifiedTypeName name="org.springframework.test.annotation.DirtiesContext"/>
 <fullyQualifiedTypeName name="org.springframework.test.context.ActiveProfiles"/>
 <fullyQualifiedTypeName name="java.util.concurrent.locks.ReentrantLock"/>
 <fullyQualifiedTypeName name="java.util.concurrent.locks.Lock"/>
@@ -60,4 +39,25 @@
 <fullyQualifiedTypeName name="com.siteproj0.demo.vacation.VacationRegisterModel"/>
 <fullyQualifiedTypeName name="com.siteproj0.demo.dal.VacationDbModel"/>
 <fullyQualifiedTypeName name="com.siteproj0.demo.vacation.VacationResponseModel"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.dal.ClinicRatingDbModel"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.repo.ClinicRatingRepo"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.repo.DoctorRatingRepo"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.dal.DoctorRatingDbModel"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.doctor.DoctorRatingResponseModel"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.Collections"/>
+<fullyQualifiedTypeName name="java.util.Comparator"/>
+<fullyQualifiedTypeName name="java.text.DateFormat"/>
+<fullyQualifiedTypeName name="java.util.Locale"/>
+<fullyQualifiedTypeName name="java.text.ParseException"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.time.LocalDate"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.repo.MedicalCheckupRepo"/>
 </qualifiedTypeNameHistroy>

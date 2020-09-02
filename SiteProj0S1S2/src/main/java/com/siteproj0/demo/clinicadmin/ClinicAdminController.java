@@ -152,4 +152,9 @@ public class ClinicAdminController {
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 	
+	@GetMapping(path = {"/businessReport"})
+	public String showBusinessReportPage() {
+		return "businessReport";
+	}
+	
 }
