@@ -144,7 +144,7 @@ $("#chooseRoomDateBtn").click(function() {
 			'chosenDate':chosenDate
 		},
 		success : function(successData) {
-			window.location.href = "../doctorHome";
+			window.location.href = "../clinicAdminHome";
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			if(textStatus=="401"){			

@@ -73,6 +73,8 @@ public class UserDbModel {
 	
 	private boolean enabled;
 	
+	private boolean firstLogin;
+	
 	public int getId() {
 		return id;
 	}
@@ -185,4 +187,11 @@ public class UserDbModel {
 	public void setMedicalCheckups(List<MedicalCheckupDbModel> medicalCheckups) {
 		this.medicalCheckups = medicalCheckups;
 	}
+	public boolean isFirstLogin() {
+		return firstLogin;
+	}
+	public void setFirstLogin(boolean firstLogin) {
+		this.firstLogin = firstLogin;
+	}
+	
 }

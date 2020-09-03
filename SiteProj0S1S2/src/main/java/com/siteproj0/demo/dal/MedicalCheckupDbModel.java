@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import javax.persistence.Version;
+
 @SuppressWarnings("unused")
 @Entity
 @Table(name="Medicalcheckup")
@@ -58,6 +60,11 @@ public class MedicalCheckupDbModel {
 	private String endNotes;
 	
 	private boolean finished;
+	
+	@Version
+	private Integer version;
+	
+	private boolean inProgress;
 
 	public int getId() {
 		return id;
@@ -170,5 +177,20 @@ public class MedicalCheckupDbModel {
 	public void setFinished(boolean finished) {
 		this.finished = finished;
 	}
-	
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public boolean isInProgress() {
+		return inProgress;
+	}
+
+	public void setInProgress(boolean inProgress) {
+		this.inProgress = inProgress;
+	}
 }

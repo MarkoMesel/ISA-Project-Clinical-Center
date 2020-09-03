@@ -372,7 +372,8 @@ class TestController {
 			"1111111111111", 
 			"testmail@testmail.com", 
 			true, 
-			"TEST");
+			"TEST",
+			false);
 		
 		editProfileBasicInfoRM = new EditProfileBasicInfoRequestModel();
 		editProfileBasicInfoRM.setFirstName("TestFirstName");
@@ -579,6 +580,7 @@ class TestController {
 		vacationDBM.setDoctor(doctorDBM);
 		vacationDBM.setApproved(false);
 		vacationDBM.setEnabled(true);
+		vacationDBM.setType("VACATION");
 		
 		vacationDBMList = new ArrayList<>();
 		vacationDBMList.add(vacationDBM);
@@ -591,7 +593,8 @@ class TestController {
 		
 		vacationResM = new VacationResponseModel(
 			1, 
-			"TestFirstName TestLastName", 
+			"TestFirstName TestLastName",
+			"VACATION",
 			"2020-11-11", 
 			"2020-12-12");
 		

@@ -4,17 +4,16 @@ if(localStorage.getItem('token')==null){
 else {
 	var role = '';
 	var verified = '';
-	var firstLogin = '';
 	$.ajax({
 		type : 'GET',
-		url : "/getClinicAdminProfile",
+		url : "/getDoctorProfile",
 		dataType : "json",
 		headers:{
 			'token':localStorage.getItem('token')
 		},
 		success : function(successData) {
 			role = successData.role;
-			if(role != "CLINICADMIN") {
+			if(role != "DOCTOR") {
 				localStorage.removeItem('token');
 				window.location.href = "../whatAreYou";
 			}
@@ -23,15 +22,9 @@ else {
 				localStorage.removeItem('token');
 				window.location.href = "../notVerified";
 			}
-			
-			firstLogin = successData.firstLogin;
-			
-			if(firstLogin == true) {
-				window.location.href = "../changeClinicAdminPassword";
-			}
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			if(textStatus=="401"){
+			if(textStatus=="401"){			
 				window.location.href = "../whatAreYou";
 			} else {
 				window.location.href = "../notAuthorized";

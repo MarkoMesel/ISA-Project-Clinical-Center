@@ -64,6 +64,8 @@ public class ClinicAdminDbModel {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="CLINIC_ID")
 	private ClinicDbModel clinic;
+	
+	private boolean firstLogin;
 
 	public int getId() {
 		return id;
@@ -183,6 +185,14 @@ public class ClinicAdminDbModel {
 
 	public void setClinic(ClinicDbModel clinic) {
 		this.clinic = clinic;
+	}
+
+	public boolean isFirstLogin() {
+		return firstLogin;
+	}
+
+	public void setFirstLogin(boolean firstLogin) {
+		this.firstLogin = firstLogin;
 	}
 	
 	

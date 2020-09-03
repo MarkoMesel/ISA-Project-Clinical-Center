@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,26 +96,14 @@ public class MedicalCheckupController {
 	@PostMapping(path = "/registerMedicalCheckup")
 	public String registerMedicalCheckup(@RequestBody MedicalCheckupResponseModel mc, BindingResult result) {
 		if (result.hasErrors()) {
-			return "registerDoctor";
+			return "registerMedicalCheckup";
 		}
-
+		mc.setDate(convertDateFormat(mc.getDate()));
 		CheckupTypeDbModel ct = ctRepo.findById(mc.getCtId()).get();
 		ClinicDbModel clinic = clinicRepo.findById(mc.getClinicId()).get();
 		RoomDbModel room = roomRepo.findById(mc.getRoomId()).get();
 		DoctorDbModel doctor = doctorRepo.findById(mc.getDoctorId()).get();
-		
-		/*
-		 * Važno je da više istovremenih pacijenata, 
-		 * tj. korisnika aplikacije, 
-		 * ne može da zatraži upit za pregled 
-		 * u istom terminu kod istog lekara.
-		 */
-		/*
-		 * Jedan lekar ne može 
-		 * istovremeno da bude 
-		 * prisutan na više 
-		 * različitih operacija.
-		 */
+
 		List<MedicalCheckupDbModel> mcList = medicalCheckupRepo.findByDoctorIdAndDateAndTime(doctor.getId(),
 																							mc.getDate(),
 																							mc.getTime());
@@ -137,6 +126,7 @@ public class MedicalCheckupController {
 		mcdbm.setNotes(mc.getNotes());
 		mcdbm.setEndNotes("");
 		mcdbm.setFinished(false);
+		mcdbm.setInProgress(false);
 
 		medicalCheckupRepo.save(mcdbm);
 		
@@ -155,7 +145,7 @@ public class MedicalCheckupController {
 			Integer doctorId = user.getId();
 			//System.out.println("ID OD OVE KLINIKE JE: " + clinicId);
 			
-			List<MedicalCheckupDbModel> mcList = medicalCheckupRepo.findByClinicIdAndDoctorIdAndFree(clinicId,
+			List<MedicalCheckupDbModel> mcList = medicalCheckupRepo.findByClinicIdAndDoctorIdAndPatientIdNotNullAndFree(clinicId,
 																												doctorId,
 																												false);
 			//CheckupTypeDbModel ctdbm = ctRepo.findById(mcs.)
@@ -186,6 +176,7 @@ public class MedicalCheckupController {
 				}
 	        }
 			
+			
 			//ClinicResponseModel result = new ClinicResponseModel(clinic.getName(), clinic.getDescription(), clinic.getAddress());
 			return new ResponseEntity<>(mcdrmList, HttpStatus.OK);
 		} catch (Exception e) {
@@ -211,12 +202,6 @@ public class MedicalCheckupController {
 		
 		MedicalCheckupDbModel mcOld = medicalCheckupRepo.findById(mc.getId()).get();
 		
-		/*
-		 * Jedan lekar ne može 
-		 * istovremeno da bude 
-		 * prisutan na više 
-		 * različitih operacija.
-		 */
 		List<MedicalCheckupDbModel> mcList = medicalCheckupRepo.findByDoctorIdAndDateAndTime(mcOld.getDoctor().getId(),
 																							mc.getDate(),
 																							mc.getTime());
@@ -239,6 +224,7 @@ public class MedicalCheckupController {
 		mcdbm.setNotes("Please find a room for this next checkup.");
 		mcdbm.setEndNotes("");
 		mcdbm.setFinished(false);
+		mcdbm.setInProgress(false);
 		medicalCheckupRepo.save(mcdbm);
 		
 		return "redirect:/chooseAndBeginCheckup";
@@ -264,6 +250,7 @@ public class MedicalCheckupController {
 			
 			mcdbm.setEndNotes(notes);
 			mcdbm.setFinished(true);
+			mcdbm.setInProgress(false);
 			medicalCheckupRepo.save(mcdbm);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -297,7 +284,7 @@ public class MedicalCheckupController {
 		mcdbm.setNotes(mc.getNotes());
 		mcdbm.setEndNotes("");
 		mcdbm.setFinished(false);
-
+		mcdbm.setInProgress(false);
 		medicalCheckupRepo.save(mcdbm);
 		
 		return "redirect:/clinicManager";
@@ -465,12 +452,6 @@ public class MedicalCheckupController {
 			
 			MedicalCheckupDbModel mcdbm = medicalCheckupRepo.findById(mcId).get();
 			
-			/*
-			 * Prilikom odobravanja zahteva za 
-			 * operaciju/pregled, ne može jedna sala 
-			 * da bude rezervisana u isto vreme 
-			 * za različite operacije/preglede
-			 */
 			List<MedicalCheckupDbModel> mcList = medicalCheckupRepo.findByRoomIdAndDateAndTime(roomId,chosenDate,mcdbm.getTime());
 			if(mcList.size() > 1) {
 				return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -656,6 +637,86 @@ public class MedicalCheckupController {
 		}		
 	}
 	
+	@GetMapping(path = "/registerMedicalCheckupDoctor")
+	public String showRegisterMedicalCheckupDoctorForm(Model model) {
+		return "registerMedicalCheckupDoctor";
+	}
+	
+	/*
+	 * U METODI "requestMedicalCheckup" REALIZOVANA JE SLEDECA STAVKA:
+	 * Važno je da više istovremenih pacijenata, tj. korisnika aplikacije, ne može
+	 * da zatraži upit za pregled u istom terminu kod istog lekara.
+	 */
+	@PutMapping(path = "/requestMedicalCheckup")
+	@Transactional
+	public String requestMedicalCheckup(
+		@RequestHeader("token") UUID securityToken, 
+		@RequestBody MedicalCheckupResponseModel mc, 
+		BindingResult result) {
+		try {
+			UserDbModel user = userRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return "redirect:/requestMedicalCheckup";
+			}
+			
+			if (result.hasErrors()) {
+				return "redirect:/requestMedicalCheckup";
+			}
+			
+			MedicalCheckupDbModel mcdbm = medicalCheckupRepo.findById(mc.getId()).get();
+			mcdbm.setPatient(user);
+	
+			medicalCheckupRepo.save(mcdbm);
+			
+			return "redirect:/home";
+		} catch (Exception e) {
+			return "redirect:/requestMedicalCheckup";
+		}
+	}
+	
+	@PutMapping(path = "/mcInProgressYes/{mcId}")
+	public ResponseEntity markMcAsInProgress(@RequestHeader("token") UUID securityToken,
+			@PathVariable int mcId) {
+		if (securityToken == null) {
+			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+		}
+		try {
+			DoctorDbModel user = doctorRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			
+			MedicalCheckupDbModel mcdbm = medicalCheckupRepo.findById(mcId).get();
+			mcdbm.setInProgress(true);
+	
+			medicalCheckupRepo.save(mcdbm);
+		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping(path = "/checkIfMcInProgress")
+	public ResponseEntity<Object> checkIfMcInProgress(@RequestHeader("token") UUID securityToken) {
+		try {
+			DoctorDbModel user = doctorRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>("ne", HttpStatus.UNAUTHORIZED);
+			}
+			
+			
+			List<MedicalCheckupDbModel> mcdbmList = medicalCheckupRepo.findByDoctorIdAndInProgress(user.getId(), true);
+			if(mcdbmList.size() > 0) {
+				MedicalCheckupDbModel mcdbm = mcdbmList.get(0);
+				return new ResponseEntity<>(mcdbm.getId(), HttpStatus.OK);
+			}
+			
+			return new ResponseEntity<>("ne", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("ne", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	private static List<MedicalCheckupDailyResponseModel> sortMcByDate(List<MedicalCheckupDailyResponseModel> mcdrmList) {
 		Collections.sort(mcdrmList, new Comparator<MedicalCheckupDailyResponseModel>() {
 		public int compare(MedicalCheckupDailyResponseModel o1, MedicalCheckupDailyResponseModel o2) {
@@ -727,6 +788,26 @@ public class MedicalCheckupController {
 	    String newMonth = new DateFormatSymbols().getMonths()[month-1].substring(0,3);
 	    
 	    return newMonth  + " " + dateParts[2];
+	}
+	
+	private String convertDateFormat(String currentDateStr) {
+		DateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.US);
+		DateFormat neededFormat = new SimpleDateFormat("MM/dd/yyyy",Locale.US);
+		Date currentDate = null;
+		
+		try {
+			currentDate = originalFormat.parse(currentDateStr);
+	      } catch (ParseException e) {
+	    	  try {
+	  			currentDate = neededFormat.parse(currentDateStr);
+	  	      } catch (ParseException e0) {
+	  	          e.printStackTrace();
+	  	      }
+	      }
+		
+		String newFormat = neededFormat.format(currentDate);
+		
+		return newFormat;
 	}
 	
 }

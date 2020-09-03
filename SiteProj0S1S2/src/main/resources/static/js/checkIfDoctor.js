@@ -4,6 +4,7 @@ if(localStorage.getItem('token')==null){
 else {
 	var role = '';
 	var verified = '';
+	var firstLogin = '';
 	$.ajax({
 		type : 'GET',
 		url : "/getDoctorProfile",
@@ -21,6 +22,10 @@ else {
 			if(verified == false) {
 				localStorage.removeItem('token');
 				window.location.href = "../notVerified";
+			}
+			firstLogin = successData.firstLogin;
+			if(firstLogin == true) {
+				window.location.href = "../changeDoctorPassword";
 			}
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {

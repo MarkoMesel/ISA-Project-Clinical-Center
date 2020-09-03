@@ -74,7 +74,7 @@ public class ClinicAdminController {
 			}
 
 			ProfileResponseModel result = new ProfileResponseModel(user.getId(), user.getFirstName(), user.getLastName(),
-					user.getCountry(), user.getCity(), user.getStreet(), user.getPhone(), user.getJmbg(), user.getEmail(), user.isVerified(), user.getRole());
+					user.getCountry(), user.getCity(), user.getStreet(), user.getPhone(), user.getJmbg(), user.getEmail(), user.isVerified(), user.getRole(), user.isFirstLogin());
 			
 			return new ResponseEntity<>(result, HttpStatus.OK);
 		} catch (Exception e) {
@@ -139,9 +139,9 @@ public class ClinicAdminController {
 			}
 			String oldPassword = clinicAdminModel.getOldPassword();
 			String passwordFromDb = user.getPassword();
-			
 			if(oldPassword.equals(passwordFromDb)) {
 				user.setPassword(clinicAdminModel.getPassword());
+				user.setFirstLogin(false);
 				repo.save(user);
 			} else {
 				return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -156,5 +156,19 @@ public class ClinicAdminController {
 	public String showBusinessReportPage() {
 		return "businessReport";
 	}
+	
+//	@GetMapping(path= "/checkIfFirstLogin")
+//	public ResponseEntity<Object> checkIfFirstLogin(@RequestHeader("token") UUID securityToken) {
+//		try {
+//			ClinicAdminDbModel user = repo.findBySecurityToken(securityToken);
+//			if (user == null) {
+//				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+//			}
+//			
+//			return new ResponseEntity<>(user.isFirstLogin(), HttpStatus.OK);
+//		} catch (Exception e) {
+//			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//	}
 	
 }

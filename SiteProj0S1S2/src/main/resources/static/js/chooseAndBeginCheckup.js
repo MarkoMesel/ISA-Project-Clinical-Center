@@ -45,6 +45,26 @@ $(window).resize(function() {
 
 $.ajax({
 	type : 'GET',
+	url : "/checkIfMcInProgress",
+	dataType : "json",
+	headers:{
+		'token':localStorage.getItem('token')
+	},
+	success : function(successData) {
+		var id = successData;
+		if(id != 'ne') {
+			window.location.href = "../beginMedicalCheckup/"+id;	
+		}
+	},
+	error : function(XMLHttpRequest, textStatus, errorThrown) {
+		if(textStatus=="401"){			
+			window.location.href = "../whatAreYou";
+		}
+	}
+});
+
+$.ajax({
+	type : 'GET',
 	url : "/getReservedMcFromDoctor",
 	dataType : "json",
 	headers:{
@@ -66,7 +86,24 @@ $("#beginCheckupBtn").click(function() {
 	var parsedData = getParsedDataFromTable("#mcTable");
 	var mcId = parsedData.id;
 	
-	window.location.href = "../beginMedicalCheckup/"+mcId;	
+	$.ajax({
+		type : 'PUT',
+		url : "/mcInProgressYes/"+mcId,
+		dataType : "json",
+		headers:{
+			'token':localStorage.getItem('token')
+		},
+		success : function(successData) {
+			window.location.href = "../beginMedicalCheckup/"+mcId;	
+	
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			if(textStatus=="401"){			
+				window.location.href = "../whatAreYou";
+			}
+		}
+	});
+	
 });
 
 function getParsedDataFromTable(tableIdString) {

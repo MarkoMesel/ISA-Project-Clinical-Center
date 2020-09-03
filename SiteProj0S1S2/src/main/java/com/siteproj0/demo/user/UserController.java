@@ -76,7 +76,7 @@ public class UserController {
 			}
 
 			ProfileResponseModel result = new ProfileResponseModel(user.getId(), user.getFirstName(), user.getLastName(),
-					user.getCountry(), user.getCity(), user.getStreet(), user.getPhone(), user.getJmbg(), user.getEmail(), user.isVerified(), user.getRole());
+					user.getCountry(), user.getCity(), user.getStreet(), user.getPhone(), user.getJmbg(), user.getEmail(), user.isVerified(), user.getRole(), user.isFirstLogin());
 			
 			return new ResponseEntity<>(result, HttpStatus.OK);
 		} catch (Exception e) {

@@ -12,6 +12,9 @@ $("#vrTable").tabulator({
 		title : "Doctor",
 		field : "doctor",
 	},{
+		title : "Type",
+		field : "type",
+	},{
 		title : "Start Date",
 		field : "startDate",
 	},{

@@ -1,7 +1,12 @@
 package com.siteproj0.demo.vacation;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -61,13 +66,11 @@ public class VacationController {
 	
 	@PostMapping(path = "/sendVacationRequest")
 	public String sendVacationRequest(@ModelAttribute("vacation") @Valid VacationRegisterModel vacation, BindingResult result) {
-
+		vacation.setStartDate(convertDateFormat(vacation.getStartDate()));
+		vacation.setEndDate(convertDateFormat(vacation.getEndDate()));
 		if (result.hasErrors()) {
 			return "sendVacationRequest";
 		}
-		System.out.println(vacation.getDoctorId());
-		System.out.println(vacation.getStartDate());
-		System.out.println(vacation.getEndDate());
 		
 		DoctorDbModel dr = doctorRepo.findById(vacation.getDoctorId()).get();
 		
@@ -79,6 +82,7 @@ public class VacationController {
 		vdbm.setDoctor(dr);
 		vdbm.setApproved(false);
 		vdbm.setEnabled(true);
+		vdbm.setType(vacation.getType());
 		repo.save(vdbm);
 		//return "redirect:/doctorHome?success";
 		return "redirect:/doctorHome";
@@ -112,6 +116,7 @@ public class VacationController {
 					VacationResponseModel vrm = new VacationResponseModel(
 							v.getId(),
 							dr.getFirstName() + " " + dr.getLastName(),
+							v.getType(),
 							v.getStartDate(),
 							v.getEndDate());
 					vrmList.add(vrm);
@@ -176,5 +181,25 @@ public class VacationController {
 			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
+	}
+	
+	private String convertDateFormat(String currentDateStr) {
+		DateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.US);
+		DateFormat neededFormat = new SimpleDateFormat("MM/dd/yyyy",Locale.US);
+		Date currentDate = null;
+		
+		try {
+			currentDate = originalFormat.parse(currentDateStr);
+	      } catch (ParseException e) {
+	    	  try {
+	  			currentDate = neededFormat.parse(currentDateStr);
+	  	      } catch (ParseException e0) {
+	  	          e.printStackTrace();
+	  	      }
+	      }
+		
+		String newFormat = neededFormat.format(currentDate);
+		
+		return newFormat;
 	}
 }

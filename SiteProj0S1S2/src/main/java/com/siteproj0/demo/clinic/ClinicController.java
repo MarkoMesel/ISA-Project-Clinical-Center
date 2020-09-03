@@ -25,11 +25,13 @@ import com.siteproj0.demo.dal.AppointmentDbModel;
 import com.siteproj0.demo.dal.ClinicAdminDbModel;
 import com.siteproj0.demo.dal.ClinicDbModel;
 import com.siteproj0.demo.dal.ClinicRatingDbModel;
+import com.siteproj0.demo.dal.DoctorDbModel;
 import com.siteproj0.demo.dal.MedicalCheckupDbModel;
 import com.siteproj0.demo.dal.UserDbModel;
 import com.siteproj0.demo.repo.ClinicAdminRepo;
 import com.siteproj0.demo.repo.ClinicRatingRepo;
 import com.siteproj0.demo.repo.ClinicRepo;
+import com.siteproj0.demo.repo.DoctorRepo;
 import com.siteproj0.demo.repo.MedicalCheckupRepo;
 import com.siteproj0.demo.user.EditProfileRequestModel;
 import com.siteproj0.demo.user.ProfileResponseModel;
@@ -47,6 +49,9 @@ public class ClinicController {
 	
 	@Autowired
 	MedicalCheckupRepo medicalCheckupRepo;
+	
+	@Autowired
+	DoctorRepo doctorRepo;
 	
 	@GetMapping(path = "/clinic/{clinicId}")
 	public String showHome() {
@@ -92,11 +97,19 @@ public class ClinicController {
 	@GetMapping(path = "/getClinicInfo")
 	public ResponseEntity<ClinicResponseModel> getClinicInfo(@RequestHeader("token") UUID securityToken) {
 		try {
+			ClinicDbModel clinic = null;
+			
 			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
+			
 			if (user == null) {
-				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+				DoctorDbModel doctor = doctorRepo.findBySecurityToken(securityToken);
+				if(doctor == null) {
+					return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+				}
+				clinic = doctor.getClinic();
+			} else {
+				clinic = user.getClinic();
 			}
-			ClinicDbModel clinic = user.getClinic();
 			
 			ClinicResponseModel result = new ClinicResponseModel(clinic.getId(), clinic.getName(), clinic.getDescription(), clinic.getAddress());
 			

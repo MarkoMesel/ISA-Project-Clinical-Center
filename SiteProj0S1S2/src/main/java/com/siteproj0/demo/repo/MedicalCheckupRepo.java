@@ -1,10 +1,12 @@
 package com.siteproj0.demo.repo;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.repository.CrudRepository;
 
+import com.siteproj0.demo.dal.CheckupTypeDbModel;
 import com.siteproj0.demo.dal.DoctorDbModel;
 import com.siteproj0.demo.dal.MedicalCheckupDbModel;
 
@@ -43,5 +45,10 @@ public interface MedicalCheckupRepo extends CrudRepository<MedicalCheckupDbModel
 	List<MedicalCheckupDbModel> findByDoctorIdAndDateAndTime(int doctorId, String date, String time);
 
 	List<MedicalCheckupDbModel> findByClinicIdAndFreeAndFinished(Integer clinicId, boolean b, boolean c);
+
+	List<MedicalCheckupDbModel> findByClinicIdAndDoctorIdAndPatientIdNotNullAndFree(Integer clinicId, Integer doctorId,
+			boolean b);
+
+	List<MedicalCheckupDbModel> findByDoctorIdAndInProgress(Integer doctorId, boolean b);
 
 }

@@ -5,45 +5,44 @@ $(document).on('submit', '*[name="sendMedicalCheckupRequestForm"]',function(e){
 	e.preventDefault();
 	const form = document.forms['sendMedicalCheckupRequestForm'];
 	var notes = document.getElementById("notes").value;
+	const data = formToJSON(form.elements);
 	$.ajax({
-		type : 'PUT',
-		url : "/saveEndNotes",
-		contentType : 'application/json',	
+		type : 'POST',
+		url : "/saveNotesAndSendMedicalCheckupRequest",
+		contentType : 'application/json',
+		data : data,	
 		headers:{
-			'token':localStorage.getItem('token'),
-			'mcId':mcId,
-			'notes':notes
+			'token':localStorage.getItem('token')
 		},
-		success : function(successData) {
-			const data = formToJSON(form.elements);
-			
+		success : function(successData) {		
 			$.ajax({
-				type : 'POST',
-				url : "/saveNotesAndSendMedicalCheckupRequest",
-				contentType : 'application/json',
-				data : data,	
+				type : 'PUT',
+				url : "/saveEndNotes",
+				contentType : 'application/json',	
 				headers:{
-					'token':localStorage.getItem('token')
+					'token':localStorage.getItem('token'),
+					'mcId':mcId,
+					'notes':notes
 				},
 				success : function(successData) {
-					window.location.href = "../doctorHome";	
+					window.location.href = "../doctorHome";
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					if(textStatus=="401"){			
-						window.location.href = "../clinicBasicInfo";
+						window.location.href = "../doctorHome";
 					}
 					else{
-						//window.location.href = "../registerMedicalCheckup";				
+						window.location.href = "../beginMedicalCheckup/"+mcId;			
 					}
 				}
 			});		
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 			if(textStatus=="401"){			
-				window.location.href = "../doctorHome";
+				window.location.href = "../clinicBasicInfo";
 			}
 			else{
-				window.location.href = "../beginMedicalCheckup/"+mcId;			
+				//window.location.href = "../registerMedicalCheckup";				
 			}
 		}
 	});	

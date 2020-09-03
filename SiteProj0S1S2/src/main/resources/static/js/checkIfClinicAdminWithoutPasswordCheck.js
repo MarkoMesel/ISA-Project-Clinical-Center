@@ -4,7 +4,6 @@ if(localStorage.getItem('token')==null){
 else {
 	var role = '';
 	var verified = '';
-	var firstLogin = '';
 	$.ajax({
 		type : 'GET',
 		url : "/getClinicAdminProfile",
@@ -22,12 +21,6 @@ else {
 			if(verified == false) {
 				localStorage.removeItem('token');
 				window.location.href = "../notVerified";
-			}
-			
-			firstLogin = successData.firstLogin;
-			
-			if(firstLogin == true) {
-				window.location.href = "../changeClinicAdminPassword";
 			}
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {

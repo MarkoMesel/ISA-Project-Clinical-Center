@@ -70,6 +70,8 @@ public class DoctorDbModel {
 	
 	private String shiftEnd;
 	
+	private boolean firstLogin;
+	
 	@OneToMany(mappedBy = "doctor")
 	private List<ScheduleDbModel> schedules;
 	
@@ -237,6 +239,14 @@ public class DoctorDbModel {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public boolean isFirstLogin() {
+		return firstLogin;
+	}
+
+	public void setFirstLogin(boolean firstLogin) {
+		this.firstLogin = firstLogin;
 	}
 	
 }

@@ -23,6 +23,8 @@ public class VacationRegisterModel {
 	
 	private int doctorId;
 	
+	private String type;
+	
 	public int getId() {
 		return id;
 	}
@@ -47,6 +49,12 @@ public class VacationRegisterModel {
 	public void setDoctorId(int doctorId) {
 		this.doctorId = doctorId;
 	}
-
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 	
 }

@@ -100,7 +100,7 @@ public class DoctorController {
 			}
 
 			ProfileResponseModel result = new ProfileResponseModel(user.getId(), user.getFirstName(), user.getLastName(),
-					user.getCountry(), user.getCity(), user.getStreet(), user.getPhone(), user.getJmbg(), user.getEmail(), user.isVerified(), user.getRole());
+					user.getCountry(), user.getCity(), user.getStreet(), user.getPhone(), user.getJmbg(), user.getEmail(), user.isVerified(), user.getRole(), user.isFirstLogin());
 			
 			return new ResponseEntity<>(result, HttpStatus.OK);
 		} catch (Exception e) {
@@ -319,6 +319,7 @@ public class DoctorController {
 			
 			if(oldPassword.equals(passwordFromDb)) {
 				user.setPassword(doctorModel.getPassword());
+				user.setFirstLogin(false);
 				doctorRepo.save(user);
 			} else {
 				return new ResponseEntity(HttpStatus.NO_CONTENT);
