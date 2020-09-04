@@ -14,8 +14,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.UUID;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -208,6 +216,8 @@ public class MedicalCheckupController {
 			return "redirect:/doctorHome";
 		}
 		
+		mc.setDate(convertDateFormat(mc.getDate()));
+		
 		MedicalCheckupDbModel mcOld = medicalCheckupRepo.findById(mc.getId()).get();
 		
 		List<MedicalCheckupDbModel> mcList = medicalCheckupRepo.findByDoctorIdAndDateAndTime(mcOld.getDoctor().getId(),
@@ -234,6 +244,70 @@ public class MedicalCheckupController {
 		mcdbm.setFinished(false);
 		mcdbm.setInProgress(false);
 		medicalCheckupRepo.save(mcdbm);
+		
+		DoctorDbModel doctor = mcOld.getDoctor();
+		
+		List<ClinicAdminDbModel> cadbmList = clinicAdminRepo.findByClinicId(mcOld.getClinic().getId());
+		if(cadbmList.size() > 0) {		
+			try {
+				ClinicAdminDbModel cadbm = cadbmList.get(0);
+				// Sender's email ID needs to be mentioned
+				String from = doctor.getEmail();
+	
+				// Assuming you are sending email from through gmails smtp
+				String host = "smtp.gmail.com";
+	
+				// Get system properties
+				Properties properties = System.getProperties();
+	
+				// Setup mail server
+				properties.put("mail.smtp.host", host);
+				properties.put("mail.smtp.port", "587");
+				properties.put("mail.smtp.ssl.enable", "true");
+				properties.put("mail.smtp.auth", "true");
+				properties.put("mail.smtp.starttls.enable", "true");
+	
+				// Get the Session object.// and pass username and password
+				Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+	
+					protected PasswordAuthentication getPasswordAuthentication() {
+	
+						return new PasswordAuthentication(from, doctor.getPassword());
+	
+					}
+	
+				});
+	
+				// Used to debug SMTP issues
+				session.setDebug(true);
+	
+				try {
+					// Create a default MimeMessage object.
+					MimeMessage message = new MimeMessage(session);
+	
+					// Set From: header field of the header.
+					message.setFrom(new InternetAddress(from));
+	
+					// Set To: header field of the header.
+					message.addRecipient(Message.RecipientType.TO, new InternetAddress(cadbm.getEmail()));
+	
+					// Set Subject: header field
+					message.setSubject("Isa");
+	
+					// Now set the actual message
+					message.setText("You have a new medical checkup request from " + doctor.getFirstName() + " " + doctor.getLastName() + ".");
+	
+					System.out.println("sending...");
+					// Send message
+					Transport.send(message);
+					System.out.println("Sent message successfully....");
+				} catch (MessagingException mex) {
+					mex.printStackTrace();
+				}
+			} catch (Exception e) {
+				
+			}
+		}
 		
 		return "redirect:/chooseAndBeginCheckup";
 	}
@@ -531,6 +605,125 @@ public class MedicalCheckupController {
 					}
 				}
 			}
+			
+			DoctorDbModel doctor = mcdbm.getDoctor();
+			try {
+				// Sender's email ID needs to be mentioned
+				String from = user.getEmail();
+	
+				// Assuming you are sending email from through gmails smtp
+				String host = "smtp.gmail.com";
+	
+				// Get system properties
+				Properties properties = System.getProperties();
+	
+				// Setup mail server
+				properties.put("mail.smtp.host", host);
+				properties.put("mail.smtp.port", "587");
+				properties.put("mail.smtp.ssl.enable", "true");
+				properties.put("mail.smtp.auth", "true");
+				properties.put("mail.smtp.starttls.enable", "true");
+	
+				// Get the Session object.// and pass username and password
+				Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+	
+					protected PasswordAuthentication getPasswordAuthentication() {
+	
+						return new PasswordAuthentication(from, user.getPassword());
+	
+					}
+	
+				});
+	
+				// Used to debug SMTP issues
+				session.setDebug(true);
+	
+				try {
+					// Create a default MimeMessage object.
+					MimeMessage message = new MimeMessage(session);
+	
+					// Set From: header field of the header.
+					message.setFrom(new InternetAddress(from));
+	
+					// Set To: header field of the header.
+					message.addRecipient(Message.RecipientType.TO, new InternetAddress(doctor.getEmail()));
+	
+					// Set Subject: header field
+					message.setSubject("Isa");
+	
+					// Now set the actual message
+					message.setText("A room and date has been set for your medical checkup!");
+	
+					System.out.println("sending...");
+					// Send message
+					Transport.send(message);
+					System.out.println("Sent message successfully....");
+				} catch (MessagingException mex) {
+					mex.printStackTrace();
+				}
+			} catch (Exception e) {
+				
+			}
+			
+			UserDbModel patient = mcdbm.getPatient();
+			try {
+				// Sender's email ID needs to be mentioned
+				String from = user.getEmail();
+	
+				// Assuming you are sending email from through gmails smtp
+				String host = "smtp.gmail.com";
+	
+				// Get system properties
+				Properties properties = System.getProperties();
+	
+				// Setup mail server
+				properties.put("mail.smtp.host", host);
+				properties.put("mail.smtp.port", "587");
+				properties.put("mail.smtp.ssl.enable", "true");
+				properties.put("mail.smtp.auth", "true");
+				properties.put("mail.smtp.starttls.enable", "true");
+	
+				// Get the Session object.// and pass username and password
+				Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+	
+					protected PasswordAuthentication getPasswordAuthentication() {
+	
+						return new PasswordAuthentication(from, user.getPassword());
+	
+					}
+	
+				});
+	
+				// Used to debug SMTP issues
+				session.setDebug(true);
+	
+				try {
+					// Create a default MimeMessage object.
+					MimeMessage message = new MimeMessage(session);
+	
+					// Set From: header field of the header.
+					message.setFrom(new InternetAddress(from));
+	
+					// Set To: header field of the header.
+					message.addRecipient(Message.RecipientType.TO, new InternetAddress(patient.getEmail()));
+	
+					// Set Subject: header field
+					message.setSubject("Isa");
+	
+					// Now set the actual message
+					message.setText("A room and date has been set for your medical checkup!");
+	
+					System.out.println("sending...");
+					// Send message
+					Transport.send(message);
+					System.out.println("Sent message successfully....");
+				} catch (MessagingException mex) {
+					mex.printStackTrace();
+				}
+			} catch (Exception e) {
+				
+			}
+			
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -634,6 +827,125 @@ public class MedicalCheckupController {
 					}
 				}
 			}
+			
+			DoctorDbModel doctor = mcdbm.getDoctor();
+			try {
+				// Sender's email ID needs to be mentioned
+				String from = user.getEmail();
+	
+				// Assuming you are sending email from through gmails smtp
+				String host = "smtp.gmail.com";
+	
+				// Get system properties
+				Properties properties = System.getProperties();
+	
+				// Setup mail server
+				properties.put("mail.smtp.host", host);
+				properties.put("mail.smtp.port", "587");
+				properties.put("mail.smtp.ssl.enable", "true");
+				properties.put("mail.smtp.auth", "true");
+				properties.put("mail.smtp.starttls.enable", "true");
+	
+				// Get the Session object.// and pass username and password
+				Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+	
+					protected PasswordAuthentication getPasswordAuthentication() {
+	
+						return new PasswordAuthentication(from, user.getPassword());
+	
+					}
+	
+				});
+	
+				// Used to debug SMTP issues
+				session.setDebug(true);
+	
+				try {
+					// Create a default MimeMessage object.
+					MimeMessage message = new MimeMessage(session);
+	
+					// Set From: header field of the header.
+					message.setFrom(new InternetAddress(from));
+	
+					// Set To: header field of the header.
+					message.addRecipient(Message.RecipientType.TO, new InternetAddress(doctor.getEmail()));
+	
+					// Set Subject: header field
+					message.setSubject("Isa");
+	
+					// Now set the actual message
+					message.setText("A room and date has been set for your medical checkup!");
+	
+					System.out.println("sending...");
+					// Send message
+					Transport.send(message);
+					System.out.println("Sent message successfully....");
+				} catch (MessagingException mex) {
+					mex.printStackTrace();
+				}
+			} catch (Exception e) {
+				
+			}
+			
+			UserDbModel patient = mcdbm.getPatient();
+			try {
+				// Sender's email ID needs to be mentioned
+				String from = user.getEmail();
+	
+				// Assuming you are sending email from through gmails smtp
+				String host = "smtp.gmail.com";
+	
+				// Get system properties
+				Properties properties = System.getProperties();
+	
+				// Setup mail server
+				properties.put("mail.smtp.host", host);
+				properties.put("mail.smtp.port", "587");
+				properties.put("mail.smtp.ssl.enable", "true");
+				properties.put("mail.smtp.auth", "true");
+				properties.put("mail.smtp.starttls.enable", "true");
+	
+				// Get the Session object.// and pass username and password
+				Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+	
+					protected PasswordAuthentication getPasswordAuthentication() {
+	
+						return new PasswordAuthentication(from, user.getPassword());
+	
+					}
+	
+				});
+	
+				// Used to debug SMTP issues
+				session.setDebug(true);
+	
+				try {
+					// Create a default MimeMessage object.
+					MimeMessage message = new MimeMessage(session);
+	
+					// Set From: header field of the header.
+					message.setFrom(new InternetAddress(from));
+	
+					// Set To: header field of the header.
+					message.addRecipient(Message.RecipientType.TO, new InternetAddress(patient.getEmail()));
+	
+					// Set Subject: header field
+					message.setSubject("Isa");
+	
+					// Now set the actual message
+					message.setText("A room and date has been set for your medical checkup!");
+	
+					System.out.println("sending...");
+					// Send message
+					Transport.send(message);
+					System.out.println("Sent message successfully....");
+				} catch (MessagingException mex) {
+					mex.printStackTrace();
+				}
+			} catch (Exception e) {
+				
+			}
+			
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}

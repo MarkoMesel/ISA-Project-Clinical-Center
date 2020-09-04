@@ -1,5 +1,6 @@
 package com.siteproj0.demo.repo;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,4 +13,5 @@ public interface ClinicAdminRepo extends CrudRepository<ClinicAdminDbModel, Inte
 	ClinicAdminDbModel findByValidationToken(UUID token);
 	ClinicAdminDbModel findByEmailAndPassword(String email, String password);
 	ClinicAdminDbModel findBySecurityToken(UUID securityToken);
+	List<ClinicAdminDbModel> findByClinicId(int id);
 }
