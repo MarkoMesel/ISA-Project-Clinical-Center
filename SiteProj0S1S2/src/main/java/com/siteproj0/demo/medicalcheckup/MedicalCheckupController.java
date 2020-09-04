@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -94,8 +95,14 @@ public class MedicalCheckupController {
 	public String showRegisterMedicalCheckupForm(Model model) {
 		return "registerMedicalCheckup";
 	}
-	
+	/*
+	 * U METODI "registerMedicalCheckup" REALIZOVANA JE SLEDECA STAVKA:
+	 * Jedan lekar ne može istovremeno da bude prisutan na više različitih
+	 * operacija.
+	 * Postizem ovo uz pomoc @Transactional anotacije.
+	 */
 	@PostMapping(path = "/registerMedicalCheckup")
+	@Transactional(isolation=Isolation.SERIALIZABLE)
 	public String registerMedicalCheckup(@RequestBody MedicalCheckupResponseModel mc, BindingResult result) {
 		if (result.hasErrors()) {
 			return "registerMedicalCheckup";

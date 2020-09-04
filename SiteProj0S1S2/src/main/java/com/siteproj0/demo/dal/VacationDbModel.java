@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotEmpty;
 
 @SuppressWarnings("unused")
@@ -33,6 +34,9 @@ public class VacationDbModel {
 	private boolean enabled;
 
 	private String type;
+	
+	@Version
+	private Integer version;
 	
 	public int getId() {
 		return id;
@@ -88,6 +92,14 @@ public class VacationDbModel {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 	
 }

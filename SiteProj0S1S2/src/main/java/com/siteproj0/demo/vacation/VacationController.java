@@ -22,6 +22,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,6 +51,14 @@ import com.siteproj0.demo.user.UserRegisterModel;
 @Controller
 public class VacationController {
 	
+	/*
+	 * U METODAMA "approveVacationRequest" i "rejectVacationRequest" REALIZOVANA JE 
+	 * SLEDECA STAVKA:
+	 * Smatra se da student nije uspešno ispunio ovaj zahtev ukoliko pored navedenih
+	 * ograničenja ne pronađe i adekvatno ne reši bar još jednu konfliktnu situaciju
+	 * za svoj deo funkcionalnosti propisanih specifikacijom.
+	 */
+	 
 	@Autowired
 	VacationRepo repo;
 	
@@ -83,6 +92,7 @@ public class VacationController {
 		vdbm.setApproved(false);
 		vdbm.setEnabled(true);
 		vdbm.setType(vacation.getType());
+		vdbm.setVersion(0);
 		repo.save(vdbm);
 		//return "redirect:/doctorHome?success";
 		return "redirect:/doctorHome";
@@ -129,13 +139,12 @@ public class VacationController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
+	/* Nakon sto je odobren odmor/odsustvo, ne moze se ponovo odobriti/odbiti. */
 	@PutMapping(path = "/approveVacationRequest")
 	@ResponseBody
 	public ResponseEntity approveVacationRequest(@RequestHeader("token") UUID securityToken,
-			@RequestHeader("vrId") int vrId) {
-		//System.out.println("I AM HERE!!!");
-		//System.out.println("UBACENI ID JE: " + roomId );
+		@RequestHeader("vrId") int vrId) {
 		if (securityToken == null) {
 			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 		}
@@ -147,7 +156,20 @@ public class VacationController {
 			
 			VacationDbModel vdbm = repo.findById(vrId).get();
 			vdbm.setApproved(true);
-			repo.save(vdbm);
+			try {
+				repo.save(vdbm);
+				//Otkomentarisanjem ovoga se izazove ObjectOptimisticLockingFailureException
+				/*
+				VacationDbModel vdbmTest = new VacationDbModel();
+				vdbmTest.setId(vdbm.getId()); 
+				vdbmTest.setApproved(false);
+				vdbmTest.setVersion(0); 
+				repo.save(vdbmTest);
+				 */
+			} catch(ObjectOptimisticLockingFailureException e0) {
+				System.out.println("Approval failed. It's already approved/rejected.");
+				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+			}
 			
 			
 		} catch (Exception e) {
@@ -156,12 +178,11 @@ public class VacationController {
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 	
+	/* Nakon sto je odbijen odmor/odsustvo, ne moze se ponovo odobriti/odbiti. */
 	@PutMapping(path = "/rejectVacationRequest")
 	@ResponseBody
 	public ResponseEntity rejectVacationRequest(@RequestHeader("token") UUID securityToken,
-			@RequestHeader("vrId") int vrId, @RequestHeader("notes") String notes) {
-		//System.out.println("I AM HERE!!!");
-		//System.out.println("UBACENI ID JE: " + roomId );
+		@RequestHeader("vrId") int vrId, @RequestHeader("notes") String notes) {
 		if (securityToken == null) {
 			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 		}
@@ -174,7 +195,20 @@ public class VacationController {
 			VacationDbModel vdbm = repo.findById(vrId).get();
 			vdbm.setApproved(false);
 			vdbm.setEnabled(false);
-			repo.save(vdbm);
+			try {
+				repo.save(vdbm);
+				//Otkomentarisanjem ovoga se izazove ObjectOptimisticLockingFailureException
+				/*
+				VacationDbModel vdbmTest = new VacationDbModel();
+				vdbmTest.setId(vdbm.getId()); 
+				vdbmTest.setApproved(true);
+				vdbmTest.setVersion(0); 
+				repo.save(vdbmTest);
+				 */
+			} catch(ObjectOptimisticLockingFailureException e0) {
+				System.out.println("Rejection failed. It's already approved/rejected.");
+				return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+			}
 			
 			
 		} catch (Exception e) {

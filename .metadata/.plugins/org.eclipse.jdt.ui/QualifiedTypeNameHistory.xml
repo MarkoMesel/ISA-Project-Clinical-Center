@@ -13,7 +13,6 @@
 <fullyQualifiedTypeName name="java.util.Optional"/>
 <fullyQualifiedTypeName name="com.siteproj0.demo.repo.VacationRepo"/>
 <fullyQualifiedTypeName name="com.siteproj0.demo.vacation.VacationRegisterModel"/>
-<fullyQualifiedTypeName name="com.siteproj0.demo.dal.VacationDbModel"/>
 <fullyQualifiedTypeName name="com.siteproj0.demo.vacation.VacationResponseModel"/>
 <fullyQualifiedTypeName name="com.siteproj0.demo.dal.ClinicRatingDbModel"/>
 <fullyQualifiedTypeName name="com.siteproj0.demo.repo.ClinicRatingRepo"/>
@@ -34,7 +33,6 @@
 <fullyQualifiedTypeName name="java.time.LocalDate"/>
 <fullyQualifiedTypeName name="com.siteproj0.demo.dal.DoctorDbModel"/>
 <fullyQualifiedTypeName name="com.siteproj0.demo.repo.DoctorRepo"/>
-<fullyQualifiedTypeName name="org.springframework.transaction.annotation.Transactional"/>
 <fullyQualifiedTypeName name="javax.persistence.LockModeType"/>
 <fullyQualifiedTypeName name="org.springframework.data.annotation.Version"/>
 <fullyQualifiedTypeName name="javax.transaction.Transactional"/>
@@ -60,4 +58,6 @@
 <fullyQualifiedTypeName name="org.springframework.scheduling.annotation.Scheduled"/>
 <fullyQualifiedTypeName name="com.siteproj0.demo.dal.MedicalCheckupDbModel"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="org.springframework.transaction.annotation.Transactional"/>
+<fullyQualifiedTypeName name="com.siteproj0.demo.dal.VacationDbModel"/>
 </qualifiedTypeNameHistroy>
