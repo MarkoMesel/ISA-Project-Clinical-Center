@@ -26,3 +26,6 @@ Administrator Klinike:
     Sifra: abcde123
    
 Za testiranje autorizacije, treba se ulogovati kao doktor/clinicAdmin i ici na neki link kome moze da pristupi samo clinicAdmin/doktor (a da pritom taj link nije home/doctorHome/clinicAdminHome jer ce na tim stranicama ulogovani korisnik samo biti redirect-ovan ka svom odgovarajucem home page-u).
+
+Postoji i funkcionalnost da, ako se prvi put doktor ili clinicAdmin loginuje, da ce morati da promeni sifru.
+Da bi se testirala, treba da se udje u data.sql i promeni vrednost FIRST_LOGIN kod clinicAdmin-a ili doctor-a(preporucujem clinicAdmin sa mailom aabb@gmail.com ili doktor sa mailom dddd@gmail.com) na TRUE.
