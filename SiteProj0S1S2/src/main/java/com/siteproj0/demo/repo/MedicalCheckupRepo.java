@@ -51,4 +51,10 @@ public interface MedicalCheckupRepo extends CrudRepository<MedicalCheckupDbModel
 
 	List<MedicalCheckupDbModel> findByDoctorIdAndInProgress(Integer doctorId, boolean b);
 
+	List<MedicalCheckupDbModel> findByRoomIdAndDateAndFreeAndFinished(int pId, String foundDateStr, boolean b,
+			boolean c);
+
+	List<MedicalCheckupDbModel> findByRoomIdAndDoctorIdAndDateAndTime(int roomId, int doctorId, String chosenDate,
+			String time);
+
 }

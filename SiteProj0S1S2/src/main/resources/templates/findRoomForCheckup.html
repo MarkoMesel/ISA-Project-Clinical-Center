@@ -17,22 +17,34 @@
 
 <body>
 	<!-- 	<container> -->
-	<div class="mainPanel">
+	<div class="mainPanelLarge">
 		<h1>Rooms List</h1>
 		<div>
-			<div style="width: 40%; float:left;">
+			<h3>Choose a new doctor (optional)</h3>
+			<div id="doctorTable"></div>
+		<br/>
+		</div>
+		<div>
+			<div style="width: 48%; float:left;">
+				<h3>Select room and find date ...</h3>
 				<div id="roomTable"></div>
+				<h3>The first free date for this room is ...</h3>
+				<h3 id="firstFreeDate">... click on room ...</h3>
+				<a href="#" class="submitButton" id="pickThisDateBtn" name="pickThisDateBtn">Go With This</a>
 			</div>
-	    	<div style="width: 50%; float:right;">
+	    	<div style="width: 48%; float:right;">
 	    		<div>
-		    			<a class="button" href="../roomManager">Manage Rooms</a>
-					<br/>
-					<h3>Find A Room</h3>
-					<p>
+					<h3>... or find a room</h3>
+						<div style="display:flex; flex-direction: row; justify-content: center; align-items: center;">
+							<label style="min-width: 50px; text-align: left;" for="rNameOrNum">Room Value:</label>
+							<input type="text" placeholder="Room Name" id="rNameOrNum"/><br />
+						</div>
+						<br />
+						<div style="display:flex; flex-direction: row; justify-content: center; align-items: center;">
+							<label style="min-width: 50px; text-align: left;" for="rDate">Reservation Date:</label>
+							<input type="date" placeholder="Reservation Date" id="rDate"/><br />
+						</div>
 						
-						Room Name or Number: <input type="text" placeholder="Room Name" id="rNameOrNum"/><br />
-						Reservation Date: <br/><input type="date" placeholder="Reservation Date" id="rDate"/><br />
-					</p>
 					<p>
 						<a href="#" class="button" id="findRoomNameBtn" type=button name="findRoomNameBtn">Find By Room Name</a>
 						<a href="#" class="button" id="findRoomNumBtn" type=button name="findRoomNumBtn">Find By Room Number</a>
@@ -40,19 +52,23 @@
 				</div>
 			</div>
 		</div>
-		<div style="padding-top: 390px;">
-			<div style="width: 40%; float:left;">
+		<div style="padding-top: 100px;">
+			<div style="width: 48%; float:left;">
+
+			</div>
+			<div style="width: 48%; float:right;">
+			<div style="width: 48%; float:left;">
 				<h3 id="roomsFreeOn">Rooms free on ...</h3>
 				<div id="foundRoomTable"></div>
-				<br/>
 			</div>
-			<div style="width: 50%; float:right;">
+			<div style="width: 48%; float:right;">
 				<h3 id="busyDatesFor">Busy dates for ...</h3>
 				<div id="busyDatesTable"></div>
 			</div>
+			</div>
 		</div>
-		<div style="padding-top: 300px;">
-		<a href="#" class="submitButton" id="chooseRoomDateBtn" name="chooseRoomDateBtn">Submit Room and Reservation Date</a>
+		<div style="padding-top: 420px;">
+		<a href="#" class="submitButton" id="chooseRoomDateBtn" name="chooseRoomDateBtn">Submit Chosen Room and Date</a>
 		</div>
 	</div>
 	<!--

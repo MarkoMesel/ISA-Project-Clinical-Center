@@ -1,9 +1,9 @@
 package com.siteproj0.demo.room;
 
-public class BusyDateResponseModel {
+public class FoundDateResponseModel {
 	
 	
-	public BusyDateResponseModel(String date) {
+	public FoundDateResponseModel(String date) {
 		super();
 		this.date = date;
 	}

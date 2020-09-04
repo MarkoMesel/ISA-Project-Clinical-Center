@@ -1,7 +1,13 @@
 package com.siteproj0.demo.room;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -281,6 +287,9 @@ public class RoomController {
 	public ResponseEntity<Object> findRoomByName(@RequestHeader("token") UUID securityToken,
 													@RequestHeader("searchByThis") String searchByThis,
 													@RequestHeader("rDate") String rDate) {
+		if(searchByThis.isEmpty() || rDate.isEmpty()) {
+			return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+		}
 		try {
 			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
 			if (user == null) {
@@ -288,6 +297,8 @@ public class RoomController {
 			}
 			ClinicDbModel clinic = user.getClinic();
 			Integer clinicId = clinic.getId();	
+			
+			rDate = convertDateFormat(rDate);
 			
 			List<RoomDbModel> rooms = roomRepo.findByNameAndClinicIdAndEnabled(searchByThis,
 																				clinicId,
@@ -319,13 +330,18 @@ public class RoomController {
 													@RequestHeader("searchByThis") String searchByThis,
 													@RequestHeader("rDate") String rDate) {
 		
+		if(searchByThis.isEmpty() || rDate.isEmpty()) {
+			return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+		}
 		try {
 			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
 			if (user == null) {
 				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 			}
 			ClinicDbModel clinic = user.getClinic();
-			Integer clinicId = clinic.getId();	
+			Integer clinicId = clinic.getId();
+			
+			rDate = convertDateFormat(rDate);
 			
 			List<RoomDbModel> rooms = roomRepo.findByNumberAndClinicIdAndEnabled(searchByThis,
 																				clinicId,
@@ -370,12 +386,12 @@ public class RoomController {
 			
 			//System.out.println("NASAO JE OVOLIKO ELEMENATA: " + doctors.size());
 			
-			List<BusyDateResponseModel> busyDates = new ArrayList<BusyDateResponseModel>();
+			List<FoundDateResponseModel> busyDates = new ArrayList<FoundDateResponseModel>();
 			
 			//List<RoomResponseModel> roomResponseList = new ArrayList<RoomResponseModel>();
 			
 			for(MedicalCheckupDbModel mc : mcList) {
-				BusyDateResponseModel bd = new BusyDateResponseModel(mc.getDate());
+				FoundDateResponseModel bd = new FoundDateResponseModel(mc.getDate());
 				busyDates.add(bd);
 			}	
 			
@@ -385,6 +401,80 @@ public class RoomController {
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	@GetMapping(path = "/getfirstFreeDateForRoom/{pId}")
+	public ResponseEntity<Object> getfirstFreeDateForRoom(@RequestHeader("token") UUID securityToken, @PathVariable int pId) {
+		try {
+			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			
+			FoundDateResponseModel foundDate = null;
+			
+			String foundDateStr = getCurrentDate();
+			
+			List<MedicalCheckupDbModel> mcList = mcRepo.findByRoomIdAndDateAndFreeAndFinished(pId, foundDateStr, false, false);
+			if(mcList.size() <= 0) {
+				foundDate = new FoundDateResponseModel(foundDateStr);
+				return new ResponseEntity<>(foundDate, HttpStatus.OK);
+			}
+			
+			do {
+				foundDateStr = getNextDate(foundDateStr);
+				mcList = mcRepo.findByRoomIdAndDateAndFreeAndFinished(pId, foundDateStr, false, false);
+			} while(mcList.size() > 0);
+			
+			foundDate = new FoundDateResponseModel(foundDateStr);
+			return new ResponseEntity<>(foundDate, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	private String convertDateFormat(String currentDateStr) {
+		DateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.US);
+		DateFormat neededFormat = new SimpleDateFormat("MM/dd/yyyy",Locale.US);
+		Date currentDate = null;
+		
+		try {
+			currentDate = originalFormat.parse(currentDateStr);
+	      } catch (ParseException e) {
+	    	  try {
+	  			currentDate = neededFormat.parse(currentDateStr);
+	  	      } catch (ParseException e0) {
+	  	          e.printStackTrace();
+	  	      }
+	      }
+		
+		String newFormat = neededFormat.format(currentDate);
+		
+		return newFormat;
+	}
+	
+	private String getCurrentDate() {
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy",Locale.US);
+		Calendar cal = Calendar.getInstance();
+		return dateFormat.format(cal.getTime());
+	}
+	
+	private String getNextDate(String oldDateStr) {
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy",Locale.US);
+		Date oldDate = null;
+		try {
+			oldDate = dateFormat.parse(oldDateStr);
+	      } catch (ParseException e) {
+	    	  e.printStackTrace();
+	  	  }
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(oldDate);
+		cal.add(Calendar.DAY_OF_YEAR, 1);
+		
+		return dateFormat.format(cal.getTime());
+		
 	}
 	
 }

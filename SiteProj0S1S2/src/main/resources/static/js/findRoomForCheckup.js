@@ -2,24 +2,60 @@ var chosenDate = "";
 var url = document.URL;
 var mcId = url.substring(url.lastIndexOf('/') + 1);
 
-$("#roomTable").tabulator({
-	height : "false",
+$("#doctorTable").tabulator({
+	height : "150px",
 	layout : 'fitColumns',
 	movableCols : false,
-	selectable:false,
+	selectable:1,
 	sortable: false,
 	columns : [ {
 		title : "ID",
 		field : "id",
 		visible : false
 	},{
-		title : "Name",
-		field : "name",
-		width : 120,
+		title : "First Name",
+		field : "firstName",
+		width : 250,
 	},{
-		title : "Number",
-		field : "number",
-		width : 105,
+		title : "Last Name",
+		field : "lastName",
+		width : 250,
+	},{
+		title : "JMBG",
+		field : "jmbg",
+		width : 250,
+	},{
+		title : "Country",
+		field : "country",
+		width : 250,
+	},{
+		title : "City",
+		field : "city",
+		width : 250,
+	},{
+		title : "Street",
+		field : "street",
+		width : 250,
+	},{
+		title : "Email",
+		field : "email",
+		width : 250,
+	},{
+		title : "Phone",
+		field : "phone",
+		width : 250,
+	},{
+		title : "Rating",
+		field : "rating",
+		width : 250,
+	},{
+		title : "Shift Start Time",
+		field : "shiftStart",
+		width : 250,
+	},{
+		title : "Shift End Time",
+		field : "shiftEnd",
+		width : 250,
 	},{
 		title : "CLINIC ID",
 		field : "clinicId",
@@ -27,11 +63,61 @@ $("#roomTable").tabulator({
 	}
 	
 	],
+
+});
+
+$("#roomTable").tabulator({
+	height: 200,
+	layout : 'fitColumns',
+	movableCols : false,
+	selectable:1,
+	sortable: false,
+	columns : [ {
+		title : "ID",
+		field : "id",
+		visible : false
+	},{
+		title : "Name",
+		field : "name"
+	},{
+		title : "Number",
+		field : "number"
+	},{
+		title : "CLINIC ID",
+		field : "clinicId",
+		visible : false
+	}
+	
+	], rowSelected:function(e, row){
+        //row.toggleSelect();
+        
+    	var parsedData = getParsedDataFromTable("#roomTable");
+    	var pId = parsedData.id;
+    	
+    	$.ajax({
+    		type : 'GET',
+    		url : "/getfirstFreeDateForRoom/"+pId,
+    		dataType : "json",
+    		headers:{
+    			'token':localStorage.getItem('token')
+    		},
+    		success : function(successData) {
+    			var fDate = successData.date;
+    			$("#firstFreeDate").html(fDate);
+    			
+    		},
+    		error : function(XMLHttpRequest, textStatus, errorThrown) {
+    			if(textStatus=="401"){			
+    				window.location.href = "../whatAreYou";
+    			}
+    		}
+    	});
+    }
 	
 });
 
 $("#foundRoomTable").tabulator({
-	height : "false",
+	height: 150,
 	layout : 'fitColumns',
 	movableCols : false,
 	selectable:1,
@@ -88,7 +174,7 @@ $("#foundRoomTable").tabulator({
 });
 
 $("#busyDatesTable").tabulator({
-	height : "false",
+	height: 150,
 	layout : 'fitColumns',
 	movableCols : false,
 	selectable:false,
@@ -105,9 +191,29 @@ $("#busyDatesTable").tabulator({
 
 
 $(window).resize(function() {
+	$("#doctorTable").tabulator("redraw");
 	$("#roomTable").tabulator("redraw");
 	$("#foundRoomTable").tabulator("redraw");
 	$("#busyDatesTable").tabulator("redraw");
+});
+
+$.ajax({
+	type : 'GET',
+	url : "/getDoctorsFromClinicAdmin",
+	dataType : "json",
+	headers:{
+		'token':localStorage.getItem('token')
+	},
+	success : function(successData) {
+		$("#doctorTable").tabulator("setData", successData);
+		
+		
+	},
+	error : function(XMLHttpRequest, textStatus, errorThrown) {
+		if(textStatus=="401"){			
+			window.location.href = "../whatAreYou";
+		}
+	}
 });
 
 $.ajax({
@@ -129,32 +235,100 @@ $.ajax({
 	}
 });
 
+$("#pickThisDateBtn").click(function() {
+	var doctorData = $("#doctorTable").tabulator("getSelectedData");
+	mcId = mcId.replace('#','');
+	var parsedData = getParsedDataFromTable("#roomTable");
+	var roomId = parsedData.id;
+	var date = document.getElementById("firstFreeDate").innerText;
+	if(doctorData.length == 0 && date != '... click on room ...') {	
+		$.ajax({
+			type : 'PUT',
+			url : "/saveRoomAndDate",
+			contentType : 'application/json',	
+			headers:{
+				'token':localStorage.getItem('token'),
+				'mcId':mcId,
+				'roomId':roomId,
+				'chosenDate':date
+			},
+			success : function(successData) {
+				window.location.href = "../clinicAdminHome";
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				//location.reload();
+			}
+		});	
+	} else {
+		var parsedDoctorData = getParsedDataFromTable("#doctorTable");
+		var doctorId = parsedData.id;
+		$.ajax({
+			type : 'PUT',
+			url : "/saveRoomAndDateAndDoctor",
+			contentType : 'application/json',	
+			headers:{
+				'token':localStorage.getItem('token'),
+				'mcId':mcId,
+				'roomId':roomId,
+				'chosenDate':date,
+				'doctorId':doctorId
+			},
+			success : function(successData) {
+				window.location.href = "../clinicAdminHome";
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				//location.reload();
+			}
+		});	
+	}
+});
+
 $("#chooseRoomDateBtn").click(function() {
+	var doctorData = $("#doctorTable").tabulator("getSelectedData");
+	mcId = mcId.replace('#','');
 	var parsedData = getParsedDataFromTable("#foundRoomTable");
 	var roomId = parsedData.id;
-	
-	$.ajax({
-		type : 'PUT',
-		url : "/saveRoomAndDate",
-		contentType : 'application/json',	
-		headers:{
-			'token':localStorage.getItem('token'),
-			'mcId':mcId,
-			'roomId':roomId,
-			'chosenDate':chosenDate
-		},
-		success : function(successData) {
-			window.location.href = "../clinicAdminHome";
-		},
-		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			if(textStatus=="401"){			
-				window.location.href = "../doctorHome";
+	var date = document.getElementById("rDate").value;
+	if(doctorData.length == 0) {
+		$.ajax({
+			type : 'PUT',
+			url : "/saveRoomAndDate",
+			contentType : 'application/json',	
+			headers:{
+				'token':localStorage.getItem('token'),
+				'mcId':mcId,
+				'roomId':roomId,
+				'chosenDate':date
+			},
+			success : function(successData) {
+				window.location.href = "../clinicAdminHome";
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				//location.reload();
 			}
-			else{
-				window.location.href = "../beginMedicalCheckup/"+mcId;			
+		});
+	} else {
+		var parsedDoctorData = getParsedDataFromTable("#doctorTable");
+		var doctorId = parsedData.id;
+		$.ajax({
+			type : 'PUT',
+			url : "/saveRoomAndDateAndDoctor",
+			contentType : 'application/json',	
+			headers:{
+				'token':localStorage.getItem('token'),
+				'mcId':mcId,
+				'roomId':roomId,
+				'chosenDate':date,
+				'doctorId':doctorId
+			},
+			success : function(successData) {
+				window.location.href = "../clinicAdminHome";
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				//location.reload();
 			}
-		}
-	});	
+		});	
+	}
 });
 
 

@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="IT FOUND THE USER"/>
+		<item key="selection" value="ScheduledTask"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="scheduledTask"/>
+			<item value="mcRepo"/>
+			<item value="mcId"/>
+			<item value="Calendar"/>
+			<item value="console"/>
+			<item value="forbidden"/>
+			<item value="http"/>
+			<item value="bad"/>
+			<item value="gateway"/>
+			<item value="convertDateFormat"/>
+			<item value="chosenDate"/>
+			<item value="saveRoom"/>
 			<item value="IT FOUND THE USER"/>
 			<item value="findRoom"/>
 			<item value="save"/>
-			<item value="transactional"/>
-			<item value="vers"/>
-			<item value="upit za pregled u istom terminu kod istog lekara"/>
-			<item value="doctor"/>
-			<item value="Doctor"/>
-			<item value="getClinicFrom"/>
-			<item value="getClinic"/>
-			<item value="getClinicInfo"/>
-			<item value="registerMedical"/>
-			<item value="null"/>
-			<item value="convertDateFormat"/>
-			<item value="js"/>
 		</list>
 		<list key="replacehistory">
 			<item value=" "/>

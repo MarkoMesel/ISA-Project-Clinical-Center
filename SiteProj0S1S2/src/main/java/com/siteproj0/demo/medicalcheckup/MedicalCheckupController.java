@@ -22,6 +22,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -444,13 +445,25 @@ public class MedicalCheckupController {
 		if (securityToken == null) {
 			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 		}
+		if(chosenDate.isEmpty()) {
+			return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+		}
+		System.out.println(securityToken);
+		System.out.println(mcId);
+		System.out.println(roomId);
+		System.out.println(chosenDate);
+		chosenDate = convertDateFormat(chosenDate);
+		
+		
 		try {
 			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
 			if (user == null) {
 				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 			}
 			
+			
 			MedicalCheckupDbModel mcdbm = medicalCheckupRepo.findById(mcId).get();
+			
 			
 			List<MedicalCheckupDbModel> mcList = medicalCheckupRepo.findByRoomIdAndDateAndTime(roomId,chosenDate,mcdbm.getTime());
 			if(mcList.size() > 1) {
@@ -459,9 +472,66 @@ public class MedicalCheckupController {
 			
 			
 			RoomDbModel rdbm = roomRepo.findById(roomId).get();
+			
 			mcdbm.setRoom(rdbm);
 			mcdbm.setDate(chosenDate);
+			
+			System.out.println("I set the values of mcdbm.");
 			medicalCheckupRepo.save(mcdbm);
+			System.out.println("I saved mcdbm.");
+		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
+	}
+	
+	@PutMapping(path = "/saveRoomAndDateAndDoctor")
+	@ResponseBody
+	public ResponseEntity saveRoomAndDateAndDoctor(@RequestHeader("token") UUID securityToken,
+			@RequestHeader("mcId") int mcId,
+			@RequestHeader("roomId") int roomId,
+			@RequestHeader("chosenDate") String chosenDate,
+			@RequestHeader("doctorId") int doctorId) {
+		if (securityToken == null) {
+			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+		}
+		if(chosenDate.isEmpty()) {
+			return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+		}
+		System.out.println(securityToken);
+		System.out.println(mcId);
+		System.out.println(roomId);
+		System.out.println(chosenDate);
+		System.out.println(doctorId);
+		chosenDate = convertDateFormat(chosenDate);
+		
+		
+		try {
+			ClinicAdminDbModel user = clinicAdminRepo.findBySecurityToken(securityToken);
+			if (user == null) {
+				return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+			}
+			
+			
+			MedicalCheckupDbModel mcdbm = medicalCheckupRepo.findById(mcId).get();
+			
+			
+			List<MedicalCheckupDbModel> mcList = medicalCheckupRepo.findByRoomIdAndDoctorIdAndDateAndTime(roomId,doctorId,chosenDate,mcdbm.getTime());
+			if(mcList.size() > 1) {
+				return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			
+			
+			RoomDbModel rdbm = roomRepo.findById(roomId).get();
+			DoctorDbModel ddbm = doctorRepo.findById(doctorId).get();
+			
+			mcdbm.setRoom(rdbm);
+			mcdbm.setDate(chosenDate);
+			mcdbm.setDoctor(ddbm);
+			
+			System.out.println("I set the values of mcdbm.");
+			medicalCheckupRepo.save(mcdbm);
+			System.out.println("I saved mcdbm.");
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -808,6 +878,58 @@ public class MedicalCheckupController {
 		String newFormat = neededFormat.format(currentDate);
 		
 		return newFormat;
+	}
+	
+	//KRAJ DANA
+	@Scheduled(cron = "59 59 23 * * ?")
+	public void autoSetMcDateAndTime() {
+		System.out.println("Initiating automatic room and date finding procedure...");
+		List<MedicalCheckupDbModel> mcList = medicalCheckupRepo.findByRoomIdIsNull();
+		Iterable<RoomDbModel> roomIterable = roomRepo.findAll();
+		String date = "";
+		for(MedicalCheckupDbModel mcdbm : mcList) {
+			System.out.println("Found new medical checkup.");
+			date = getCurrentDate();
+			do {
+				date = getNextDate(date);
+				Iterator<RoomDbModel> roomIterator = roomIterable.iterator();
+				while(roomIterator.hasNext()) {
+					RoomDbModel rdbm = roomIterator.next();
+					List<MedicalCheckupDbModel> mcList0 = medicalCheckupRepo.findByRoomIdAndDateAndTime(rdbm.getId(),date,mcdbm.getTime());
+					if(mcList0.size() <= 0) {
+						mcdbm.setDate(date);
+						mcdbm.setRoom(rdbm);
+						medicalCheckupRepo.save(mcdbm);
+						System.out.println("done");
+						break;
+					}
+				}
+			} while(mcdbm.getRoom() == null);
+		}
+		System.out.println("It is done.");
+	}
+	
+	private String getNextDate(String oldDateStr) {
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy",Locale.US);
+		Date oldDate = null;
+		try {
+			oldDate = dateFormat.parse(oldDateStr);
+	      } catch (ParseException e) {
+	    	  e.printStackTrace();
+	  	  }
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(oldDate);
+		cal.add(Calendar.DAY_OF_YEAR, 1);
+		
+		return dateFormat.format(cal.getTime());
+		
+	}
+	
+	private String getCurrentDate() {
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy",Locale.US);
+		Calendar cal = Calendar.getInstance();
+		return dateFormat.format(cal.getTime());
 	}
 	
 }

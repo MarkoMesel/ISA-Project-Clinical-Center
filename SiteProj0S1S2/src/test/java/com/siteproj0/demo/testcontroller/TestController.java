@@ -50,7 +50,7 @@ import com.siteproj0.demo.repo.MedicalCheckupRepo;
 import com.siteproj0.demo.repo.RoomRepo;
 import com.siteproj0.demo.repo.UserRepo;
 import com.siteproj0.demo.repo.VacationRepo;
-import com.siteproj0.demo.room.BusyDateResponseModel;
+import com.siteproj0.demo.room.FoundDateResponseModel;
 import com.siteproj0.demo.room.RoomRegisterModel;
 import com.siteproj0.demo.room.RoomResponseModel;
 import com.siteproj0.demo.user.EditProfileRequestModel;
@@ -152,8 +152,8 @@ class TestController {
 	static RoomResponseModel roomResM;
 	static List<RoomResponseModel> roomResMList;
 	static RoomRegisterModel roomRegM;
-	static BusyDateResponseModel busyDateRM;
-	static List<BusyDateResponseModel> busyDateRMList;
+	static FoundDateResponseModel busyDateRM;
+	static List<FoundDateResponseModel> busyDateRMList;
 	
 	static EditProfileRequestModel editProfileRM;
 	static List<UserDbModel> patientDBMList;
@@ -541,7 +541,7 @@ class TestController {
 		roomRegM.setNumber("1");
 		roomRegM.setClinicId(1);
 		
-		busyDateRM = new BusyDateResponseModel("2020-10-10");
+		busyDateRM = new FoundDateResponseModel("2020-10-10");
 		
 		busyDateRMList = new ArrayList<>();
 		busyDateRMList.add(busyDateRM);
