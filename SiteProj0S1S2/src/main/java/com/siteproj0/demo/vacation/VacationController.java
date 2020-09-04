@@ -155,7 +155,9 @@ public class VacationController {
 			}
 			
 			VacationDbModel vdbm = repo.findById(vrId).get();
-			vdbm.setApproved(true);
+				if(!vdbm.isApproved() && vdbm.isEnabled()) {
+					vdbm.setApproved(true);
+				}
 			try {
 				repo.save(vdbm);
 				//Otkomentarisanjem ovoga se izazove ObjectOptimisticLockingFailureException
@@ -193,8 +195,10 @@ public class VacationController {
 			}
 			
 			VacationDbModel vdbm = repo.findById(vrId).get();
-			vdbm.setApproved(false);
-			vdbm.setEnabled(false);
+			if(!vdbm.isApproved() && vdbm.isEnabled()) {
+				vdbm.setApproved(false);
+				vdbm.setEnabled(false);
+			}
 			try {
 				repo.save(vdbm);
 				//Otkomentarisanjem ovoga se izazove ObjectOptimisticLockingFailureException

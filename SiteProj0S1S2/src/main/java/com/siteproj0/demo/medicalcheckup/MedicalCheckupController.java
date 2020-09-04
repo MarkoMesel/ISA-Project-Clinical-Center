@@ -99,7 +99,6 @@ public class MedicalCheckupController {
 	 * U METODI "registerMedicalCheckup" REALIZOVANA JE SLEDECA STAVKA:
 	 * Jedan lekar ne može istovremeno da bude prisutan na više različitih
 	 * operacija.
-	 * Postizem ovo uz pomoc @Transactional anotacije.
 	 */
 	@PostMapping(path = "/registerMedicalCheckup")
 	@Transactional(isolation=Isolation.SERIALIZABLE)
@@ -451,6 +450,7 @@ public class MedicalCheckupController {
 	 */
 	@PutMapping(path = "/saveRoomAndDate")
 	@ResponseBody
+	@Transactional(isolation=Isolation.SERIALIZABLE)
 	public ResponseEntity saveRoomAndDate(@RequestHeader("token") UUID securityToken,
 			@RequestHeader("mcId") int mcId,
 			@RequestHeader("roomId") int roomId,
@@ -544,6 +544,7 @@ public class MedicalCheckupController {
 	 */
 	@PutMapping(path = "/saveRoomAndDateAndDoctor")
 	@ResponseBody
+	@Transactional(isolation=Isolation.SERIALIZABLE)
 	public ResponseEntity saveRoomAndDateAndDoctor(@RequestHeader("token") UUID securityToken,
 			@RequestHeader("mcId") int mcId,
 			@RequestHeader("roomId") int roomId,

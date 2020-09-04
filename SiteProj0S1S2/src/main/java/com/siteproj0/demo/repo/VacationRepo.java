@@ -12,4 +12,6 @@ public interface VacationRepo extends CrudRepository<VacationDbModel, Integer>{
 
 	List<VacationDbModel> findByApprovedAndEnabled(boolean approved, boolean enabled);
 
+	List<VacationDbModel> findByEnabled(boolean b);
+
 }

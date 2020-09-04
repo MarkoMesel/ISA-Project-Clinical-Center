@@ -20880,3 +20880,60 @@
 2020-09-04 19:35:54,900 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 94 resources
 2020-09-04 19:35:54,925 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2020-09-04 19:35:54,926 [Worker-2: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\FAKS\Materijali - ISA\ISA FAJNL FAJNL BOS\ISA-Proj\SiteProj0S1S2\src\test\resources
+2020-09-04 19:45:18,899 [Worker-0: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2020-09-04 19:45:20,888 [Worker-1: Decoration Calculation] WARN  org.eclipse.jgit.util.FS_Win32 - null
+2020-09-04 20:34:54,037 [Worker-19: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 20:34:54,047 [Worker-19: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2020-09-04 20:34:54,068 [Worker-19: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 94 resources
+2020-09-04 20:34:54,089 [Worker-19: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 20:34:54,089 [Worker-19: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\FAKS\Materijali - ISA\ISA FAJNL FAJNL BOS\ISA-Proj\SiteProj0S1S2\src\test\resources
+2020-09-04 20:34:56,996 [Worker-22: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 20:34:57,004 [Worker-22: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2020-09-04 20:34:57,054 [Worker-22: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 94 resources
+2020-09-04 20:34:57,070 [Worker-22: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 20:34:57,070 [Worker-22: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\FAKS\Materijali - ISA\ISA FAJNL FAJNL BOS\ISA-Proj\SiteProj0S1S2\src\test\resources
+2020-09-04 21:45:27,038 [Worker-32: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 21:45:27,044 [Worker-32: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2020-09-04 21:45:27,052 [Worker-32: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 94 resources
+2020-09-04 21:45:27,067 [Worker-32: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 21:45:27,067 [Worker-32: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\FAKS\Materijali - ISA\ISA FAJNL FAJNL BOS\ISA-Proj\SiteProj0S1S2\src\test\resources
+2020-09-04 21:45:34,223 [Worker-32: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 21:45:34,229 [Worker-32: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2020-09-04 21:45:34,239 [Worker-32: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 94 resources
+2020-09-04 21:45:34,255 [Worker-32: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 21:45:34,255 [Worker-32: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\FAKS\Materijali - ISA\ISA FAJNL FAJNL BOS\ISA-Proj\SiteProj0S1S2\src\test\resources
+2020-09-04 21:46:00,167 [Worker-33: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 21:46:00,171 [Worker-33: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2020-09-04 21:46:00,177 [Worker-33: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 94 resources
+2020-09-04 21:46:00,204 [Worker-33: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 21:46:00,205 [Worker-33: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\FAKS\Materijali - ISA\ISA FAJNL FAJNL BOS\ISA-Proj\SiteProj0S1S2\src\test\resources
+2020-09-04 21:47:16,770 [Worker-29: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 21:47:16,775 [Worker-29: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2020-09-04 21:47:16,780 [Worker-29: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 94 resources
+2020-09-04 21:47:16,796 [Worker-29: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 21:47:16,797 [Worker-29: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\FAKS\Materijali - ISA\ISA FAJNL FAJNL BOS\ISA-Proj\SiteProj0S1S2\src\test\resources
+2020-09-04 21:49:15,244 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 21:49:15,248 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2020-09-04 21:49:15,253 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 94 resources
+2020-09-04 21:49:15,267 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 21:49:15,267 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\FAKS\Materijali - ISA\ISA FAJNL FAJNL BOS\ISA-Proj\SiteProj0S1S2\src\test\resources
+2020-09-04 21:49:36,469 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 21:49:36,473 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2020-09-04 21:49:36,478 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 94 resources
+2020-09-04 21:49:36,491 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 21:49:36,491 [Worker-34: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\FAKS\Materijali - ISA\ISA FAJNL FAJNL BOS\ISA-Proj\SiteProj0S1S2\src\test\resources
+2020-09-04 21:50:10,134 [Worker-29: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 21:50:10,138 [Worker-29: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2020-09-04 21:50:10,144 [Worker-29: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 94 resources
+2020-09-04 21:50:10,157 [Worker-29: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 21:50:10,158 [Worker-29: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\FAKS\Materijali - ISA\ISA FAJNL FAJNL BOS\ISA-Proj\SiteProj0S1S2\src\test\resources
+2020-09-04 21:50:49,974 [Worker-28: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 21:50:49,978 [Worker-28: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2020-09-04 21:50:49,983 [Worker-28: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 94 resources
+2020-09-04 21:50:49,997 [Worker-28: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 21:50:49,998 [Worker-28: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\FAKS\Materijali - ISA\ISA FAJNL FAJNL BOS\ISA-Proj\SiteProj0S1S2\src\test\resources
+2020-09-04 21:50:59,106 [Worker-30: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 21:50:59,111 [Worker-30: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2020-09-04 21:50:59,116 [Worker-30: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 94 resources
+2020-09-04 21:50:59,129 [Worker-30: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2020-09-04 21:50:59,129 [Worker-30: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory E:\FAKS\Materijali - ISA\ISA FAJNL FAJNL BOS\ISA-Proj\SiteProj0S1S2\src\test\resources
