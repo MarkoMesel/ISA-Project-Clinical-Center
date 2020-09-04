@@ -308,7 +308,7 @@ class TestController {
 		
 		medicalCheckupDBM = new MedicalCheckupDbModel();
 		medicalCheckupDBM.setId(1);
-		medicalCheckupDBM.setDate("2020-10-10");
+		medicalCheckupDBM.setDate("10/10/2020");
 		medicalCheckupDBM.setTime("10:00");
 		medicalCheckupDBM.setDuration("50");
 		medicalCheckupDBM.setPrice(500);
@@ -428,7 +428,7 @@ class TestController {
 		
 		medicalCheckupResM = new MedicalCheckupResponseModel(
 			1, 
-			"2020-10-10", 
+			"10/10/2020", 
 			"10:00", 
 			"50", 
 			500, 
@@ -439,7 +439,7 @@ class TestController {
 		
 		medicalCheckupDoctorRM = new MedicalCheckupDoctorResponseModel(
 			1, 
-			"2020-10-10", 
+			"10/10/2020", 
 			"10:00", 
 			"50", 
 			500,
@@ -454,13 +454,13 @@ class TestController {
 		
 		medicalCheckupRegReqM = new MedicalCheckupRegisterRequestModel();
 		medicalCheckupRegReqM.setId(1);
-		medicalCheckupRegReqM.setDate("2020-10-10");
+		medicalCheckupRegReqM.setDate("10/10/2020");
 		medicalCheckupRegReqM.setTime("10:00");
 		medicalCheckupRegReqM.setNotes("TestNotes");
 		
 		medicalCheckupDBMWithNoRoom = new MedicalCheckupDbModel();
 		medicalCheckupDBMWithNoRoom.setId(1);
-		medicalCheckupDBMWithNoRoom.setDate("2020-10-10");
+		medicalCheckupDBMWithNoRoom.setDate("10/10/2020");
 		medicalCheckupDBMWithNoRoom.setTime("10:00");
 		medicalCheckupDBMWithNoRoom.setDuration("50");
 		medicalCheckupDBMWithNoRoom.setPrice(500);
@@ -479,7 +479,7 @@ class TestController {
 		
 		medicalCheckupRoomRM = new MedicalCheckupRoomResponseModel(
 			1, 
-			"2020-10-10", 
+			"10/10/2020", 
 			"10:00", 
 			"50", 
 			500, 
@@ -496,7 +496,7 @@ class TestController {
 		
 		medicalCheckupDoctorRMNotFinished = new MedicalCheckupDoctorResponseModel(
 			1, 
-			"2020-10-10", 
+			"10/10/2020", 
 			"10:00", 
 			"50", 
 			500,
@@ -511,7 +511,7 @@ class TestController {
 		
 		medicalCheckupPatientRM = new MedicalCheckupPatientResponseModel(
 			1, 
-			"2020-10-10", 
+			"10/10/2020", 
 			"10:00", 
 			"50", 
 			500,
@@ -541,7 +541,7 @@ class TestController {
 		roomRegM.setNumber("1");
 		roomRegM.setClinicId(1);
 		
-		busyDateRM = new FoundDateResponseModel("2020-10-10");
+		busyDateRM = new FoundDateResponseModel("10/10/2020");
 		
 		busyDateRMList = new ArrayList<>();
 		busyDateRMList.add(busyDateRM);
@@ -575,8 +575,8 @@ class TestController {
 		
 		vacationDBM = new VacationDbModel();
 		vacationDBM.setId(1);
-		vacationDBM.setStartDate("2020-11-11");
-		vacationDBM.setEndDate("2020-12-12");
+		vacationDBM.setStartDate("11/11/2020");
+		vacationDBM.setEndDate("12/12/2020");
 		vacationDBM.setDoctor(doctorDBM);
 		vacationDBM.setApproved(false);
 		vacationDBM.setEnabled(true);
@@ -587,16 +587,16 @@ class TestController {
 		
 		vacationRegM = new VacationRegisterModel();
 		vacationRegM.setId(1);
-		vacationRegM.setStartDate("2020-11-11");
-		vacationRegM.setEndDate("2020-12-12");
+		vacationRegM.setStartDate("11/11/2020");
+		vacationRegM.setEndDate("12/12/2020");
 		vacationRegM.setDoctorId(1);
 		
 		vacationResM = new VacationResponseModel(
 			1, 
 			"TestFirstName TestLastName",
 			"VACATION",
-			"2020-11-11", 
-			"2020-12-12");
+			"11/11/2020", 
+			"12/12/2020");
 		
 		vacationResMList = new ArrayList<>();
 		vacationResMList.add(vacationResM);

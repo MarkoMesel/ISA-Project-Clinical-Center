@@ -59,15 +59,15 @@ class TestDoctorRepo {
 	@Test
 	void findByFirstNameAndLastNameAndRatingAndClinicIdAndEnabled_ReturnObj() {
 		DoctorDbModel result = doctorRepo.findByFirstNameAndLastNameAndRatingAndClinicIdAndEnabled(
-			"Isa",
-			"Klinike",
+			"Aleksandar",
+			"Aleksandrovic",
 			10,
 			1,
-				true);
+			true);
 		assertThat(result, notNullValue());
 		assertThat(result, allOf(
-				hasProperty("firstName", is("Isa")),
-				hasProperty("lastName", is("Klinike")),
+				hasProperty("firstName", is("Aleksandar")),
+				hasProperty("lastName", is("Aleksandrovic")),
 				hasProperty("rating", is(10.0f)),
 				hasProperty("clinic", hasProperty("id", is(1))),
 				hasProperty("enabled", is(true))

@@ -71,7 +71,7 @@ class TestUserRepo extends TestRepo {
 	@Test
 	void findByFirstNameAndClinicIdAndIsVerifiedAndEnabled_ReturnList() {
 		List<UserDbModel> result = userRepo.findByFirstNameAndClinicIdAndIsVerifiedAndEnabled(
-			"Isa",
+			"Svetlana",
 			1,
 			true,
 			true);
@@ -79,7 +79,7 @@ class TestUserRepo extends TestRepo {
 		assertThat(result, hasSize(greaterThan(0)));
 		assertThat(result, everyItem(
 			allOf(
-				hasProperty("firstName", is("Isa")),
+				hasProperty("firstName", is("Svetlana")),
 				hasProperty("clinic", hasProperty("id", is(1))),
 				hasProperty("verified", is(true)),
 				hasProperty("enabled", is(true))

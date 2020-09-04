@@ -69,7 +69,7 @@ class TestMedicalCheckupController extends TestController {
 		String expected = expectedJsonArray.toString();
 		
 		when(doctorRepo.findBySecurityToken((UUID)notNull())).thenReturn(doctorDBM);
-		when(medicalCheckupRepo.findByClinicIdAndDoctorIdAndFree(
+		when(medicalCheckupRepo.findByClinicIdAndDoctorIdAndPatientIdNotNullAndFree(
 			anyInt(),
 			anyInt(),
 			anyBoolean()))
@@ -259,7 +259,7 @@ class TestMedicalCheckupController extends TestController {
 			anyInt(),
 			anyString(),
 			anyString()))
-		.thenReturn(medicalCheckupDBMListWithOnlyOneElement);
+		.thenReturn(new ArrayList<>());
 		when(roomRepo.findById(anyInt())).thenReturn(Optional.of(roomDBM));
 		when(medicalCheckupRepo.save((MedicalCheckupDbModel)notNull())).thenReturn(medicalCheckupDBM);
 		

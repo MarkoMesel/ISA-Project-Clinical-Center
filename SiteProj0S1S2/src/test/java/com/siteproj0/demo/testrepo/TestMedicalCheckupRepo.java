@@ -246,8 +246,8 @@ class TestMedicalCheckupRepo  extends TestRepo {
 	 * stare verzije objekta
 	 */
 	@Test
-	void save_OptimisticLockingCheck_ThrowsError() {
-		final MedicalCheckupDbModel mcdbm = mcRepo.findById(1).get();
+	void save_OptimisticLockingCheck_ThrowsException() {
+		final MedicalCheckupDbModel mcdbm = mcRepo.findById(2).get();
 		/*
 		 * Promenom vrednosti unutar mcdbm ce se registrovati promena u objektu prilikom
 		 * cuvanja. Kada dodje do neke promene, version se inkrementira.
@@ -263,5 +263,49 @@ class TestMedicalCheckupRepo  extends TestRepo {
 			mcRepo.save(mcdbm);
 		});
 	}
+	
+	@Test
+	void save_OptimisticLockingCheck_CatchException() {
+		int i = 0;
+		final MedicalCheckupDbModel mcdbm = mcRepo.findById(3).get();
+		mcdbm.setDuration("1000");
+		mcRepo.save(mcdbm);
+		try {
+			mcRepo.save(mcdbm);
+		} catch(ObjectOptimisticLockingFailureException e) {
+			i++;
+		}
+		
+		assertEquals(i,1);
+	}
+	
+	@Test
+	void save_OptimisticLockingCheck_TestSLeep() throws InterruptedException {
+		int i = 0;
+		final MedicalCheckupDbModel mcdbm = mcRepo.findById(4).get();
+		mcdbm.setDuration("1000");
+		mcRepo.save(mcdbm);
+		try {
+			mcRepo.save(mcdbm);
+		} catch(ObjectOptimisticLockingFailureException e0) {
+			System.out.println("Sleep 1 start...");
+			Thread.sleep(1000);
+			System.out.println("Sleep 1 end.");
+			try {
+				mcRepo.save(mcdbm);
+			} catch(ObjectOptimisticLockingFailureException e1) {
+				System.out.println("Sleep 2 start...");
+				Thread.sleep(1000);
+				System.out.println("Sleep 2 end.");
+				try {
+					mcRepo.save(mcdbm);
+				} catch(ObjectOptimisticLockingFailureException e2) {
+					i++;
+				}
+			}
+		}
+		assertEquals(i,1);
+	}
+	
 	
 }

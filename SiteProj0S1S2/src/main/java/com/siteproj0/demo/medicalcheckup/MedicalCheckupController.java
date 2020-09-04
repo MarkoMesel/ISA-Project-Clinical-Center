@@ -22,6 +22,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -436,6 +437,11 @@ public class MedicalCheckupController {
 		return "findRoomForCheckup";
 	}
 	
+	/*
+	 * U METODI "saveRoomAndDate" REALIZOVANA JE SLEDECA STAVKA:
+	 * Prilikom odobravanja zahteva za operaciju/pregled, ne može jedna sala da bude
+	 * rezervisana u isto vreme za različite operacije/preglede.
+	 */
 	@PutMapping(path = "/saveRoomAndDate")
 	@ResponseBody
 	public ResponseEntity saveRoomAndDate(@RequestHeader("token") UUID securityToken,
@@ -448,10 +454,6 @@ public class MedicalCheckupController {
 		if(chosenDate.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
 		}
-		System.out.println(securityToken);
-		System.out.println(mcId);
-		System.out.println(roomId);
-		System.out.println(chosenDate);
 		chosenDate = convertDateFormat(chosenDate);
 		
 		
@@ -466,7 +468,7 @@ public class MedicalCheckupController {
 			
 			
 			List<MedicalCheckupDbModel> mcList = medicalCheckupRepo.findByRoomIdAndDateAndTime(roomId,chosenDate,mcdbm.getTime());
-			if(mcList.size() > 1) {
+			if(mcList.size() > 0) {
 				return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 			
@@ -475,16 +477,64 @@ public class MedicalCheckupController {
 			
 			mcdbm.setRoom(rdbm);
 			mcdbm.setDate(chosenDate);
-			
-			System.out.println("I set the values of mcdbm.");
-			medicalCheckupRepo.save(mcdbm);
-			System.out.println("I saved mcdbm.");
+			try {
+				medicalCheckupRepo.save(mcdbm);
+				/*
+				//Otkomentarisanjem ovoga se izazove ObjectOptimisticLockingFailureException
+				MedicalCheckupDbModel mcdbmTest = new MedicalCheckupDbModel();
+				mcdbmTest.setId(mcdbm.getId()); 
+				mcdbmTest.setVersion(0);
+				medicalCheckupRepo.save(mcdbmTest);
+				 */			
+			} catch(ObjectOptimisticLockingFailureException e0) {
+				
+				System.out.println("Save failed. Retrying...");
+				Thread.sleep(1000);
+				
+				MedicalCheckupDbModel mcdbm0 = medicalCheckupRepo.findById(mcId).get();
+				List<MedicalCheckupDbModel> mcList0 = medicalCheckupRepo.findByRoomIdAndDateAndTime(roomId,chosenDate,mcdbm0.getTime());
+				if(mcList0.size() > 0) {
+					return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+				RoomDbModel rdbm0 = roomRepo.findById(roomId).get();
+				mcdbm0.setRoom(rdbm0);
+				mcdbm0.setDate(chosenDate);
+				try {
+					medicalCheckupRepo.save(mcdbm0);
+				} catch(ObjectOptimisticLockingFailureException e1) {
+					
+					System.out.println("Save failed again. Retrying...");
+					Thread.sleep(1000);
+					
+					MedicalCheckupDbModel mcdbm1 = medicalCheckupRepo.findById(mcId).get();
+					List<MedicalCheckupDbModel> mcList1 = medicalCheckupRepo.findByRoomIdAndDateAndTime(roomId,chosenDate,mcdbm1.getTime());
+					if(mcList1.size() > 0) {
+						return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+					}
+					RoomDbModel rdbm1 = roomRepo.findById(roomId).get();
+					mcdbm1.setRoom(rdbm1);
+					mcdbm1.setDate(chosenDate);
+					try {
+						medicalCheckupRepo.save(mcdbm1);
+					} catch(ObjectOptimisticLockingFailureException e2) {
+						
+						System.out.println("Save failed. Try again later.");
+						Thread.sleep(1000);
+						return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+					}
+				}
+			}
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 	
+	/*
+	 * U METODI "saveRoomAndDateAndDoctor" REALIZOVANA JE SLEDECA STAVKA:
+	 * Prilikom odobravanja zahteva za operaciju/pregled, ne može jedna sala da bude
+	 * rezervisana u isto vreme za različite operacije/preglede.
+	 */
 	@PutMapping(path = "/saveRoomAndDateAndDoctor")
 	@ResponseBody
 	public ResponseEntity saveRoomAndDateAndDoctor(@RequestHeader("token") UUID securityToken,
@@ -498,11 +548,6 @@ public class MedicalCheckupController {
 		if(chosenDate.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
 		}
-		System.out.println(securityToken);
-		System.out.println(mcId);
-		System.out.println(roomId);
-		System.out.println(chosenDate);
-		System.out.println(doctorId);
 		chosenDate = convertDateFormat(chosenDate);
 		
 		
@@ -517,7 +562,7 @@ public class MedicalCheckupController {
 			
 			
 			List<MedicalCheckupDbModel> mcList = medicalCheckupRepo.findByRoomIdAndDoctorIdAndDateAndTime(roomId,doctorId,chosenDate,mcdbm.getTime());
-			if(mcList.size() > 1) {
+			if(mcList.size() > 0) {
 				return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 			
@@ -529,9 +574,58 @@ public class MedicalCheckupController {
 			mcdbm.setDate(chosenDate);
 			mcdbm.setDoctor(ddbm);
 			
-			System.out.println("I set the values of mcdbm.");
-			medicalCheckupRepo.save(mcdbm);
-			System.out.println("I saved mcdbm.");
+			try {
+				medicalCheckupRepo.save(mcdbm);
+				 
+				//Otkomentarisanjem ovoga se izazove ObjectOptimisticLockingFailureException
+				/*
+				MedicalCheckupDbModel mcdbmTest = new MedicalCheckupDbModel();
+				mcdbmTest.setId(mcdbm.getId()); mcdbmTest.setVersion(0);
+				medicalCheckupRepo.save(mcdbmTest);
+				*/
+				 			
+			} catch(ObjectOptimisticLockingFailureException e0) {
+				
+				System.out.println("Save failed. Retrying...");
+				Thread.sleep(1000);
+				
+				MedicalCheckupDbModel mcdbm0 = medicalCheckupRepo.findById(mcId).get();
+				List<MedicalCheckupDbModel> mcList0 = medicalCheckupRepo.findByRoomIdAndDoctorIdAndDateAndTime(roomId,doctorId,chosenDate,mcdbm0.getTime());
+				if(mcList0.size() > 0) {
+					return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+				RoomDbModel rdbm0 = roomRepo.findById(roomId).get();
+				DoctorDbModel ddbm0 = doctorRepo.findById(doctorId).get();
+				mcdbm0.setRoom(rdbm0);
+				mcdbm0.setDate(chosenDate);
+				mcdbm.setDoctor(ddbm0);
+				try {
+					medicalCheckupRepo.save(mcdbm0);
+				} catch(ObjectOptimisticLockingFailureException e1) {
+					
+					System.out.println("Save failed again. Retrying...");
+					Thread.sleep(1000);
+					
+					MedicalCheckupDbModel mcdbm1 = medicalCheckupRepo.findById(mcId).get();
+					List<MedicalCheckupDbModel> mcList1 = medicalCheckupRepo.findByRoomIdAndDoctorIdAndDateAndTime(roomId,doctorId,chosenDate,mcdbm1.getTime());
+					if(mcList1.size() > 0) {
+						return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+					}
+					RoomDbModel rdbm1 = roomRepo.findById(roomId).get();
+					DoctorDbModel ddbm1 = doctorRepo.findById(doctorId).get();
+					mcdbm1.setRoom(rdbm1);
+					mcdbm1.setDate(chosenDate);
+					mcdbm.setDoctor(ddbm1);
+					try {
+						medicalCheckupRepo.save(mcdbm1);
+					} catch(ObjectOptimisticLockingFailureException e2) {
+						
+						System.out.println("Save failed. Try again later.");
+						Thread.sleep(1000);
+						return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+					}
+				}
+			}
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -735,8 +829,28 @@ public class MedicalCheckupController {
 			
 			MedicalCheckupDbModel mcdbm = medicalCheckupRepo.findById(mc.getId()).get();
 			mcdbm.setPatient(user);
-	
-			medicalCheckupRepo.save(mcdbm);
+			try {
+				medicalCheckupRepo.save(mcdbm);
+			} catch(ObjectOptimisticLockingFailureException e0) {
+				System.out.println("Save failed. Retrying...");
+				Thread.sleep(1000);
+				MedicalCheckupDbModel mcdbm0 = medicalCheckupRepo.findById(mc.getId()).get();
+				mcdbm0.setPatient(user);
+				try {
+					medicalCheckupRepo.save(mcdbm0);
+				} catch(ObjectOptimisticLockingFailureException e1) {
+					System.out.println("Save failed again. Retrying...");
+					Thread.sleep(1000);
+					MedicalCheckupDbModel mcdbm1 = medicalCheckupRepo.findById(mc.getId()).get();
+					mcdbm1.setPatient(user);
+					try {
+						System.out.println("Save failed. Try again later.");
+						medicalCheckupRepo.save(mcdbm1);
+					} catch(ObjectOptimisticLockingFailureException e2) {
+						return "redirect:/requestMedicalCheckup";
+					}
+				}
+			}
 			
 			return "redirect:/home";
 		} catch (Exception e) {
